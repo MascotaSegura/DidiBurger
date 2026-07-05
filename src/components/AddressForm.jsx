@@ -98,7 +98,7 @@ const AddressForm = ({ onClose, initialData }) => {
                   value={query}
                   onChange={(e) => handleSearch(e.target.value)}
                   placeholder="Ej. Av. Reforma 123"
-                  className="flex-1 ml-2 text-[15px] outline-none bg-transparent text-[#1E1E1E] placeholder:text-[#8E8E93]"
+                  className="flex-1 ml-2 text-[14px] outline-none bg-transparent text-[#1E1E1E] placeholder:text-[#8E8E93]"
                 />
               </div>
               
@@ -129,7 +129,7 @@ const AddressForm = ({ onClose, initialData }) => {
                   value={label}
                   onChange={(e) => setLabel(e.target.value)}
                   placeholder="Ej. Mi Casa, Trabajo"
-                  className="w-full bg-[#F3F4F6] rounded-2xl px-4 py-3 text-[15px] outline-none text-[#1E1E1E] placeholder:text-[#8E8E93] focus:ring-2 focus:ring-[#FF441F]"
+                  className="w-full bg-[#F3F4F6] rounded-2xl px-4 py-3 text-[14px] outline-none text-[#1E1E1E] placeholder:text-[#8E8E93] focus:ring-2 focus:ring-[#FF441F] transition-shadow"
                 />
               </div>
               
@@ -141,7 +141,7 @@ const AddressForm = ({ onClose, initialData }) => {
                     value={street}
                     onChange={(e) => setStreet(e.target.value)}
                     placeholder="Ej. Av. Reforma 123"
-                    className="w-full bg-[#F3F4F6] rounded-2xl px-4 py-3 text-[15px] outline-none text-[#1E1E1E] placeholder:text-[#8E8E93] focus:ring-2 focus:ring-[#FF441F]"
+                    className="w-full bg-[#F3F4F6] rounded-2xl px-4 py-3 text-[14px] outline-none text-[#1E1E1E] placeholder:text-[#8E8E93] focus:ring-2 focus:ring-[#FF441F] transition-shadow"
                   />
                 </div>
                 <div className="md:w-32">
@@ -151,7 +151,7 @@ const AddressForm = ({ onClose, initialData }) => {
                     value={interior}
                     onChange={(e) => setInterior(e.target.value)}
                     placeholder="Opcional"
-                    className="w-full bg-[#F3F4F6] rounded-2xl px-4 py-3 text-[15px] outline-none text-[#1E1E1E] placeholder:text-[#8E8E93] focus:ring-2 focus:ring-[#FF441F]"
+                    className="w-full bg-[#F3F4F6] rounded-2xl px-4 py-3 text-[14px] outline-none text-[#1E1E1E] placeholder:text-[#8E8E93] focus:ring-2 focus:ring-[#FF441F] transition-shadow"
                   />
                 </div>
               </div>
@@ -163,7 +163,7 @@ const AddressForm = ({ onClose, initialData }) => {
                   onChange={(e) => setReferences(e.target.value)}
                   placeholder="Ej. Casa de dos pisos verde con portón negro..."
                   rows={2}
-                  className="w-full bg-[#F3F4F6] rounded-2xl px-4 py-3 text-[15px] outline-none text-[#1E1E1E] placeholder:text-[#8E8E93] focus:ring-2 focus:ring-[#FF441F] resize-none"
+                  className="w-full bg-[#F3F4F6] rounded-2xl px-4 py-3 text-[14px] outline-none text-[#1E1E1E] placeholder:text-[#8E8E93] focus:ring-2 focus:ring-[#FF441F] resize-none transition-shadow"
                 />
               </div>
 
@@ -174,7 +174,7 @@ const AddressForm = ({ onClose, initialData }) => {
                   onChange={(e) => setInstructions(e.target.value)}
                   placeholder="Ej. Dejar en recepción, timbre descompuesto..."
                   rows={2}
-                  className="w-full bg-[#F3F4F6] rounded-2xl px-4 py-3 text-[15px] outline-none text-[#1E1E1E] placeholder:text-[#8E8E93] focus:ring-2 focus:ring-[#FF441F] resize-none"
+                  className="w-full bg-[#F3F4F6] rounded-2xl px-4 py-3 text-[14px] outline-none text-[#1E1E1E] placeholder:text-[#8E8E93] focus:ring-2 focus:ring-[#FF441F] resize-none transition-shadow"
                 />
               </div>
             </div>
