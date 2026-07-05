@@ -113,7 +113,7 @@ export const DeliveryLocation = ({ setActiveModal, variant = 'header' }) => {
 
   return (
     <div
-      className="flex flex-row items-center cursor-pointer outline-none focus-visible:ring-2 focus-visible:ring-[#FF441F] rounded-xl hover:opacity-80 transition-opacity flex-1 min-w-0 h-10"
+      className="flex flex-row items-center cursor-pointer outline-none focus-visible:ring-2 focus-visible:ring-[#FF441F] rounded-xl hover:opacity-80 transition-opacity flex-1 min-w-0 h-9"
       onClick={() => setActiveModal('location')}
       onKeyDown={handleKeyDown(() => setActiveModal('location'))}
       role="button"
@@ -146,7 +146,7 @@ export const DeliveryModeMobile = ({ setActiveModal, variant = 'header' }) => {
 
   return (
     <div
-      className={`flex items-center gap-1.5 px-4 h-10 rounded-full text-[14px] font-bold cursor-pointer transition-colors text-[#1E1E1E] outline-none focus-visible:ring-2 focus-visible:ring-[#FF441F] shrink-0 ${bgClass}`}
+      className={`flex items-center gap-1.5 px-3 h-9 rounded-full text-[14px] font-bold cursor-pointer transition-colors text-[#1E1E1E] outline-none focus-visible:ring-2 focus-visible:ring-[#FF441F] shrink-0 ${bgClass}`}
       onClick={() => setActiveModal('mode')}
       onKeyDown={handleKeyDown(() => setActiveModal('mode'))}
       role="button"
@@ -164,7 +164,7 @@ export const DeliveryModeDesktop = ({ variant = 'header' }) => {
   const inactiveHover = variant === 'header' ? 'hover:text-[#1E1E1E]' : 'hover:text-[#1E1E1E] hover:bg-gray-50';
 
   return (
-    <div className={`flex items-center rounded-full p-1 shrink-0 h-10 ${containerBg}`}>
+    <div className={`flex items-center rounded-full p-1 shrink-0 h-9 ${containerBg}`}>
       <button
         className={`flex items-center justify-center px-4 h-full rounded-full outline-none focus-visible:ring-2 focus-visible:ring-[#FF441F] transition-all cursor-pointer ${
           deliveryMode === 'delivery'
