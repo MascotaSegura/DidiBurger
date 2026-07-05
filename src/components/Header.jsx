@@ -35,7 +35,7 @@ const Header = ({ onOpenCart, searchQuery, onSearchChange }) => {
 
   return (
     <div className="bg-white">
-      <div className="max-w-7xl mx-auto px-4 py-2 md:py-3 flex flex-col md:flex-row md:items-center gap-3 md:gap-4">
+      <div className="max-w-7xl mx-auto px-4 pt-2 pb-1 md:py-3 flex flex-col md:flex-row md:items-center gap-2 md:gap-4">
         
         {/* MOBILE ROW 1: Logo & Cart | DESKTOP: Logo & ModeDesktop */}
         <div className="flex items-center justify-between md:justify-start gap-4 w-full md:w-auto shrink-0">
