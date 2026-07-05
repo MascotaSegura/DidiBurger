@@ -22,3 +22,7 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Sound pack source (only selected files go to public/sounds/)
+kenney_interface-sounds/
+kenney_interface-sounds.zip
