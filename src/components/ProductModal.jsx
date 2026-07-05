@@ -50,12 +50,12 @@ const ProductModal = ({ product, onClose }) => {
 
   return (
     <div
-      className="fixed inset-0 z-50 flex items-end md:items-center justify-center bg-[#1E1E1E]/40 md:p-4"
+      className="fixed inset-0 h-[100dvh] w-screen z-50 flex items-end md:items-center justify-center bg-[#1E1E1E]/40 p-0 md:p-4 overflow-hidden"
       role="dialog"
       aria-modal="true"
       aria-label={product.name}
     >
-      <div className="bg-white w-full h-screen h-[100dvh] md:h-[85vh] md:max-h-[650px] max-w-[480px] md:max-w-[900px] flex flex-col md:flex-row md:rounded-2xl overflow-hidden relative animate-slide-up md:animate-fade-in">
+      <div className="bg-white w-full max-h-[100dvh] h-full md:h-[85vh] md:max-h-[650px] max-w-[480px] md:max-w-[900px] flex flex-col md:flex-row md:rounded-2xl overflow-hidden relative animate-slide-up md:animate-fade-in isolate">
         
         {/* Imagen - Solo Desktop */}
         <div className="hidden md:flex relative w-[45%] shrink-0 h-full bg-[#F3F4F6] justify-center items-center p-8">
@@ -69,11 +69,11 @@ const ProductModal = ({ product, onClose }) => {
         {/* Columna de Información (Mobile: 100%, Desktop: 55%) */}
         <div className="flex-1 min-h-0 flex flex-col w-full md:w-[55%] bg-white relative">
           
-          {/* Botones Flotantes (Mobile y Desktop) */}
-          <div className="absolute top-[max(1rem,env(safe-area-inset-top))] left-4 right-4 flex justify-between md:justify-end gap-2 z-20 pointer-events-none">
+          {/* Header con Botones (Solid background to prevent content overlap) */}
+          <div className="w-full flex justify-between md:justify-end gap-2 px-4 py-3 pt-[max(1rem,env(safe-area-inset-top,1rem))] z-20 bg-white shrink-0">
             {/* Close Button (Left on mobile, Right on desktop) */}
             <div
-              className="w-10 h-10 bg-white/80 backdrop-blur-md md:bg-[#F3F4F6] rounded-full flex items-center justify-center cursor-pointer hover:bg-[#ECECEE] transition-colors pointer-events-auto md:order-2"
+              className="w-10 h-10 bg-[#F3F4F6] rounded-full flex items-center justify-center cursor-pointer hover:bg-[#ECECEE] transition-colors pointer-events-auto md:order-2"
               onClick={onClose}
               onKeyDown={handleKeyDown(onClose)}
               role="button"
@@ -84,7 +84,7 @@ const ProductModal = ({ product, onClose }) => {
             </div>
             {/* Share Button (Right on mobile, Left on desktop) */}
             <div
-              className="w-10 h-10 bg-white/80 backdrop-blur-md md:bg-[#F3F4F6] rounded-full flex items-center justify-center cursor-pointer hover:bg-[#ECECEE] transition-colors pointer-events-auto md:order-1"
+              className="w-10 h-10 bg-[#F3F4F6] rounded-full flex items-center justify-center cursor-pointer hover:bg-[#ECECEE] transition-colors pointer-events-auto md:order-1"
               onClick={handleShare}
               onKeyDown={handleKeyDown(handleShare)}
               role="button"
@@ -108,7 +108,7 @@ const ProductModal = ({ product, onClose }) => {
             </div>
 
             {/* Contenido */}
-            <div className="px-6 pt-2 md:pt-16 pb-6">
+            <div className="px-6 pb-6 pt-4">
               <h1 className="text-2xl md:text-3xl font-bold text-[#1E1E1E] mb-3 leading-tight">{product.name}</h1>
               <p className="text-[#8E8E93] text-[15px] md:text-[16px] leading-relaxed mb-8">
                 {product.description}

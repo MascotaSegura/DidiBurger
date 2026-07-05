@@ -41,8 +41,8 @@ const CartPanel = ({ onClose }) => {
   if (orderStatus) {
     const currentIndex = STEPS.findIndex((s) => s.key === orderStatus);
     return (
-      <div className="fixed inset-0 z-50 flex items-center md:items-stretch justify-center md:justify-end bg-[#1E1E1E]/40 p-4 md:p-0">
-        <div className="bg-white w-full max-w-[480px] flex flex-col items-center justify-center p-8 text-center rounded-2xl md:rounded-none md:rounded-l-2xl">
+      <div className="fixed inset-0 h-[100dvh] w-screen z-50 flex items-center md:items-stretch justify-center md:justify-end bg-[#1E1E1E]/40 p-4 md:p-0 overflow-hidden">
+        <div className="bg-white w-full max-h-[100dvh] max-w-[480px] flex flex-col items-center justify-center p-8 text-center rounded-2xl md:rounded-none md:rounded-l-2xl isolate overflow-y-auto">
           <h2 className="text-3xl font-bold text-[#1E1E1E] mb-2">
             {statusTitle[orderStatus]}
           </h2>
@@ -103,13 +103,13 @@ const CartPanel = ({ onClose }) => {
 
   return (
     <div
-      className="fixed inset-0 z-50 flex items-end md:items-stretch justify-center md:justify-end bg-[#1E1E1E]/40 md:p-0"
+      className="fixed inset-0 h-[100dvh] w-screen z-50 flex items-end md:items-stretch justify-center md:justify-end bg-[#1E1E1E]/40 md:p-0 overflow-hidden"
       role="dialog"
       aria-modal="true"
       aria-label="Tu carrito"
     >
-      <div className="bg-white w-full h-screen h-[100dvh] md:h-full max-w-[480px] flex flex-col md:rounded-none md:rounded-l-2xl overflow-hidden md:max-h-full relative animate-slide-up md:animate-none">
-        <div className="flex items-center px-6 pb-4 pt-[max(1rem,env(safe-area-inset-top))] shrink-0">
+      <div className="bg-white w-full h-full max-h-[100dvh] md:h-full max-w-[480px] flex flex-col md:rounded-none md:rounded-l-2xl overflow-hidden relative animate-slide-up md:animate-none isolate">
+        <div className="flex items-center px-6 pb-4 pt-[max(1rem,env(safe-area-inset-top,1rem))] shrink-0">
           <div
             className="w-10 h-10 bg-[#F3F4F6] rounded-full flex items-center justify-center cursor-pointer hover:bg-[#ECECEE] transition-colors"
             onClick={onClose}
