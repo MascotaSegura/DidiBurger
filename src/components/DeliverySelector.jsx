@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { CaretDown, Check, X, PencilSimple, MapPin, Storefront } from '@phosphor-icons/react';
+import { CaretDown, Check, X, PencilSimple, MapPin, Storefront, Moped } from '@phosphor-icons/react';
 import { useCart } from '../context/useCart';
 import AddressForm from './AddressForm';
 
@@ -57,8 +57,10 @@ export const ModalDropdown = ({ isOpen, onClose, title, items, selectedId, onSel
                 role="button"
                 tabIndex={0}
               >
-                <div className="flex flex-col">
-                  <span className="font-bold">{item.label}</span>
+                <div className="flex items-center gap-3">
+                  {item.icon && <span className="shrink-0">{item.icon}</span>}
+                  <div className="flex flex-col">
+                    <span className="font-bold">{item.label}</span>
                   {item.detail && (
                     <span className={`text-[13px] ${isSelected ? 'text-gray-300' : 'text-[#8E8E93]'}`}>
                       {item.detail}
@@ -119,8 +121,8 @@ const DeliverySelector = () => {
   const [editingItem, setEditingItem] = useState(null);
 
   const modes = [
-    { id: 'delivery', label: 'A Domicilio' },
-    { id: 'pickup', label: 'Recoger' },
+    { id: 'delivery', label: 'A Domicilio', icon: <Moped size={20} weight="fill" /> },
+    { id: 'pickup', label: 'Recoger', icon: <Storefront size={20} weight="fill" /> },
   ];
 
   const currentModeLabel = deliveryMode === 'delivery' ? 'A Domicilio' : 'Recoger';
@@ -144,9 +146,9 @@ const DeliverySelector = () => {
           </span>
           <div className="flex items-center gap-1.5 w-full">
             {deliveryMode === 'delivery' ? (
-              <MapPin size={18} weight="fill" color="#FF441F" className="shrink-0" />
+              <MapPin size={18} weight="fill" color="#1E1E1E" className="shrink-0" />
             ) : (
-              <Storefront size={18} weight="fill" color="#FF441F" className="shrink-0" />
+              <Storefront size={18} weight="fill" color="#1E1E1E" className="shrink-0" />
             )}
             <span className="text-[15px] font-bold text-[#1E1E1E] truncate leading-tight">
               {currentLocationLabel}
