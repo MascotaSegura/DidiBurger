@@ -134,7 +134,7 @@ const DeliverySelector = () => {
 
   return (
     <>
-      <div className="flex items-center shrink-0 gap-4 w-full justify-between mb-2">
+      <div className="flex items-center shrink-0 gap-4 w-full justify-between">
         <div
           className="flex flex-col cursor-pointer outline-none focus-visible:ring-2 focus-visible:ring-[#FF441F] rounded-xl px-1 -ml-1 hover:opacity-80 transition-opacity flex-1 min-w-0 mr-2"
           onClick={() => setActiveModal('location')}
