@@ -14,7 +14,7 @@ const handleKeyDown = (fn) => (e) => {
 const CartButton = ({ onOpenCart, cartCount }) => (
   <button
     type="button"
-    onClick={() => { playSound('click'); onOpenCart(); }}
+    onClick={() => { playSound('open'); onOpenCart(); }}
     aria-label={`Carrito${cartCount > 0 ? `, ${cartCount} artículos` : ''}`}
     className="relative w-10 h-10 flex items-center justify-center cursor-pointer hover:bg-[#F3F4F6] active:scale-[0.95] outline-none focus-visible:ring-2 focus-visible:ring-[#FF441F] rounded-full transition-all shrink-0"
   >
