@@ -98,7 +98,8 @@ const AddressForm = ({ onClose, initialData }) => {
           {!selectedPlace ? (
             <div>
               <label className="text-[14px] font-bold text-[#1E1E1E] mb-2 block">Buscar dirección</label>
-              <div className="bg-[#F3F4F6] rounded-full px-4 py-3 flex items-center focus-within:ring-2 focus-within:ring-[#FF441F] transition-shadow">
+              {/* Diseño (Flat Design): Se usa focus-within:bg-[#ECECEE] en lugar de focus-within:ring para evitar contornos (líneas) y mantener el aspecto "flat". */}
+              <div className="bg-[#F3F4F6] rounded-full px-4 py-3 flex items-center focus-within:bg-[#ECECEE] transition-colors">
                 <MapPin size={20} weight="fill" color="#8E8E93" className="shrink-0" />
                 <input
                   type="text"
@@ -136,7 +137,7 @@ const AddressForm = ({ onClose, initialData }) => {
                   value={label}
                   onChange={(e) => setLabel(e.target.value)}
                   placeholder="Ej. Mi Casa, Trabajo"
-                  className="w-full bg-[#F3F4F6] rounded-2xl px-4 py-3 text-[14px] outline-none text-[#1E1E1E] placeholder:text-[#8E8E93] focus:ring-2 focus:ring-[#FF441F] transition-shadow"
+                  className="w-full bg-[#F3F4F6] rounded-2xl px-4 py-3 text-[14px] outline-none text-[#1E1E1E] placeholder:text-[#8E8E93] focus:bg-[#ECECEE] transition-colors"
                 />
               </div>
               
@@ -148,7 +149,7 @@ const AddressForm = ({ onClose, initialData }) => {
                     value={street}
                     onChange={(e) => setStreet(e.target.value)}
                     placeholder="Ej. Av. Reforma 123"
-                    className="w-full bg-[#F3F4F6] rounded-2xl px-4 py-3 text-[14px] outline-none text-[#1E1E1E] placeholder:text-[#8E8E93] focus:ring-2 focus:ring-[#FF441F] transition-shadow"
+                    className="w-full bg-[#F3F4F6] rounded-2xl px-4 py-3 text-[14px] outline-none text-[#1E1E1E] placeholder:text-[#8E8E93] focus:bg-[#ECECEE] transition-colors"
                   />
                 </div>
                 <div className="md:w-32">
@@ -158,7 +159,7 @@ const AddressForm = ({ onClose, initialData }) => {
                     value={interior}
                     onChange={(e) => setInterior(e.target.value)}
                     placeholder="Opcional"
-                    className="w-full bg-[#F3F4F6] rounded-2xl px-4 py-3 text-[14px] outline-none text-[#1E1E1E] placeholder:text-[#8E8E93] focus:ring-2 focus:ring-[#FF441F] transition-shadow"
+                    className="w-full bg-[#F3F4F6] rounded-2xl px-4 py-3 text-[14px] outline-none text-[#1E1E1E] placeholder:text-[#8E8E93] focus:bg-[#ECECEE] transition-colors"
                   />
                 </div>
               </div>
@@ -170,7 +171,7 @@ const AddressForm = ({ onClose, initialData }) => {
                   onChange={(e) => setReferences(e.target.value)}
                   placeholder="Ej. Casa de dos pisos verde con portón negro..."
                   rows={2}
-                  className="w-full bg-[#F3F4F6] rounded-2xl px-4 py-3 text-[14px] outline-none text-[#1E1E1E] placeholder:text-[#8E8E93] focus:ring-2 focus:ring-[#FF441F] resize-none transition-shadow"
+                  className="w-full bg-[#F3F4F6] rounded-2xl px-4 py-3 text-[14px] outline-none text-[#1E1E1E] placeholder:text-[#8E8E93] focus:bg-[#ECECEE] resize-none transition-colors"
                 />
               </div>
 
@@ -181,7 +182,7 @@ const AddressForm = ({ onClose, initialData }) => {
                   onChange={(e) => setInstructions(e.target.value)}
                   placeholder="Ej. Dejar en recepción, timbre descompuesto..."
                   rows={2}
-                  className="w-full bg-[#F3F4F6] rounded-2xl px-4 py-3 text-[14px] outline-none text-[#1E1E1E] placeholder:text-[#8E8E93] focus:ring-2 focus:ring-[#FF441F] resize-none transition-shadow"
+                  className="w-full bg-[#F3F4F6] rounded-2xl px-4 py-3 text-[14px] outline-none text-[#1E1E1E] placeholder:text-[#8E8E93] focus:bg-[#ECECEE] resize-none transition-colors"
                 />
               </div>
             </div>

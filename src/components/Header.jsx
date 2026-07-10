@@ -68,7 +68,8 @@ const Header = ({ onOpenCart, searchQuery, onSearchChange }) => {
         <div className="flex items-center gap-3 w-full md:flex-1 min-w-0">
           
           <div className="flex-1 min-w-0">
-            <div className="flex items-center bg-[#F3F4F6] rounded-full h-10 px-4 focus-within:ring-2 focus-within:ring-[#FF441F] transition-shadow">
+            {/* Diseño (Flat Design): Se usa focus-within:bg-[#ECECEE] en lugar de focus-within:ring para evitar contornos (líneas) y mantener el aspecto "flat". */}
+            <div className="flex items-center bg-[#F3F4F6] rounded-full h-10 px-4 focus-within:bg-[#ECECEE] transition-colors">
               <MagnifyingGlass size={20} weight="bold" color="#8E8E93" className="shrink-0" />
               <input
                 type="text"

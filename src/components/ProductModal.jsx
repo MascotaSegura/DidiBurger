@@ -80,11 +80,11 @@ const ProductModal = ({ product, onClose }) => {
         {/* Columna de Información (Mobile: 100%, Desktop: 55%) */}
         <div className="flex-1 min-h-0 flex flex-col w-full md:w-[55%] bg-white relative">
           
-          {/* Header con Botones (Solid background to prevent content overlap) */}
-          <div className="w-full flex justify-between md:justify-end gap-2 px-4 py-3 pt-[max(1rem,env(safe-area-inset-top,1rem))] z-20 bg-white shrink-0">
+          {/* Diseño (Flat/Moderno): En móvil el header es absoluto y transparente para que los íconos floten sobre la imagen del producto, evitando barras sólidas que cortan la experiencia visual. */}
+          <div className="absolute md:relative top-0 left-0 w-full flex justify-between md:justify-end gap-2 px-4 py-3 pt-[max(1rem,env(safe-area-inset-top,1rem))] z-20 md:bg-white shrink-0 pointer-events-none md:pointer-events-auto">
             {/* Close Button (Left on mobile, Right on desktop) */}
             <div
-              className="w-10 h-10 bg-[#F3F4F6] rounded-full flex items-center justify-center cursor-pointer hover:bg-[#ECECEE] active:scale-[0.95] outline-none focus-visible:ring-2 focus-visible:ring-[#FF441F] transition-all pointer-events-auto md:order-2"
+              className="w-10 h-10 bg-white md:bg-[#F3F4F6] rounded-full flex items-center justify-center cursor-pointer hover:bg-[#ECECEE] active:scale-[0.95] outline-none focus-visible:ring-2 focus-visible:ring-[#FF441F] transition-all pointer-events-auto md:order-2"
               onClick={handleClose}
               onKeyDown={handleKeyDown(handleClose)}
               role="button"
@@ -95,7 +95,7 @@ const ProductModal = ({ product, onClose }) => {
             </div>
             {/* Share Button (Right on mobile, Left on desktop) */}
             <div
-              className="w-10 h-10 bg-[#F3F4F6] rounded-full flex items-center justify-center cursor-pointer hover:bg-[#ECECEE] active:scale-[0.95] outline-none focus-visible:ring-2 focus-visible:ring-[#FF441F] transition-all pointer-events-auto md:order-1"
+              className="w-10 h-10 bg-white md:bg-[#F3F4F6] rounded-full flex items-center justify-center cursor-pointer hover:bg-[#ECECEE] active:scale-[0.95] outline-none focus-visible:ring-2 focus-visible:ring-[#FF441F] transition-all pointer-events-auto md:order-1"
               onClick={handleShare}
               onKeyDown={handleKeyDown(handleShare)}
               role="button"
@@ -174,7 +174,7 @@ const ProductModal = ({ product, onClose }) => {
                 onChange={(e) => setSpecialInstructions(e.target.value)}
                 placeholder="Ej. poca sal, salsa aparte..."
                 rows={2}
-                className="w-full bg-[#F3F4F6] rounded-2xl px-4 py-3 text-[14px] outline-none text-[#1E1E1E] placeholder:text-[#8E8E93] focus:ring-2 focus:ring-[#FF441F] resize-none transition-shadow"
+                className="w-full bg-[#F3F4F6] rounded-2xl px-4 py-3 text-[14px] outline-none text-[#1E1E1E] placeholder:text-[#8E8E93] focus:bg-[#ECECEE] resize-none transition-colors"
               />
             </div>
 
