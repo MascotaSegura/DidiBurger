@@ -1,13 +1,6 @@
 import React from 'react';
 import { createPortal } from 'react-dom';
-import { BellRinging, X } from '@phosphor-icons/react';
-
-const handleKeyDown = (fn) => (e) => {
-  if (e.key === 'Enter' || e.key === ' ') {
-    e.preventDefault();
-    fn();
-  }
-};
+import { BellRinging } from '@phosphor-icons/react';
 
 const NotificationModal = ({ isOpen, onClose, onAllow }) => {
   if (!isOpen) return null;
@@ -31,7 +24,7 @@ const NotificationModal = ({ isOpen, onClose, onAllow }) => {
           
           <div className="w-full flex flex-col gap-3">
             <button
-              className="w-full bg-[#1E1E1E] text-white py-3.5 rounded-full font-medium hover:bg-[#2C2C2E] active:bg-[#2C2C2E] transition-all active:scale-[0.98] outline-none"
+              className="w-full bg-[#1E1E1E] text-white py-3.5 rounded-full font-medium hover:bg-[#2C2C2E] active:bg-[#2C2C2E] transition-all active:scale-[0.98] outline-none focus-visible:opacity-90"
               onClick={() => {
                 onAllow();
                 onClose();
@@ -40,7 +33,7 @@ const NotificationModal = ({ isOpen, onClose, onAllow }) => {
               Permitir notificaciones
             </button>
             <button
-              className="w-full bg-[#F3F4F6] text-[#1E1E1E] py-3.5 rounded-full font-medium hover:bg-[#ECECEE] active:bg-[#ECECEE] transition-all active:scale-[0.98] outline-none"
+              className="w-full bg-[#F3F4F6] text-[#1E1E1E] py-3.5 rounded-full font-medium hover:bg-[#ECECEE] active:bg-[#ECECEE] transition-all active:scale-[0.98] outline-none focus-visible:bg-[#ECECEE]"
               onClick={onClose}
             >
               Ahora no

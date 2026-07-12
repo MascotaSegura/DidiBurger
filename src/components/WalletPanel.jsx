@@ -120,7 +120,7 @@ const WalletPanel = ({ onClose }) => {
           <div className="bg-[#1E1E1E] text-white p-6 rounded-2xl mb-8 flex flex-col gap-1">
             <span className="text-[14px] text-[#D1D1D6] font-medium">Uber Cash</span>
             <span className="text-3xl font-bold">$150.00 <span className="text-[14px] font-medium text-[#8E8E93]">MXN</span></span>
-            <button className="mt-4 bg-[#2C2C2E] py-2.5 rounded-full font-medium text-[14px] hover:bg-[#3C3C3E] active:scale-[0.98] outline-none transition-all w-fit px-6">
+            <button className="mt-4 bg-[#2C2C2E] py-2.5 rounded-full font-medium text-[14px] hover:bg-[#3C3C3E] active:scale-[0.98] outline-none focus-visible:opacity-80 transition-all w-fit px-6">
               Agregar fondos
             </button>
           </div>
@@ -136,7 +136,7 @@ const WalletPanel = ({ onClose }) => {
                   selectedPaymentMethod?.id === card.id ? 'bg-[#1E1E1E] text-white' : 'bg-[#F3F4F6] text-[#1E1E1E] hover:bg-[#ECECEE]'
                 }`}
               >
-                <div className={`w-12 h-8 rounded-md flex items-center justify-center ${selectedPaymentMethod?.id === card.id ? 'bg-[#2C2C2E]' : 'bg-white'}`}>
+                <div className={`w-12 h-8 rounded-xl flex items-center justify-center ${selectedPaymentMethod?.id === card.id ? 'bg-[#2C2C2E]' : 'bg-white'}`}>
                    <CreditCard size={20} weight="fill" color={selectedPaymentMethod?.id === card.id ? '#FFFFFF' : '#1E1E1E'} />
                 </div>
                 <div className="flex-1 flex flex-col">
@@ -161,7 +161,7 @@ const WalletPanel = ({ onClose }) => {
                 <div className="flex justify-between items-center mb-1">
                   <span className="font-medium text-[#1E1E1E] text-[15px]">Nueva Tarjeta</span>
                   {cardNumber.replace(/\D/g, '').length > 0 && (
-                     <span className="text-[13px] font-bold text-[#8E8E93] bg-white px-2 py-0.5 rounded-md">{getCardType(cardNumber)}</span>
+                     <span className="text-[13px] font-bold text-[#8E8E93] bg-white px-2 py-0.5 rounded-full">{getCardType(cardNumber)}</span>
                   )}
                 </div>
                 
@@ -206,7 +206,7 @@ const WalletPanel = ({ onClose }) => {
 
                 <div className="flex gap-2 mt-1">
                   <button 
-                    className="flex-1 bg-white text-[#1E1E1E] py-2.5 rounded-full font-medium text-[14px] hover:bg-[#ECECEE] active:scale-[0.98] outline-none transition-all"
+                    className="flex-1 bg-white text-[#1E1E1E] py-2.5 rounded-full font-medium text-[14px] hover:bg-[#ECECEE] active:scale-[0.98] outline-none focus-visible:bg-[#ECECEE] transition-all"
                     onClick={() => { 
                        setIsAdding(false); 
                        setCardNumber(''); 
@@ -218,7 +218,7 @@ const WalletPanel = ({ onClose }) => {
                     Cancelar
                   </button>
                   <button 
-                    className="flex-1 bg-[#1E1E1E] text-white py-2.5 rounded-full font-medium text-[14px] hover:bg-[#2C2C2E] active:scale-[0.98] outline-none transition-all disabled:opacity-50"
+                    className="flex-1 bg-[#1E1E1E] text-white py-2.5 rounded-full font-medium text-[14px] hover:bg-[#2C2C2E] active:scale-[0.98] outline-none focus-visible:opacity-90 transition-all disabled:opacity-50"
                     onClick={handleAddCard}
                     disabled={cardNumber.length < 15 || expiry.length < 5 || cvv.length < 3}
                   >

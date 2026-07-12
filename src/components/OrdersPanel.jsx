@@ -60,7 +60,7 @@ const OrdersPanel = ({ onClose }) => {
                     <span className="text-[#8E8E93]">{order.items} {order.items === 1 ? 'artículo' : 'artículos'}</span>
                     <span className="font-semibold text-[#1E1E1E]">${order.total.toFixed(2)} MXN</span>
                   </div>
-                  <button className="mt-2 w-full bg-white text-[#1E1E1E] font-medium py-2.5 rounded-full hover:bg-[#FAFAFA] active:scale-[0.98] outline-none transition-all">
+                  <button className="mt-2 w-full bg-white text-[#1E1E1E] font-medium py-2.5 rounded-full hover:bg-[#FAFAFA] active:scale-[0.98] outline-none focus-visible:bg-[#FAFAFA] transition-all">
                     Volver a pedir
                   </button>
                 </div>

@@ -45,11 +45,11 @@ const ProductModal = ({ product, onClose }) => {
 
   useEffect(() => {
     const onKey = (e) => {
-      if (e.key === 'Escape') handleClose();
+      if (e.key === 'Escape') onClose();
     };
     window.addEventListener('keydown', onKey);
     return () => window.removeEventListener('keydown', onKey);
-  }, []);
+  }, [onClose]);
 
   if (!product) return null;
 
@@ -81,9 +81,6 @@ const ProductModal = ({ product, onClose }) => {
     onClose();
   };
 
-  const handleClose = () => {
-    onClose();
-  };
 
   return (
     <div
@@ -111,8 +108,8 @@ const ProductModal = ({ product, onClose }) => {
             {/* Close Button */}
             <div
               className="w-10 h-10 bg-white md:bg-[#F3F4F6] rounded-full flex items-center justify-center cursor-pointer hover:bg-[#ECECEE] active:bg-[#ECECEE] active:scale-[0.95] outline-none focus-visible:bg-[#ECECEE] transition-all pointer-events-auto md:order-2"
-              onClick={handleClose}
-              onKeyDown={handleKeyDown(handleClose)}
+              onClick={onClose}
+              onKeyDown={handleKeyDown(onClose)}
               role="button"
               tabIndex={0}
               aria-label="Cerrar"

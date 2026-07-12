@@ -54,7 +54,7 @@ const Header = ({ onOpenCart, searchQuery, onSearchChange, onMenuToggle }) => {
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2">
             <button 
-              className="w-9 h-9 flex items-center justify-center rounded-full hover:bg-[#F3F4F6] active:bg-[#F3F4F6] active:scale-95 transition-all outline-none"
+              className="w-9 h-9 flex items-center justify-center rounded-full hover:bg-[#F3F4F6] active:bg-[#F3F4F6] active:scale-95 transition-all outline-none focus-visible:bg-[#F3F4F6]"
               onClick={onMenuToggle}
             >
               <List size={24} weight="bold" color="#1E1E1E" />
@@ -66,7 +66,7 @@ const Header = ({ onOpenCart, searchQuery, onSearchChange, onMenuToggle }) => {
           
           <div className="flex items-center gap-1">
             <button 
-              className="w-9 h-9 flex items-center justify-center rounded-full hover:bg-[#F3F4F6] active:bg-[#F3F4F6] active:scale-95 transition-all outline-none"
+              className="w-9 h-9 flex items-center justify-center rounded-full hover:bg-[#F3F4F6] active:bg-[#F3F4F6] active:scale-95 transition-all outline-none focus-visible:bg-[#F3F4F6]"
               onClick={() => openAuth(user ? 'profile' : 'login')}
             >
               {user ? (
@@ -123,7 +123,7 @@ const Header = ({ onOpenCart, searchQuery, onSearchChange, onMenuToggle }) => {
         {/* Hamburger + Logo */}
         <div className="flex items-center gap-3 shrink-0">
           <button 
-            className="w-9 h-9 flex items-center justify-center rounded-full hover:bg-[#F3F4F6] active:bg-[#F3F4F6] active:scale-95 transition-all outline-none"
+            className="w-9 h-9 flex items-center justify-center rounded-full hover:bg-[#F3F4F6] active:bg-[#F3F4F6] active:scale-95 transition-all outline-none focus-visible:bg-[#F3F4F6]"
             onClick={onMenuToggle}
           >
             <List size={22} weight="bold" color="#1E1E1E" />
@@ -172,7 +172,7 @@ const Header = ({ onOpenCart, searchQuery, onSearchChange, onMenuToggle }) => {
         <div className="flex items-center shrink-0 gap-1 lg:gap-2 ml-auto">
           {user ? (
             <button 
-              className="hidden lg:flex px-4 h-9 items-center justify-center rounded-full bg-[#F3F4F6] hover:bg-[#ECECEE] active:bg-[#ECECEE] text-[#1E1E1E] font-medium text-[14px] transition-all outline-none gap-2"
+              className="hidden lg:flex px-4 h-9 items-center justify-center rounded-full bg-[#F3F4F6] hover:bg-[#ECECEE] active:bg-[#ECECEE] text-[#1E1E1E] font-medium text-[14px] transition-all outline-none focus-visible:bg-[#ECECEE] gap-2"
               onClick={() => openAuth('profile')}
             >
               <div className="w-6 h-6 rounded-full bg-[#1E1E1E] text-white flex items-center justify-center text-[11px] font-bold">
@@ -183,13 +183,13 @@ const Header = ({ onOpenCart, searchQuery, onSearchChange, onMenuToggle }) => {
           ) : (
             <>
               <button 
-                className="hidden lg:flex px-4 h-9 items-center justify-center rounded-full bg-white hover:bg-[#F3F4F6] active:bg-[#F3F4F6] text-[#1E1E1E] font-medium text-[14px] transition-all outline-none"
+                className="hidden lg:flex px-4 h-9 items-center justify-center rounded-full bg-white hover:bg-[#F3F4F6] active:bg-[#F3F4F6] text-[#1E1E1E] font-medium text-[14px] transition-all outline-none focus-visible:bg-[#F3F4F6]"
                 onClick={() => openAuth('login')}
               >
                 Iniciar sesión
               </button>
               <button 
-                className="hidden lg:flex px-4 h-9 items-center justify-center rounded-full bg-[#1E1E1E] hover:bg-[#2C2C2E] active:bg-[#2C2C2E] text-white font-medium text-[14px] transition-all outline-none"
+                className="hidden lg:flex px-4 h-9 items-center justify-center rounded-full bg-[#1E1E1E] hover:bg-[#2C2C2E] active:bg-[#2C2C2E] text-white font-medium text-[14px] transition-all outline-none focus-visible:bg-[#2C2C2E]"
                 onClick={() => openAuth('signup')}
               >
                 Registrarte
@@ -198,7 +198,7 @@ const Header = ({ onOpenCart, searchQuery, onSearchChange, onMenuToggle }) => {
           )}
           {/* Tablet (md) fallback User Icon */}
           <button 
-            className="lg:hidden w-9 h-9 flex items-center justify-center rounded-full bg-white hover:bg-[#F3F4F6] active:bg-[#F3F4F6] text-[#1E1E1E] transition-all outline-none"
+            className="lg:hidden w-9 h-9 flex items-center justify-center rounded-full bg-white hover:bg-[#F3F4F6] active:bg-[#F3F4F6] text-[#1E1E1E] transition-all outline-none focus-visible:bg-[#F3F4F6]"
             onClick={() => openAuth(user ? 'profile' : 'login')}
           >
             {user ? (

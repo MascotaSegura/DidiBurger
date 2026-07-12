@@ -70,7 +70,7 @@ const PromosPanel = ({ onClose }) => {
                 }}
              />
              <button 
-                className="bg-[#1E1E1E] text-white px-5 py-2 rounded-full font-medium text-[14px] hover:bg-[#2C2C2E] active:scale-[0.95] transition-all outline-none disabled:opacity-50"
+                className="bg-[#1E1E1E] text-white px-5 py-2 rounded-full font-medium text-[14px] hover:bg-[#2C2C2E] active:scale-[0.95] transition-all outline-none focus-visible:opacity-90 disabled:opacity-50"
                 onClick={handleApply}
                 disabled={!inputCode.trim()}
              >
@@ -105,7 +105,7 @@ const PromosPanel = ({ onClose }) => {
                 <div className="flex items-center justify-between mt-1 relative z-10 bg-white/60 p-2 pl-4 rounded-full">
                   <span className="font-mono font-bold text-[#1E1E1E] text-[15px]">{promo.code}</span>
                   <button 
-                    className="w-8 h-8 bg-white rounded-full flex items-center justify-center text-[#1E1E1E] hover:bg-[#F3F4F6] active:scale-[0.95] transition-all outline-none"
+                    className="w-8 h-8 bg-white rounded-full flex items-center justify-center text-[#1E1E1E] hover:bg-[#F3F4F6] active:scale-[0.95] transition-all outline-none focus-visible:bg-[#F3F4F6]"
                     onClick={() => {
                        setInputCode(promo.code);
                        setMessage(null);

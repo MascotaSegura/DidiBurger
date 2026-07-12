@@ -177,7 +177,7 @@ const AuthModal = ({ isOpen, onClose, initialView = 'login' }) => {
 
               <button
                 type="submit"
-                className="w-full bg-[#1E1E1E] text-white py-4 rounded-full font-medium mt-4 hover:bg-[#2C2C2E] active:bg-[#2C2C2E] transition-all active:scale-[0.98] outline-none"
+                className="w-full bg-[#1E1E1E] text-white py-4 rounded-full font-medium mt-4 hover:bg-[#2C2C2E] active:bg-[#2C2C2E] transition-all active:scale-[0.98] outline-none focus-visible:opacity-90"
               >
                 Continuar
               </button>
@@ -218,14 +218,14 @@ const AuthModal = ({ isOpen, onClose, initialView = 'login' }) => {
 
               <button
                 type="submit"
-                className="w-full bg-[#1E1E1E] text-white py-4 rounded-full font-medium mt-4 hover:bg-[#2C2C2E] active:bg-[#2C2C2E] transition-all active:scale-[0.98] outline-none"
+                className="w-full bg-[#1E1E1E] text-white py-4 rounded-full font-medium mt-4 hover:bg-[#2C2C2E] active:bg-[#2C2C2E] transition-all active:scale-[0.98] outline-none focus-visible:opacity-90"
               >
                 Verificar código
               </button>
               
               <button
                 type="button"
-                className="text-[14px] text-[#8E8E93] font-medium hover:text-[#1E1E1E] transition-colors mt-2 outline-none"
+                className="text-[14px] text-[#8E8E93] font-medium hover:text-[#1E1E1E] transition-colors mt-2 outline-none focus-visible:opacity-80"
               >
                 Reenviar código
               </button>
@@ -258,7 +258,7 @@ const AuthModal = ({ isOpen, onClose, initialView = 'login' }) => {
 
               <button
                 type="submit"
-                className="w-full bg-[#1E1E1E] text-white py-4 rounded-full font-medium mt-4 hover:bg-[#2C2C2E] active:bg-[#2C2C2E] transition-all active:scale-[0.98] outline-none"
+                className="w-full bg-[#1E1E1E] text-white py-4 rounded-full font-medium mt-4 hover:bg-[#2C2C2E] active:bg-[#2C2C2E] transition-all active:scale-[0.98] outline-none focus-visible:opacity-90"
               >
                 Crear cuenta
               </button>

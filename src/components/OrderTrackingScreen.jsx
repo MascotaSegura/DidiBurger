@@ -160,7 +160,7 @@ const OrderTrackingScreen = () => {
           <X size={24} weight="bold" color="#1E1E1E" />
         </div>
 
-        <div className="w-full max-w-[480px] bg-white rounded-3xl p-8 flex flex-col items-center">
+        <div className="w-full max-w-[480px] bg-white rounded-2xl p-8 flex flex-col items-center">
           <div className="w-20 h-20 bg-[#F3F4F6] rounded-full flex items-center justify-center mb-6">
             <Storefront size={40} weight="fill" color="#1E1E1E" />
           </div>
@@ -225,7 +225,7 @@ const OrderTrackingScreen = () => {
       </div>
 
       {/* Information Panel (Left side on desktop, bottom sheet on mobile) */}
-      <div className="w-full md:w-[400px] xl:w-[480px] bg-white rounded-t-3xl md:rounded-none p-6 pb-[max(1.5rem,env(safe-area-inset-bottom,1.5rem))] md:p-8 z-10 relative mt-[-20px] md:mt-0 flex flex-col md:h-full md:order-1 overflow-y-auto shrink-0">
+      <div className="w-full md:w-[400px] xl:w-[480px] bg-white rounded-t-2xl md:rounded-none p-6 pb-[max(1.5rem,env(safe-area-inset-bottom,1.5rem))] md:p-8 z-10 relative mt-[-20px] md:mt-0 flex flex-col md:h-full md:order-1 overflow-y-auto shrink-0">
         
         {/* Top Header in Panel */}
         <div className="w-full flex justify-center md:justify-between items-start mb-6 shrink-0">

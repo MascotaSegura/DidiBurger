@@ -2,9 +2,10 @@ import React from 'react';
 import { X, Trash, Plus, Minus, CheckCircle, Package, Truck, ShoppingCart, CreditCard, CaretLeft, CaretRight, Ticket } from '@phosphor-icons/react';
 import { useCart } from '../context/useCart';
 import DeliverySelector from './DeliverySelector';
-import NotificationModal from './NotificationModal';
+
 import { AuthContext } from '../context/AuthContext';
 import AuthModal from './AuthModal';
+import NotificationModal from './NotificationModal';
 
 
 const handleKeyDown = (fn) => (e) => {
@@ -14,17 +15,6 @@ const handleKeyDown = (fn) => (e) => {
   }
 };
 
-const STEPS = [
-  { key: 'preparing', label: 'Preparando', Icon: Package },
-  { key: 'on-the-way', label: 'En camino', Icon: Truck },
-  { key: 'delivered', label: 'Entregado', Icon: CheckCircle },
-];
-
-const statusTitle = {
-  preparing: 'Preparando pedido...',
-  'on-the-way': '¡Tu pedido va en camino!',
-  delivered: '¡Pedido entregado!',
-};
 
 
 const CartPanel = ({ onClose }) => {
@@ -34,8 +24,6 @@ const CartPanel = ({ onClose }) => {
     updateQuantity,
     removeFromCart,
     placeOrder,
-    orderStatus,
-    resetOrder,
     deliveryMode,
     deliveryAddress,
     activePromo,
@@ -51,6 +39,7 @@ const CartPanel = ({ onClose }) => {
 
   const [errorMsg, setErrorMsg] = React.useState('');
   const [showNotificationModal, setShowNotificationModal] = React.useState(false);
+
   const [promoInput, setPromoInput] = React.useState('');
   const [promoError, setPromoError] = React.useState('');
   const [activeView, setActiveView] = React.useState('cart');
@@ -214,7 +203,7 @@ const CartPanel = ({ onClose }) => {
               {/* Move breakdown and selectors here to scroll with the content */}
               {cartItems.length > 0 && (
                 <div className="px-6 pb-6 pt-4">
-                  <div className="h-[1px] bg-[#F3F4F6] w-full mb-6" />
+                  
                   
                   {/* Price breakdown */}
                   <div className="flex flex-col gap-2 mb-6 text-[#8E8E93] text-[15px]">
@@ -401,7 +390,7 @@ const CartPanel = ({ onClose }) => {
                   role="button"
                   tabIndex={0}
                 >
-                  <div className="w-10 h-8 bg-white rounded-md flex items-center justify-center shrink-0">
+                  <div className="w-10 h-8 bg-white rounded-xl flex items-center justify-center shrink-0">
                     <CreditCard size={20} weight="fill" color="#1E1E1E" />
                   </div>
                   <div className="flex-1 min-w-0 flex flex-col">
@@ -419,6 +408,13 @@ const CartPanel = ({ onClose }) => {
 
       </div>
       <AuthModal isOpen={authModalConfig.isOpen} onClose={() => setAuthModalConfig({ ...authModalConfig, isOpen: false })} initialView={authModalConfig.view} />
+      <NotificationModal 
+        isOpen={showNotificationModal} 
+        onClose={() => setShowNotificationModal(false)}
+        onAllow={() => {
+          localStorage.setItem('ubereats_asked_notif_v2', 'true');
+        }}
+      />
     </div>
   );
 };

@@ -66,7 +66,7 @@ const StoresPanel = ({ onClose }) => {
                     </div>
                     {!isSelected && (
                       <button 
-                        className="mt-2 w-full bg-white text-[#1E1E1E] font-medium py-2.5 rounded-full hover:bg-[#ECECEE] active:scale-[0.98] outline-none transition-all"
+                        className="mt-2 w-full bg-white text-[#1E1E1E] font-medium py-2.5 rounded-full hover:bg-[#ECECEE] active:scale-[0.98] outline-none focus-visible:bg-[#ECECEE] transition-all"
                         onClick={() => handleSelectBranch(branch)}
                       >
                         Recoger aquí
