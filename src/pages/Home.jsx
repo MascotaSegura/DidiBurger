@@ -11,6 +11,7 @@ import WalletPanel from '../components/WalletPanel';
 import StoresPanel from '../components/StoresPanel';
 import PromosPanel from '../components/PromosPanel';
 import HelpPanel from '../components/HelpPanel';
+import OrderTrackingScreen from '../components/OrderTrackingScreen';
 import { products } from '../data/products';
 import { useCart } from '../context/useCart';
 
@@ -110,6 +111,7 @@ const Home = () => {
       {activePanel === 'stores' && <StoresPanel onClose={() => setActivePanel(null)} />}
       {activePanel === 'promos' && <PromosPanel onClose={() => setActivePanel(null)} />}
       {activePanel === 'help' && <HelpPanel onClose={() => setActivePanel(null)} />}
+      <OrderTrackingScreen />
     </div>
   );
 };

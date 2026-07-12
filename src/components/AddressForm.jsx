@@ -1,4 +1,5 @@
 import React, { useState, useRef } from 'react';
+import { createPortal } from 'react-dom';
 import { X, MapPin, NavigationArrow } from '@phosphor-icons/react';
 import { useCart } from '../context/useCart';
 
@@ -108,6 +109,8 @@ const AddressForm = ({ onClose, initialData }) => {
       references: references.trim(),
       instructions: instructions.trim(),
       detail: computedDetail,
+      lat: selectedPlace?.center?.[1] || 19.4326,
+      lng: selectedPlace?.center?.[0] || -99.1332,
     };
     
     if (initialData) {
@@ -121,7 +124,7 @@ const AddressForm = ({ onClose, initialData }) => {
   const finalLabelForValidation = selectedTag === 'Otro' ? customLabel : selectedTag;
   const isSaveEnabled = finalLabelForValidation.trim() && street.trim();
 
-  return (
+  return createPortal(
     <div className="fixed inset-0 z-[70] flex items-end md:items-center justify-center bg-[#1E1E1E]/40 md:p-4">
       <div className="bg-white w-full h-auto max-h-[90dvh] md:max-h-[85vh] md:max-w-[480px] flex flex-col rounded-t-2xl md:rounded-2xl overflow-hidden relative animate-slide-up md:animate-fade-in">
         <div className="flex items-center px-4 py-4 bg-white shrink-0 relative">
@@ -301,7 +304,8 @@ const AddressForm = ({ onClose, initialData }) => {
           </div>
         )}
       </div>
-    </div>
+    </div>,
+    document.body
   );
 };
 

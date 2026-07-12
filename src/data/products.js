@@ -40,5 +40,61 @@ export const products = [
     price: 89.00,
     category: 'extras',
     image: import.meta.env.BASE_URL + 'images/chocolate_brownie_v2.png',
+  },
+  {
+    id: 6,
+    name: 'Combo Clásico Didi',
+    description: 'Nuestra hamburguesa clásica acompañada de tu elección de papas o ensalada y bebida a elegir.',
+    price: 249.00,
+    category: 'combos',
+    image: import.meta.env.BASE_URL + 'images/combo_clasico_v2.png',
+    ingredients: ['Carne de Res', 'Lechuga', 'Tomate', 'Queso'],
+    singleChoiceOptions: [
+      {
+        title: 'Elige tu acompañante',
+        required: true,
+        options: [
+          { label: 'Papas Fritas Medianas', priceAdd: 0 },
+          { label: 'Aros de Cebolla', priceAdd: 20 },
+          { label: 'Ensalada Fresca', priceAdd: 10 },
+        ]
+      },
+      {
+        title: 'Elige tu bebida',
+        required: true,
+        options: [
+          { label: 'Refresco de Cola', priceAdd: 0 },
+          { label: 'Refresco Limón', priceAdd: 0 },
+          { label: 'Agua Natural', priceAdd: 0 },
+        ]
+      }
+    ]
+  },
+  {
+    id: 7,
+    name: 'Pizza Pepperoni Artesanal',
+    description: 'Pizza de masa madre con salsa de tomate de la casa, mozzarella y pepperoni crujiente.',
+    price: 199.00,
+    category: 'pizzas',
+    image: import.meta.env.BASE_URL + 'images/pizza_pepperoni_v2.png',
+    singleChoiceOptions: [
+      {
+        title: 'Tamaño',
+        required: true,
+        options: [
+          { label: 'Mediana (8 rebanadas)', priceAdd: 0 },
+          { label: 'Familiar (12 rebanadas)', priceAdd: 60 },
+        ]
+      }
+    ]
+  },
+  {
+    id: 8,
+    name: 'Alitas BBQ (10 pz)',
+    description: '10 deliciosas alitas bañadas en nuestra salsa BBQ secreta, acompañadas de aderezo ranch.',
+    price: 129.00,
+    originalPrice: 189.00,
+    category: 'entradas',
+    image: import.meta.env.BASE_URL + 'images/alitas_bbq.png',
   }
 ];

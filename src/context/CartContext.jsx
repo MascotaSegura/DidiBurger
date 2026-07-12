@@ -12,20 +12,20 @@ const loadSaved = (key, defaultVal) => {
 };
 
 export const CartProvider = ({ children }) => {
-  const [cartItems, setCartItems] = useState(() => loadSaved('didi_cart', []));
+  const [cartItems, setCartItems] = useState(() => loadSaved('ubereats_cart', []));
   const [orderStatus, setOrderStatus] = useState(null);
-  const [deliveryMode, setDeliveryMode] = useState(() => loadSaved('didi_mode', 'delivery')); // 'delivery' | 'pickup'
+  const [deliveryMode, setDeliveryMode] = useState(() => loadSaved('ubereats_mode', 'delivery')); // 'delivery' | 'pickup'
 
-  const [addresses, setAddresses] = useState(() => loadSaved('didi_addresses', []));
-  const [activePromo, setActivePromo] = useState(() => loadSaved('didi_promo', null));
-  const [savedCards, setSavedCards] = useState(() => loadSaved('didi_cards', [
+  const [addresses, setAddresses] = useState(() => loadSaved('ubereats_addresses', []));
+  const [activePromo, setActivePromo] = useState(() => loadSaved('ubereats_promo', null));
+  const [savedCards, setSavedCards] = useState(() => loadSaved('ubereats_cards', [
     { id: '1', type: 'Visa', last4: '1234' },
     { id: '2', type: 'Mastercard', last4: '5678' },
   ]));
   const [selectedPaymentMethod, setSelectedPaymentMethod] = useState(() => {
-    const active = loadSaved('didi_active_card', null);
+    const active = loadSaved('ubereats_active_card', null);
     if (active) return active;
-    const cards = loadSaved('didi_cards', [
+    const cards = loadSaved('ubereats_cards', [
       { id: '1', type: 'Visa', last4: '1234' },
       { id: '2', type: 'Mastercard', last4: '5678' }
     ]);
@@ -38,8 +38,8 @@ export const CartProvider = ({ children }) => {
   ]);
   
   const [deliveryAddress, setDeliveryAddress] = useState(() => {
-    const loadedAddresses = loadSaved('didi_addresses', []);
-    const activeId = loadSaved('didi_active_addr', null);
+    const loadedAddresses = loadSaved('ubereats_addresses', []);
+    const activeId = loadSaved('ubereats_active_addr', null);
     if (activeId) {
        const found = loadedAddresses.find(a => a.id === activeId);
        if (found) return found;
@@ -48,57 +48,69 @@ export const CartProvider = ({ children }) => {
   });
 
   const [pickupBranch, setPickupBranch] = useState(() => {
-    const activeId = loadSaved('didi_active_branch', null);
+    const activeId = loadSaved('ubereats_active_branch', null);
     return branches.find(b => b.id === activeId) || branches[0];
   });
 
   useEffect(() => {
-    localStorage.setItem('didi_cart', JSON.stringify(cartItems));
+    localStorage.setItem('ubereats_cart', JSON.stringify(cartItems));
   }, [cartItems]);
 
   useEffect(() => {
-    localStorage.setItem('didi_addresses', JSON.stringify(addresses));
+    localStorage.setItem('ubereats_addresses', JSON.stringify(addresses));
   }, [addresses]);
 
   useEffect(() => {
-    localStorage.setItem('didi_mode', JSON.stringify(deliveryMode));
+    localStorage.setItem('ubereats_mode', JSON.stringify(deliveryMode));
   }, [deliveryMode]);
 
   useEffect(() => {
-    localStorage.setItem('didi_promo', JSON.stringify(activePromo));
+    localStorage.setItem('ubereats_promo', JSON.stringify(activePromo));
   }, [activePromo]);
 
   useEffect(() => {
-    localStorage.setItem('didi_cards', JSON.stringify(savedCards));
+    localStorage.setItem('ubereats_cards', JSON.stringify(savedCards));
   }, [savedCards]);
 
   useEffect(() => {
-    localStorage.setItem('didi_active_card', JSON.stringify(selectedPaymentMethod));
+    localStorage.setItem('ubereats_active_card', JSON.stringify(selectedPaymentMethod));
   }, [selectedPaymentMethod]);
 
   useEffect(() => {
     if (deliveryAddress) {
-      localStorage.setItem('didi_active_addr', JSON.stringify(deliveryAddress.id));
+      localStorage.setItem('ubereats_active_addr', JSON.stringify(deliveryAddress.id));
     } else {
-      localStorage.removeItem('didi_active_addr');
+      localStorage.removeItem('ubereats_active_addr');
     }
   }, [deliveryAddress]);
 
   useEffect(() => {
     if (pickupBranch) {
-      localStorage.setItem('didi_active_branch', JSON.stringify(pickupBranch.id));
+      localStorage.setItem('ubereats_active_branch', JSON.stringify(pickupBranch.id));
     }
   }, [pickupBranch]);
 
-  const addToCart = (product, quantity, customizations = [], specialInstructions = '') => {
+  const addToCart = (product, quantity, customizations = [], specialInstructions = '', selectedVariants = {}) => {
     setCartItems((prev) => {
+      let finalPrice = product.price;
+      if (product.singleChoiceOptions) {
+        product.singleChoiceOptions.forEach(opt => {
+          const selectedLabel = selectedVariants[opt.title];
+          const optionDef = opt.options.find(o => o.label === selectedLabel);
+          if (optionDef && optionDef.priceAdd) {
+            finalPrice += optionDef.priceAdd;
+          }
+        });
+      }
+
       const sortedCustoms = [...customizations].sort();
       const existing = prev.find((item) => {
         const itemCustoms = [...(item.customizations || [])].sort();
         return (
           item.productId === product.id &&
           JSON.stringify(itemCustoms) === JSON.stringify(sortedCustoms) &&
-          (item.specialInstructions || '') === specialInstructions
+          (item.specialInstructions || '') === specialInstructions &&
+          JSON.stringify(item.selectedVariants || {}) === JSON.stringify(selectedVariants)
         );
       });
       
@@ -115,9 +127,11 @@ export const CartProvider = ({ children }) => {
           ...product,
           id: Date.now() + Math.random(),
           productId: product.id,
+          price: finalPrice,
           quantity,
           customizations,
           specialInstructions,
+          selectedVariants,
         },
       ];
     });
@@ -144,10 +158,8 @@ export const CartProvider = ({ children }) => {
   };
 
   const placeOrder = () => {
-    setOrderStatus('preparing');
+    setOrderStatus('tracking');
     clearCart();
-    setTimeout(() => setOrderStatus('on-the-way'), 3000);
-    setTimeout(() => setOrderStatus('delivered'), 6000);
   };
 
   const resetOrder = () => setOrderStatus(null);

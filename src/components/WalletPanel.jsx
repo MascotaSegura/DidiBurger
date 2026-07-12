@@ -99,7 +99,7 @@ const WalletPanel = ({ onClose }) => {
       aria-modal="true"
       aria-label="Billetera"
     >
-      <div className="bg-white w-full h-full max-h-[100dvh] md:h-full max-w-[480px] flex flex-col md:rounded-none md:rounded-l-2xl overflow-hidden relative animate-slide-up md:animate-none isolate">
+      <div className="bg-white w-full h-full max-h-[100dvh] md:h-full max-w-[480px] flex flex-col md:rounded-l-2xl rounded-t-2xl md:rounded-tr-none overflow-hidden relative animate-slide-up md:animate-none isolate">
         <div className="flex items-center px-6 pb-4 pt-[max(1rem,env(safe-area-inset-top,1rem))] shrink-0 bg-white">
           <div
             className="w-10 h-10 bg-[#F3F4F6] rounded-full flex items-center justify-center cursor-pointer hover:bg-[#ECECEE] active:bg-[#ECECEE] active:scale-[0.95] outline-none focus-visible:bg-[#ECECEE] transition-all"
@@ -168,7 +168,7 @@ const WalletPanel = ({ onClose }) => {
                 <input 
                   type="text" 
                   placeholder="Número de tarjeta" 
-                  className={`w-full bg-white rounded-xl h-11 px-4 outline-none text-[14px] text-[#1E1E1E] placeholder:text-[#8E8E93] focus:ring-2 transition-all ${errorMsg?.includes('Número') ? 'ring-2 ring-[#FF3B30]/50' : 'focus:ring-[#1E1E1E]/20 ring-0'}`}
+                  className={`w-full rounded-2xl h-11 px-4 outline-none text-[14px] text-[#1E1E1E] placeholder:text-[#8E8E93] transition-colors ${errorMsg?.includes('Número') ? 'bg-[#FFF0F0] text-[#FF3B30]' : 'bg-white focus:bg-[#ECECEE]'}`}
                   value={cardNumber}
                   onChange={(e) => {
                      setCardNumber(formatCardNumber(e.target.value));
@@ -180,7 +180,7 @@ const WalletPanel = ({ onClose }) => {
                   <input 
                     type="text" 
                     placeholder="MM/YY" 
-                    className={`flex-1 w-full min-w-0 bg-white rounded-xl h-11 px-4 outline-none text-[14px] text-[#1E1E1E] placeholder:text-[#8E8E93] focus:ring-2 transition-all ${errorMsg?.includes('expiración') ? 'ring-2 ring-[#FF3B30]/50' : 'focus:ring-[#1E1E1E]/20 ring-0'}`}
+                    className={`flex-1 w-full min-w-0 rounded-2xl h-11 px-4 outline-none text-[14px] text-[#1E1E1E] placeholder:text-[#8E8E93] transition-colors ${errorMsg?.includes('expiración') ? 'bg-[#FFF0F0] text-[#FF3B30]' : 'bg-white focus:bg-[#ECECEE]'}`}
                     value={expiry}
                     onChange={(e) => {
                        setExpiry(formatExpiry(e.target.value));
@@ -191,7 +191,7 @@ const WalletPanel = ({ onClose }) => {
                     type="text" 
                     placeholder="CVV" 
                     maxLength={getCardType(cardNumber) === 'Amex' ? 4 : 3}
-                    className={`flex-1 w-full min-w-0 bg-white rounded-xl h-11 px-4 outline-none text-[14px] text-[#1E1E1E] placeholder:text-[#8E8E93] focus:ring-2 transition-all ${errorMsg?.includes('código') ? 'ring-2 ring-[#FF3B30]/50' : 'focus:ring-[#1E1E1E]/20 ring-0'}`}
+                    className={`flex-1 w-full min-w-0 rounded-2xl h-11 px-4 outline-none text-[14px] text-[#1E1E1E] placeholder:text-[#8E8E93] transition-colors ${errorMsg?.includes('código') ? 'bg-[#FFF0F0] text-[#FF3B30]' : 'bg-white focus:bg-[#ECECEE]'}`}
                     value={cvv}
                     onChange={(e) => {
                        setCvv(e.target.value.replace(/\D/g, '').slice(0, 4));

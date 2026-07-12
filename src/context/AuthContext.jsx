@@ -12,13 +12,13 @@ const loadSaved = (key, defaultVal) => {
 };
 
 export const AuthProvider = ({ children }) => {
-  const [user, setUser] = useState(() => loadSaved('didi_user', null));
+  const [user, setUser] = useState(() => loadSaved('ubereats_user', null));
 
   useEffect(() => {
     if (user) {
-      localStorage.setItem('didi_user', JSON.stringify(user));
+      localStorage.setItem('ubereats_user', JSON.stringify(user));
     } else {
-      localStorage.removeItem('didi_user');
+      localStorage.removeItem('ubereats_user');
     }
   }, [user]);
 

@@ -93,6 +93,11 @@ const ProductCard = ({ product, onClick }) => {
           alt={product.name}
           className="max-w-full max-h-full object-contain mix-blend-multiply"
         />
+        {product.originalPrice && (
+          <div className="absolute top-0 left-0 bg-[#06C167] text-white text-[11px] font-bold px-2 py-0.5 rounded-full leading-none">
+            OFERTA
+          </div>
+        )}
       </div>
 
       <h3 className="text-[15px] font-semibold text-[#1E1E1E] leading-tight mb-1 line-clamp-2">
@@ -104,9 +109,16 @@ const ProductCard = ({ product, onClick }) => {
       </p>
 
       <div className="flex items-center mt-auto justify-between">
-        <span className="text-[15px] font-semibold text-[#1E1E1E]">
-          ${product.price.toFixed(2)} <span className="text-[12px] font-semibold text-[#8E8E93]">MXN</span>
-        </span>
+        <div className="flex flex-col">
+          {product.originalPrice && (
+            <span className="text-[12px] text-[#8E8E93] line-through leading-none mb-0.5">
+              ${product.originalPrice.toFixed(2)}
+            </span>
+          )}
+          <span className="text-[15px] font-semibold text-[#1E1E1E]">
+            ${product.price.toFixed(2)} <span className="text-[12px] font-semibold text-[#8E8E93]">MXN</span>
+          </span>
+        </div>
         
         <QuickAddControl product={product} />
       </div>

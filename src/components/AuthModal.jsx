@@ -1,4 +1,5 @@
 import React, { useState, useContext, useEffect } from 'react';
+import { createPortal } from 'react-dom';
 import { X, User, Phone, CaretLeft } from '@phosphor-icons/react';
 import { AuthContext } from '../context/AuthContext';
 
@@ -42,10 +43,9 @@ const AuthModal = ({ isOpen, onClose, initialView = 'login' }) => {
     setView('verify_code');
   };
 
-  const handleCodeSubmit = (e) => {
-    e.preventDefault();
+  const submitCode = (currentCode) => {
     setError('');
-    if (code.length < 4) {
+    if (currentCode.length < 4) {
       setError('Ingresa el código de 4 dígitos.');
       return;
     }
@@ -56,6 +56,11 @@ const AuthModal = ({ isOpen, onClose, initialView = 'login' }) => {
       login(phone);
       onClose();
     }
+  };
+
+  const handleCodeSubmit = (e) => {
+    e.preventDefault();
+    submitCode(code);
   };
 
   const handleNameSubmit = (e) => {
@@ -69,7 +74,7 @@ const AuthModal = ({ isOpen, onClose, initialView = 'login' }) => {
     onClose();
   };
 
-  return (
+  return createPortal(
     <div
       className="fixed inset-0 z-[60] flex items-end md:items-center justify-center bg-[#1E1E1E]/40 md:p-4"
       onClick={onClose}
@@ -154,6 +159,7 @@ const AuthModal = ({ isOpen, onClose, initialView = 'login' }) => {
                   <Phone size={20} color="#8E8E93" className="mr-2 shrink-0 pointer-events-none" />
                   <input
                     type="tel"
+                    autoComplete="tel"
                     placeholder="55 0000 0000"
                     value={phone}
                     onChange={(e) => setPhone(e.target.value.replace(/\D/g, '').slice(0, 10))}
@@ -185,9 +191,19 @@ const AuthModal = ({ isOpen, onClose, initialView = 'login' }) => {
                 <div className="flex items-center justify-center bg-[#F3F4F6] rounded-2xl px-4 h-14 mx-auto w-48 focus-within:bg-[#ECECEE] transition-colors">
                   <input
                     type="text"
+                    inputMode="numeric"
+                    pattern="[0-9]*"
+                    autoComplete="one-time-code"
+                    maxLength={4}
                     placeholder="0000"
                     value={code}
-                    onChange={(e) => setCode(e.target.value.replace(/\D/g, '').slice(0, 4))}
+                    onChange={(e) => {
+                      const newCode = e.target.value.replace(/\D/g, '').slice(0, 4);
+                      setCode(newCode);
+                      if (newCode.length === 4) {
+                        submitCode(newCode);
+                      }
+                    }}
                     className="w-full bg-transparent outline-none text-[24px] tracking-[0.5em] text-center font-semibold text-[#1E1E1E] placeholder:text-[#D1D1D6] ml-3"
                     autoFocus
                   />
@@ -223,6 +239,8 @@ const AuthModal = ({ isOpen, onClose, initialView = 'login' }) => {
                 <div className="flex items-center justify-center bg-[#F3F4F6] rounded-2xl px-4 h-14 w-full focus-within:bg-[#ECECEE] transition-colors">
                   <input
                     type="text"
+                    autoComplete="name"
+                    autoCapitalize="words"
                     placeholder="Nombre completo"
                     value={name}
                     onChange={(e) => setName(e.target.value)}
@@ -248,7 +266,8 @@ const AuthModal = ({ isOpen, onClose, initialView = 'login' }) => {
           )}
         </div>
       </div>
-    </div>
+    </div>,
+    document.body
   );
 };
 

@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { createPortal } from 'react-dom';
 import { CaretDown, Check, X, PencilSimple, MapPin, Storefront, Moped } from '@phosphor-icons/react';
 import { useCart } from '../context/useCart';
 import AddressForm from './AddressForm';
@@ -14,7 +15,7 @@ const handleKeyDown = (fn) => (e) => {
 export const ModalDropdown = ({ isOpen, onClose, title, items, selectedId, onSelect, showAddAction, onAddAction, onEditAction }) => {
   if (!isOpen) return null;
 
-  return (
+  return createPortal(
     <div
       className="fixed inset-0 z-[60] flex items-end md:items-center justify-center bg-[#1E1E1E]/40 md:p-4"
       onClick={onClose}
@@ -119,7 +120,8 @@ export const ModalDropdown = ({ isOpen, onClose, title, items, selectedId, onSel
           </div>
         )}
       </div>
-    </div>
+    </div>,
+    document.body
   );
 };
 

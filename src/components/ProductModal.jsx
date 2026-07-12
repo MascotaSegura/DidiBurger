@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { X, Minus, Plus, ShareNetwork, Check } from '@phosphor-icons/react';
 import { useCart } from '../context/useCart';
 
@@ -16,6 +16,32 @@ const ProductModal = ({ product, onClose }) => {
   const [specialInstructions, setSpecialInstructions] = useState('');
   const [copied, setCopied] = useState(false);
   const { addToCart } = useCart();
+
+  const [selectedVariants, setSelectedVariants] = useState(() => {
+    const defaults = {};
+    if (product?.singleChoiceOptions) {
+      product.singleChoiceOptions.forEach(opt => {
+        if (opt.required && opt.options.length > 0) {
+          defaults[opt.title] = opt.options[0].label;
+        }
+      });
+    }
+    return defaults;
+  });
+
+  const calculatedPrice = useMemo(() => {
+    let p = product?.price || 0;
+    if (product?.singleChoiceOptions) {
+      product.singleChoiceOptions.forEach(opt => {
+        const selectedLabel = selectedVariants[opt.title];
+        const optionDef = opt.options.find(o => o.label === selectedLabel);
+        if (optionDef && optionDef.priceAdd) {
+          p += optionDef.priceAdd;
+        }
+      });
+    }
+    return p;
+  }, [product, selectedVariants]);
 
   useEffect(() => {
     const onKey = (e) => {
@@ -51,7 +77,7 @@ const ProductModal = ({ product, onClose }) => {
   };
 
   const handleAdd = () => {
-    addToCart(product, quantity, removedIngredients, specialInstructions.trim());
+    addToCart(product, quantity, removedIngredients, specialInstructions.trim(), selectedVariants);
     onClose();
   };
 
@@ -75,14 +101,19 @@ const ProductModal = ({ product, onClose }) => {
             alt={product.name}
             className="w-full h-full object-contain mix-blend-multiply"
           />
+          {product.originalPrice && (
+            <div className="absolute top-4 left-4 bg-[#06C167] text-white text-[12px] font-bold px-3 py-1 rounded-full leading-none">
+              OFERTA
+            </div>
+          )}
         </div>
 
         {/* Columna de Información (Mobile: 100%, Desktop: 55%) */}
         <div className="flex-1 min-h-0 flex flex-col w-full md:w-[55%] bg-white relative">
           
-          {/* Diseño (Flat/Moderno): En móvil el header es absoluto y transparente para que los íconos floten sobre la imagen del producto, evitando barras sólidas que cortan la experiencia visual. */}
+          {/* Header absoluto */}
           <div className="absolute md:relative top-0 left-0 w-full flex justify-between md:justify-end gap-2 px-4 py-3 pt-[max(1rem,env(safe-area-inset-top,1rem))] z-20 md:bg-white shrink-0 pointer-events-none md:pointer-events-auto">
-            {/* Close Button (Left on mobile, Right on desktop) */}
+            {/* Close Button */}
             <div
               className="w-10 h-10 bg-white md:bg-[#F3F4F6] rounded-full flex items-center justify-center cursor-pointer hover:bg-[#ECECEE] active:bg-[#ECECEE] active:scale-[0.95] outline-none focus-visible:bg-[#ECECEE] transition-all pointer-events-auto md:order-2"
               onClick={handleClose}
@@ -93,7 +124,7 @@ const ProductModal = ({ product, onClose }) => {
             >
               <X size={20} weight="bold" color="#1E1E1E" />
             </div>
-            {/* Share Button (Right on mobile, Left on desktop) */}
+            {/* Share Button */}
             <div
               className="w-10 h-10 bg-white md:bg-[#F3F4F6] rounded-full flex items-center justify-center cursor-pointer hover:bg-[#ECECEE] active:bg-[#ECECEE] active:scale-[0.95] outline-none focus-visible:bg-[#ECECEE] transition-all pointer-events-auto md:order-1"
               onClick={handleShare}
@@ -118,16 +149,60 @@ const ProductModal = ({ product, onClose }) => {
                 alt={product.name}
                 className="w-full h-full object-contain mix-blend-multiply"
               />
+              {product.originalPrice && (
+                <div className="absolute top-4 left-4 bg-[#06C167] text-white text-[12px] font-bold px-3 py-1 rounded-full leading-none">
+                  OFERTA
+                </div>
+              )}
             </div>
 
             {/* Contenido */}
             <div className="px-6 pb-6 pt-4">
               <h1 className="text-2xl md:text-3xl font-bold text-[#1E1E1E] mb-2 leading-tight">{product.name}</h1>
-              {/* Diseño: Mostramos el precio unitario del producto aquí para mayor claridad. */}
-              <div className="text-[20px] font-semibold text-[#1E1E1E] mb-4">${product.price?.toFixed(2)} MXN</div>
+              {/* Diseño: Precio unitario calculado (con recargos de variantes). Si hay descuento, muestra original tachado. */}
+              <div className="flex items-baseline gap-3 mb-4">
+                <span className="text-[20px] font-semibold text-[#1E1E1E]">${calculatedPrice.toFixed(2)} MXN</span>
+                {product.originalPrice && (
+                  <span className="text-[15px] text-[#8E8E93] line-through">${product.originalPrice.toFixed(2)}</span>
+                )}
+              </div>
               <p className="text-[#8E8E93] text-[15px] md:text-[16px] leading-relaxed mb-8">
                 {product.description}
               </p>
+
+            {/* Variantes de selección única (Radio Buttons) */}
+            {product.singleChoiceOptions && product.singleChoiceOptions.length > 0 && (
+              <div className="mb-8 flex flex-col gap-6">
+                {product.singleChoiceOptions.map(opt => (
+                  <div key={opt.title} className="flex flex-col gap-3">
+                    <span className="text-[#1E1E1E] font-medium block">{opt.title}</span>
+                    <div className="flex flex-col gap-2">
+                      {opt.options.map(option => {
+                        const isSelected = selectedVariants[opt.title] === option.label;
+                        return (
+                          <div 
+                            key={option.label}
+                            className={`flex justify-between items-center p-4 rounded-2xl cursor-pointer transition-colors ${isSelected ? 'bg-[#ECECEE]' : 'bg-[#F3F4F6] hover:bg-[#ECECEE]'}`}
+                            onClick={() => setSelectedVariants(prev => ({...prev, [opt.title]: option.label}))}
+                            role="button"
+                            tabIndex={0}
+                            onKeyDown={handleKeyDown(() => setSelectedVariants(prev => ({...prev, [opt.title]: option.label})))}
+                          >
+                            <div className="flex items-center gap-3">
+                              <div className={`w-5 h-5 rounded-full flex items-center justify-center ${isSelected ? 'bg-[#06C167]' : 'bg-white'}`}>
+                                {isSelected && <div className="w-2 h-2 rounded-full bg-white" />}
+                              </div>
+                              <span className="text-[15px] font-medium text-[#1E1E1E]">{option.label}</span>
+                            </div>
+                            {option.priceAdd > 0 && <span className="text-[#8E8E93] text-[14px]">+${option.priceAdd}</span>}
+                          </div>
+                        );
+                      })}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
 
             {product.ingredients && product.ingredients.length > 0 && (
               <div className="mb-8">
@@ -185,7 +260,6 @@ const ProductModal = ({ product, onClose }) => {
           </div>
 
           {/* Botón inferior y controles de cantidad unificados */}
-          {/* Diseño: Se elimina la fila separada de "Cantidad" y se integra aquí para consolidar la acción en un solo lugar visible y accesible tanto en móvil como en escritorio. */}
           <div className="p-4 pb-[max(1rem,env(safe-area-inset-bottom))] md:p-6 md:pb-[max(1.5rem,env(safe-area-inset-bottom))] bg-white shrink-0 flex items-center gap-3 md:gap-4">
             {/* Controles de cantidad (Píldora) */}
             <div className="flex items-center justify-center gap-2 md:gap-3 bg-[#F3F4F6] rounded-full p-1 md:p-1.5 shrink-0">
@@ -222,10 +296,10 @@ const ProductModal = ({ product, onClose }) => {
               onKeyDown={handleKeyDown(handleAdd)}
               role="button"
               tabIndex={0}
-              aria-label={`Agregar al carrito, ${(product.price * quantity).toFixed(2)} MXN`}
+              aria-label={`Agregar al carrito, ${(calculatedPrice * quantity).toFixed(2)} MXN`}
             >
               <span>Agregar</span>
-              <span>${(product.price * quantity).toFixed(2)} MXN</span>
+              <span>${(calculatedPrice * quantity).toFixed(2)} MXN</span>
             </div>
           </div>
         </div>
