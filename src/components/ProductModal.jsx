@@ -101,11 +101,6 @@ const ProductModal = ({ product, onClose }) => {
             alt={product.name}
             className="w-full h-full object-contain mix-blend-multiply"
           />
-          {product.originalPrice && (
-            <div className="absolute top-4 left-4 bg-[#06C167] text-white text-[12px] font-bold px-3 py-1 rounded-full leading-none">
-              OFERTA
-            </div>
-          )}
         </div>
 
         {/* Columna de Información (Mobile: 100%, Desktop: 55%) */}
@@ -149,15 +144,15 @@ const ProductModal = ({ product, onClose }) => {
                 alt={product.name}
                 className="w-full h-full object-contain mix-blend-multiply"
               />
-              {product.originalPrice && (
-                <div className="absolute bottom-4 left-4 bg-[#06C167] text-white text-[12px] font-bold px-3 py-1 rounded-full leading-none">
-                  OFERTA
-                </div>
-              )}
             </div>
 
             {/* Contenido */}
             <div className="px-6 pb-6 pt-4">
+              {product.originalPrice && (
+                <div className="inline-block bg-[#06C167] text-white text-[12px] font-bold px-3 py-1 rounded-full leading-none mb-3">
+                  OFERTA
+                </div>
+              )}
               <h1 className="text-2xl md:text-3xl font-bold text-[#1E1E1E] mb-2 leading-tight">{product.name}</h1>
               {/* Diseño: Precio unitario calculado (con recargos de variantes). Si hay descuento, muestra original tachado. */}
               <div className="flex items-baseline gap-3 mb-4">
