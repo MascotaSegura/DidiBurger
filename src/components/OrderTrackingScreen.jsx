@@ -60,21 +60,9 @@ const OrderTrackingScreen = ({ onOpenChat }) => {
         height: 380,
       });
       
-      Array.from(document.styleSheets).forEach(styleSheet => {
-        try {
-          if (styleSheet.href) {
-            const link = document.createElement('link');
-            link.rel = 'stylesheet';
-            link.href = styleSheet.href;
-            pip.document.head.appendChild(link);
-          } else if (styleSheet.cssRules) {
-            const style = document.createElement('style');
-            Array.from(styleSheet.cssRules).forEach(rule => {
-              style.appendChild(document.createTextNode(rule.cssText));
-            });
-            pip.document.head.appendChild(style);
-          }
-        } catch (e) {}
+      // Copy styles directly by cloning nodes to avoid cross-origin and iteration crashes
+      Array.from(document.head.querySelectorAll('style, link[rel="stylesheet"]')).forEach(el => {
+        pip.document.head.appendChild(el.cloneNode(true));
       });
       
       pip.addEventListener('pagehide', () => {
@@ -119,7 +107,7 @@ const OrderTrackingScreen = ({ onOpenChat }) => {
   }, [currentStep, isPickup, lastNotifiedStep]);
 
   useEffect(() => {
-    if ((orderStatus !== 'tracking' && !pipWindow) || !activeOrder) return;
+    if (!activeOrder || (orderStatus !== 'tracking' && !pipWindow)) return;
 
     const DURATION_PREP = 4000;
     const DURATION_DRIVE = 12000;
@@ -133,21 +121,24 @@ const OrderTrackingScreen = ({ onOpenChat }) => {
     setCurrentStep(initialStep);
     setLastNotifiedStep(initialStep); // Don't notify on reload if already passed
 
-    if (isPickup) {
-      let timeout1, timeout2;
-      const t1 = DURATION_PREP - initialElapsed;
-      const t2 = (DURATION_PREP + DURATION_DRIVE) - initialElapsed;
-      
-      if (t1 > 0) timeout1 = setTimeout(() => setCurrentStep(1), t1);
-      if (t2 > 0) timeout2 = setTimeout(() => setCurrentStep(2), t2);
-      
-      return () => {
-        if (timeout1) clearTimeout(timeout1);
-        if (timeout2) clearTimeout(timeout2);
-      };
-    }
+    let timeout1, timeout2;
+    const t1 = DURATION_PREP - initialElapsed;
+    const t2 = (DURATION_PREP + DURATION_DRIVE) - initialElapsed;
+    
+    if (t1 > 0) timeout1 = setTimeout(() => setCurrentStep(1), t1);
+    if (t2 > 0) timeout2 = setTimeout(() => setCurrentStep(2), t2);
+    
+    return () => {
+      if (timeout1) clearTimeout(timeout1);
+      if (timeout2) clearTimeout(timeout2);
+    };
+  }, [activeOrder, orderStatus, pipWindow]);
 
-    // --- DELIVERY MAP LOGIC ---
+  useEffect(() => {
+    if (orderStatus !== 'tracking' || isPickup || !activeOrder) return;
+
+    const mapContainer = document.getElementById('tracking-map');
+    if (!mapContainer) return; // Map container must exist in the DOM
     const userLat = deliveryAddress?.lat || 19.4326;
     const userLng = deliveryAddress?.lng || -99.1332;
     
@@ -262,7 +253,7 @@ const OrderTrackingScreen = ({ onOpenChat }) => {
       }
       driverMarkerRef.current = null;
     };
-  }, [orderStatus, isPickup, deliveryAddress, activeOrder, pipWindow]);
+  }, [orderStatus, isPickup, deliveryAddress, activeOrder]);
 
   const isVisible = orderStatus === 'tracking' || pipWindow !== null;
   if (!activeOrder || !isVisible) return null;
