@@ -43,7 +43,7 @@ export const products = [
   },
   {
     id: 6,
-    name: 'Combo Clásico Didi',
+    name: 'Combo Clásico',
     description: 'Nuestra hamburguesa clásica acompañada de tu elección de papas o ensalada y bebida a elegir.',
     price: 249.00,
     category: 'combos',

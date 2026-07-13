@@ -4,7 +4,7 @@ import tailwindcss from '@tailwindcss/vite'
 import { VitePWA } from 'vite-plugin-pwa'
 
 export default defineConfig({
-  base: '/DidiBurger/',
+  base: '/UberEats/',
   plugins: [
     react(),
     tailwindcss(),
@@ -12,8 +12,8 @@ export default defineConfig({
       registerType: 'autoUpdate',
       includeAssets: ['favicon.svg', 'burger.png'],
       manifest: {
-        name: 'DidiBurger',
-        short_name: 'DidiBurger',
+        name: 'Uber Eats',
+        short_name: 'Uber Eats',
         description: 'La mejor comida a tu puerta',
         theme_color: '#F3F4F6',
         background_color: '#F3F4F6',

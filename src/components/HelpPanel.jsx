@@ -15,7 +15,7 @@ const faqs = [
   { id: '4', q: 'Tiempos de entrega', a: 'El tiempo estimado de entrega se calcula automáticamente basándose en la distancia de la sucursal y el tiempo de preparación.' },
 ];
 
-const HelpPanel = ({ onClose }) => {
+const HelpPanel = ({ onClose, onOpenChat }) => {
   const [expanded, setExpanded] = useState(null);
 
   return (
@@ -80,7 +80,10 @@ const HelpPanel = ({ onClose }) => {
         </div>
         
         <div className="p-6 bg-white shrink-0 pb-[max(1.5rem,env(safe-area-inset-bottom))]">
-           <button className="w-full bg-[#1E1E1E] text-white py-3.5 rounded-full font-medium hover:bg-[#2C2C2E] active:scale-[0.98] outline-none focus-visible:opacity-90 transition-all">
+           <button 
+             className="w-full bg-[#1E1E1E] text-white py-3.5 rounded-full font-medium hover:bg-[#2C2C2E] active:scale-[0.98] outline-none focus-visible:opacity-90 transition-all"
+             onClick={onOpenChat}
+           >
              Contactar Soporte
            </button>
         </div>

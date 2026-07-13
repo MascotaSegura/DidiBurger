@@ -12,6 +12,7 @@ import StoresPanel from '../components/StoresPanel';
 import PromosPanel from '../components/PromosPanel';
 import HelpPanel from '../components/HelpPanel';
 import OrderTrackingScreen from '../components/OrderTrackingScreen';
+import ChatPanel from '../components/ChatPanel';
 import { products } from '../data/products';
 import { useCart } from '../context/useCart';
 
@@ -23,6 +24,7 @@ const Home = () => {
   
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [activePanel, setActivePanel] = useState(null);
+  const [activeChat, setActiveChat] = useState(null);
 
   const { orderStatus } = useCart();
 
@@ -110,8 +112,10 @@ const Home = () => {
       {activePanel === 'wallet' && <WalletPanel onClose={() => setActivePanel(null)} />}
       {activePanel === 'stores' && <StoresPanel onClose={() => setActivePanel(null)} />}
       {activePanel === 'promos' && <PromosPanel onClose={() => setActivePanel(null)} />}
-      {activePanel === 'help' && <HelpPanel onClose={() => setActivePanel(null)} />}
-      <OrderTrackingScreen />
+      {activePanel === 'help' && <HelpPanel onClose={() => setActivePanel(null)} onOpenChat={() => setActiveChat('support')} />}
+      <OrderTrackingScreen onOpenChat={(type) => setActiveChat(type)} />
+      
+      <ChatPanel isOpen={!!activeChat} onClose={() => setActiveChat(null)} recipient={activeChat} />
     </div>
   );
 };

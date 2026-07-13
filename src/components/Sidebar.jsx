@@ -1,7 +1,8 @@
 import React, { useEffect, useState, useContext } from 'react';
-import { Receipt, Wallet, Tag, Storefront, Question, X } from '@phosphor-icons/react';
+import { Receipt, Wallet, Tag, Storefront, Question, X, DeviceMobile } from '@phosphor-icons/react';
 import { AuthContext } from '../context/AuthContext';
 import AuthModal from './AuthModal';
+import PWAInstallModal from './PWAInstallModal';
 
 const Sidebar = ({ isOpen, onClose, onMenuSelect }) => {
   // Prevent body scroll when sidebar is open
@@ -18,6 +19,27 @@ const Sidebar = ({ isOpen, onClose, onMenuSelect }) => {
 
   const { user } = useContext(AuthContext);
   const [authModalConfig, setAuthModalConfig] = useState({ isOpen: false, view: 'login' });
+  const [isStandalone, setIsStandalone] = useState(false);
+  const [showInstallModal, setShowInstallModal] = useState(false);
+
+  useEffect(() => {
+    if (window.matchMedia && window.matchMedia('(display-mode: standalone)').matches) {
+      setIsStandalone(true);
+    }
+  }, []);
+
+  const handleInstallClick = async () => {
+    if (window.deferredPrompt) {
+      window.deferredPrompt.prompt();
+      const { outcome } = await window.deferredPrompt.userChoice;
+      if (outcome === 'accepted') {
+        window.deferredPrompt = null;
+        setIsStandalone(true);
+      }
+    } else {
+      setShowInstallModal(true);
+    }
+  };
 
   if (!isOpen) return null;
 
@@ -88,6 +110,20 @@ const Sidebar = ({ isOpen, onClose, onMenuSelect }) => {
             </span>
           </button>
         ))}
+
+        {!isStandalone && (
+          <button 
+            className="flex items-center gap-4 w-full px-4 py-3.5 mt-2 text-left rounded-2xl bg-[#F3F4F6] text-[#06C167] hover:bg-[#ECECEE] active:bg-[#ECECEE] transition-all outline-none focus-visible:opacity-80 active:scale-[0.98]"
+            onClick={handleInstallClick}
+          >
+            <div className="shrink-0">
+              <DeviceMobile size={24} weight="fill" />
+            </div>
+            <span className="text-[16px] font-bold whitespace-nowrap">
+              Instalar App
+            </span>
+          </button>
+        )}
       </div>
     </div>
   );
@@ -119,6 +155,7 @@ const Sidebar = ({ isOpen, onClose, onMenuSelect }) => {
       </div>
       
       <AuthModal isOpen={authModalConfig.isOpen} onClose={closeAuth} initialView={authModalConfig.view} />
+      <PWAInstallModal isOpen={showInstallModal} onClose={() => setShowInstallModal(false)} />
     </div>
   );
 };

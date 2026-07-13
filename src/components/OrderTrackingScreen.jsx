@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { useCart } from '../context/useCart';
 import { createPortal } from 'react-dom';
-import { Phone, X, MapPin, Storefront, Moped, CheckCircle, Package, Truck } from '@phosphor-icons/react';
+import { Phone, X, MapPin, Storefront, Moped, CheckCircle, Package, Truck, ChatTeardropText } from '@phosphor-icons/react';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 
@@ -38,7 +38,7 @@ const STEPS_PICKUP = [
   { key: 'picked-up', label: 'Entregado', Icon: CheckCircle },
 ];
 
-const OrderTrackingScreen = () => {
+const OrderTrackingScreen = ({ onOpenChat }) => {
   const { orderStatus, resetOrder, deliveryMode, deliveryAddress, pickupBranch } = useCart();
   const [currentStep, setCurrentStep] = useState(0); 
   const mapRef = useRef(null);
@@ -76,18 +76,9 @@ const OrderTrackingScreen = () => {
         maxZoom: 19,
       }).addTo(map);
 
-      // Draw route polyline
-      const routeLine = L.polyline(
-        [[restLat, restLng], [userLat, userLng]], 
-        { color: '#1E1E1E', weight: 4, opacity: 0.5, dashArray: '8, 8' }
-      ).addTo(map);
-
       L.marker([restLat, restLng], { icon: createMarkerIcon('#1E1E1E', 'store') }).addTo(map);
       L.marker([userLat, userLng], { icon: createMarkerIcon('#06C167', 'user') }).addTo(map);
       
-      // Fit bounds to show both markers and line with some padding
-      map.fitBounds(routeLine.getBounds(), { padding: [50, 50] });
-
       mapRef.current = map;
     }
 
@@ -98,44 +89,87 @@ const OrderTrackingScreen = () => {
     const DURATION_PREP = 3000;
     const DURATION_DRIVE = 12000;
 
-    const animateDriver = (timestamp) => {
-      if (!startTime) startTime = timestamp;
-      const elapsed = timestamp - startTime;
+    // Fetch realistic route from OSRM
+    fetch(`https://router.project-osrm.org/route/v1/driving/${restLng},${restLat};${userLng},${userLat}?overview=full&geometries=geojson`)
+      .then(res => res.json())
+      .then(data => {
+        if (!mapRef.current) return; // Unmounted
+        const coords = data.routes?.[0]?.geometry?.coordinates;
+        if (!coords || coords.length === 0) return;
 
-      if (elapsed < DURATION_PREP) {
-        setCurrentStep(0);
-        if (!driverMarkerRef.current) {
-          driverMarkerRef.current = L.marker([restLat, restLng], { icon: createMarkerIcon('#1E1E1E', 'driver') }).addTo(map);
-        }
-      } else if (elapsed < DURATION_PREP + DURATION_DRIVE) {
-        setCurrentStep(1);
-        const driveElapsed = elapsed - DURATION_PREP;
-        const progress = Math.min(driveElapsed / DURATION_DRIVE, 1);
+        const routeLatLngs = coords.map(c => L.latLng(c[1], c[0]));
         
-        const easeOutQuad = t => t * (2 - t);
-        const easedProgress = easeOutQuad(progress);
-
-        const currentLat = restLat + (userLat - restLat) * easedProgress;
-        const currentLng = restLng + (userLng - restLng) * easedProgress;
-
-        if (driverMarkerRef.current) {
-          driverMarkerRef.current.setLatLng([currentLat, currentLng]);
-        }
+        // Draw the realistic route
+        const routeLine = L.polyline(routeLatLngs, { 
+          color: '#1E1E1E', 
+          weight: 4, 
+          opacity: 0.8,
+          lineJoin: 'round'
+        }).addTo(map);
         
-        map.setView([currentLat, currentLng], 15, { animate: false });
-        
-      } else {
-        setCurrentStep(2);
-        if (driverMarkerRef.current) {
-          driverMarkerRef.current.setLatLng([userLat, userLng]);
-        }
-        return; 
-      }
-      
-      animationFrame = requestAnimationFrame(animateDriver);
-    };
+        map.fitBounds(routeLine.getBounds(), { padding: [50, 50] });
 
-    animationFrame = requestAnimationFrame(animateDriver);
+        // Calculate cumulative distances for interpolation
+        let totalDist = 0;
+        const cumDist = [0];
+        for (let i = 1; i < routeLatLngs.length; i++) {
+           const dist = routeLatLngs[i-1].distanceTo(routeLatLngs[i]);
+           totalDist += dist;
+           cumDist.push(totalDist);
+        }
+
+        const animateDriver = (timestamp) => {
+          if (!startTime) startTime = timestamp;
+          const elapsed = timestamp - startTime;
+
+          if (elapsed < DURATION_PREP) {
+            setCurrentStep(0);
+            if (!driverMarkerRef.current) {
+              driverMarkerRef.current = L.marker([restLat, restLng], { icon: createMarkerIcon('#1E1E1E', 'driver') }).addTo(map);
+            }
+          } else if (elapsed < DURATION_PREP + DURATION_DRIVE) {
+            setCurrentStep(1);
+            const driveElapsed = elapsed - DURATION_PREP;
+            const progress = Math.min(driveElapsed / DURATION_DRIVE, 1);
+            
+            // Linear progression along the path looks best for realistic turns
+            const targetDist = progress * totalDist;
+            
+            let segIdx = 0;
+            while(segIdx < cumDist.length - 1 && cumDist[segIdx + 1] < targetDist) {
+              segIdx++;
+            }
+            
+            const p1 = routeLatLngs[segIdx];
+            const p2 = routeLatLngs[segIdx + 1] || p1;
+            const segStartDist = cumDist[segIdx];
+            const segEndDist = cumDist[segIdx + 1] || segStartDist;
+            const segTotal = segEndDist - segStartDist;
+            const t = segTotal > 0 ? (targetDist - segStartDist) / segTotal : 1;
+            
+            const currentLat = p1.lat + (p2.lat - p1.lat) * t;
+            const currentLng = p1.lng + (p2.lng - p1.lng) * t;
+
+            if (driverMarkerRef.current) {
+              driverMarkerRef.current.setLatLng([currentLat, currentLng]);
+            }
+            
+            map.setView([currentLat, currentLng], 15, { animate: false });
+            
+          } else {
+            setCurrentStep(2);
+            if (driverMarkerRef.current) {
+              driverMarkerRef.current.setLatLng([userLat, userLng]);
+            }
+            return; 
+          }
+          
+          animationFrame = requestAnimationFrame(animateDriver);
+        };
+
+        animationFrame = requestAnimationFrame(animateDriver);
+      })
+      .catch(err => console.error("OSRM Routing Error:", err));
 
     return () => {
       if (animationFrame) cancelAnimationFrame(animationFrame);
@@ -285,8 +319,16 @@ const OrderTrackingScreen = () => {
                 <h4 className="font-bold text-[#1E1E1E] text-[16px]">Carlos M.</h4>
                 <p className="text-[14px] text-[#8E8E93]">Honda Moto • 98% Satisfacción</p>
               </div>
-              <div className="w-10 h-10 bg-white rounded-full flex items-center justify-center cursor-pointer active:scale-[0.95] transition-transform">
-                <Phone size={20} weight="fill" color="#1E1E1E" />
+              <div className="flex items-center gap-2">
+                <div 
+                  className="w-10 h-10 bg-white rounded-full flex items-center justify-center cursor-pointer hover:bg-[#ECECEE] active:scale-[0.95] transition-all outline-none focus-visible:opacity-80"
+                  onClick={() => onOpenChat?.('driver')}
+                >
+                  <ChatTeardropText size={20} weight="fill" color="#1E1E1E" />
+                </div>
+                <div className="w-10 h-10 bg-white rounded-full flex items-center justify-center cursor-pointer hover:bg-[#ECECEE] active:scale-[0.95] transition-all outline-none focus-visible:opacity-80">
+                  <Phone size={20} weight="fill" color="#1E1E1E" />
+                </div>
               </div>
             </div>
           )}
