@@ -65,7 +65,7 @@ const ChatPanel = ({ isOpen, onClose, recipient }) => {
       role="dialog"
       aria-modal="true"
     >
-      <div className="bg-[#F3F4F6] w-full h-full max-h-[100dvh] md:h-full max-w-[480px] flex flex-col md:rounded-l-2xl rounded-t-2xl md:rounded-tr-none overflow-hidden relative animate-slide-up md:animate-none isolate">
+      <div className="bg-[#F3F4F6] w-full h-full max-h-[100dvh] md:h-full max-w-[480px] flex flex-col md:rounded-l-2xl rounded-t-2xl md:rounded-tr-none overflow-hidden relative animate-slide-up md:animate-slide-in-right isolate">
         {/* Header */}
         <div className="flex items-center px-4 pb-4 pt-[max(1rem,env(safe-area-inset-top,1rem))] shrink-0 bg-white">
           <div

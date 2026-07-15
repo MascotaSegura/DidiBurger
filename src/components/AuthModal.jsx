@@ -177,7 +177,7 @@ const AuthModal = ({ isOpen, onClose, initialView = 'login' }) => {
                       <CaretDown size={12} weight="bold" className={`transition-transform duration-200 ${countryOpen ? 'rotate-180' : ''}`} />
                     </button>
                     {countryOpen && (
-                      <div className="absolute top-full left-0 mt-2 z-[300] bg-white rounded-2xl overflow-hidden min-w-[170px]">
+                      <div className="absolute top-full left-0 mt-2 z-[300] bg-white rounded-2xl overflow-hidden min-w-[170px] border border-[#ECECEE]">
                         {countryCodes.map((c) => (
                           <button
                             key={c.code}

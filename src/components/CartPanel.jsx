@@ -92,7 +92,7 @@ const CartPanel = ({ onClose }) => {
       aria-modal="true"
       aria-label="Tu carrito"
     >
-      <div className="bg-white w-full h-full max-h-[100dvh] md:h-full max-w-[480px] flex flex-col md:rounded-l-2xl rounded-t-2xl md:rounded-tr-none overflow-hidden relative animate-slide-up md:animate-none isolate">
+      <div className="bg-white w-full h-full max-h-[100dvh] md:h-full max-w-[480px] flex flex-col md:rounded-l-2xl rounded-t-2xl md:rounded-tr-none overflow-hidden relative animate-slide-up md:animate-slide-in-right isolate">
 
         {/* ── VISTA: CARRITO ─────────────────────────────────────────────── */}
         {activeView === 'cart' && (
@@ -269,7 +269,7 @@ const CartPanel = ({ onClose }) => {
 
             {/* Sticky Footer: total + confirm */}
             {cartItems.length > 0 && (
-              <div className="p-6 pb-[max(1.5rem,env(safe-area-inset-bottom))] bg-white shrink-0">
+              <div className="p-6 pb-[max(1.5rem,env(safe-area-inset-bottom))] bg-white shrink-0 border-t border-[#F3F4F6]">
                 {/* Total */}
                 <div className="flex justify-between mb-6 text-[#1E1E1E] items-end">
                   <span className="font-semibold text-lg">Total</span>
@@ -327,7 +327,7 @@ const CartPanel = ({ onClose }) => {
                     />
                     <button
                       onClick={handleApplyPromo}
-                      className="bg-[#1E1E1E] text-white px-5 py-3 rounded-2xl text-[15px] font-medium hover:bg-[#333] transition-colors outline-none focus-visible:opacity-80"
+                      className="bg-[#1E1E1E] text-white px-5 py-3 rounded-full text-[15px] font-medium hover:bg-[#333] transition-colors outline-none focus-visible:opacity-80"
                     >
                       Aplicar
                     </button>

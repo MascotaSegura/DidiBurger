@@ -292,7 +292,7 @@ const AddressForm = ({ onClose, initialData }) => {
             </div>
             {initialData && (
                <div 
-                 className="w-full py-3 flex items-center justify-center font-medium text-[#EF4444] cursor-pointer hover:bg-[#F3F4F6] active:bg-[#F3F4F6] rounded-full outline-none focus-visible:bg-[#F3F4F6] transition-all"
+                 className="w-full py-3 flex items-center justify-center font-medium text-[#FF3B30] cursor-pointer hover:bg-[#F3F4F6] active:bg-[#F3F4F6] rounded-full outline-none focus-visible:bg-[#F3F4F6] transition-all"
                  onClick={() => { removeAddress(initialData.id); onClose(); }}
                  onKeyDown={handleKeyDown(() => { removeAddress(initialData.id); onClose(); })}
                  role="button"

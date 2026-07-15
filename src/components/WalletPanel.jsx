@@ -42,10 +42,13 @@ const formatExpiry = (val) => {
 const WalletPanel = ({ onClose }) => {
   const { savedCards, addCard, selectedPaymentMethod, setSelectedPaymentMethod } = useCart();
   const [isAdding, setIsAdding] = useState(false);
+  const [showFundMsg, setShowFundMsg] = useState(false);
+
   const [cardNumber, setCardNumber] = useState('');
   const [expiry, setExpiry] = useState('');
   const [cvv, setCvv] = useState('');
   const [errorMsg, setErrorMsg] = useState(null);
+
 
   const handleAddCard = () => {
     setErrorMsg(null);
@@ -99,7 +102,7 @@ const WalletPanel = ({ onClose }) => {
       aria-modal="true"
       aria-label="Billetera"
     >
-      <div className="bg-white w-full h-full max-h-[100dvh] md:h-full max-w-[480px] flex flex-col md:rounded-l-2xl rounded-t-2xl md:rounded-tr-none overflow-hidden relative animate-slide-up md:animate-none isolate">
+      <div className="bg-white w-full h-full max-h-[100dvh] md:h-full max-w-[480px] flex flex-col md:rounded-l-2xl rounded-t-2xl md:rounded-tr-none overflow-hidden relative animate-slide-up md:animate-slide-in-right isolate">
         <div className="flex items-center px-6 pb-4 pt-[max(1rem,env(safe-area-inset-top,1rem))] shrink-0 bg-white">
           <div
             className="w-10 h-10 bg-[#F3F4F6] rounded-full flex items-center justify-center cursor-pointer hover:bg-[#ECECEE] active:bg-[#ECECEE] active:scale-[0.95] outline-none focus-visible:bg-[#ECECEE] transition-all"
@@ -120,9 +123,15 @@ const WalletPanel = ({ onClose }) => {
           <div className="bg-[#1E1E1E] text-white p-6 rounded-2xl mb-8 flex flex-col gap-1">
             <span className="text-[14px] text-[#D1D1D6] font-medium">Uber Cash</span>
             <span className="text-3xl font-bold">$150.00 <span className="text-[14px] font-medium text-[#8E8E93]">MXN</span></span>
-            <button className="mt-4 bg-[#2C2C2E] py-2.5 rounded-full font-medium text-[14px] hover:bg-[#3C3C3E] active:scale-[0.98] outline-none focus-visible:opacity-80 transition-all w-fit px-6">
+            <button 
+              className="mt-4 bg-[#2C2C2E] py-2.5 rounded-full font-medium text-[14px] hover:bg-[#3C3C3E] active:scale-[0.98] outline-none focus-visible:opacity-80 transition-all w-fit px-6"
+              onClick={() => { setShowFundMsg(true); setTimeout(() => setShowFundMsg(false), 3000); }}
+            >
               Agregar fondos
             </button>
+            {showFundMsg && (
+              <p className="text-[13px] text-[#8E8E93] mt-2 animate-fade-in">Esta función estará disponible próximamente.</p>
+            )}
           </div>
 
           <h3 className="font-semibold text-[#1E1E1E] text-[16px] mb-4">Métodos de pago</h3>

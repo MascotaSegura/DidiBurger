@@ -1,6 +1,6 @@
 import React from 'react';
 import { createPortal } from 'react-dom';
-import { BellRinging } from '@phosphor-icons/react';
+import { BellRinging, X } from '@phosphor-icons/react';
 
 const NotificationModal = ({ isOpen, onClose, onAllow }) => {
   if (!isOpen) return null;
@@ -10,6 +10,14 @@ const NotificationModal = ({ isOpen, onClose, onAllow }) => {
       <div
         className="bg-white w-full h-auto max-h-[80vh] md:max-w-[400px] flex flex-col rounded-t-2xl md:rounded-2xl overflow-hidden relative animate-slide-up md:animate-fade-in p-6 pt-10"
       >
+        {/* Close button */}
+        <button
+          className="absolute top-4 right-4 w-9 h-9 bg-[#F3F4F6] rounded-full flex items-center justify-center hover:bg-[#ECECEE] active:bg-[#ECECEE] active:scale-[0.95] outline-none transition-all"
+          onClick={onClose}
+          aria-label="Cerrar"
+        >
+          <X size={18} weight="bold" color="#1E1E1E" />
+        </button>
         <div className="flex flex-col items-center text-center">
           <div className="w-20 h-20 bg-[#F3F4F6] rounded-full flex items-center justify-center mb-6">
             <BellRinging size={40} weight="fill" color="#1E1E1E" />

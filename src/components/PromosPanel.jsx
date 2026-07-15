@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { X, Tag, Scissors } from '@phosphor-icons/react';
+import { X } from '@phosphor-icons/react';
 import { useCart } from '../context/useCart';
 
 const handleKeyDown = (fn) => (e) => {
@@ -37,7 +37,7 @@ const PromosPanel = ({ onClose }) => {
       aria-modal="true"
       aria-label="Promociones"
     >
-      <div className="bg-white w-full h-full max-h-[100dvh] md:h-full max-w-[480px] flex flex-col md:rounded-l-2xl rounded-t-2xl md:rounded-tr-none overflow-hidden relative animate-slide-up md:animate-none isolate">
+      <div className="bg-white w-full h-full max-h-[100dvh] md:h-full max-w-[480px] flex flex-col md:rounded-l-2xl rounded-t-2xl md:rounded-tr-none overflow-hidden relative animate-slide-up md:animate-slide-in-right isolate">
         <div className="flex items-center px-6 pb-4 pt-[max(1rem,env(safe-area-inset-top,1rem))] shrink-0 bg-white">
           <div
             className="w-10 h-10 bg-[#F3F4F6] rounded-full flex items-center justify-center cursor-pointer hover:bg-[#ECECEE] active:bg-[#ECECEE] active:scale-[0.95] outline-none focus-visible:bg-[#ECECEE] transition-all"
@@ -95,24 +95,21 @@ const PromosPanel = ({ onClose }) => {
           
           <div className="flex flex-col gap-4">
             {mockPromos.map((promo) => (
-              <div key={promo.id} className="bg-[#06C167]/10 p-5 rounded-2xl flex flex-col gap-2 relative overflow-hidden">
-                <div className="absolute -right-4 -top-4 text-[#06C167]/20">
-                  <Tag size={80} weight="fill" />
-                </div>
-                <span className="font-bold text-[#06C167] text-[18px] relative z-10">{promo.title}</span>
-                <span className="text-[#1E1E1E] text-[14px] relative z-10 mb-2 max-w-[80%]">{promo.desc}</span>
+              <div key={promo.id} className="bg-[#06C167]/10 p-5 rounded-2xl flex flex-col gap-2">
+                <span className="font-bold text-[#06C167] text-[18px]">{promo.title}</span>
+                <span className="text-[#1E1E1E] text-[14px] mb-2 max-w-[80%]">{promo.desc}</span>
                 
-                <div className="flex items-center justify-between mt-1 relative z-10 bg-white/60 p-2 pl-4 rounded-full">
+                <div className="flex items-center justify-between mt-1 bg-white p-2 pl-4 rounded-full">
                   <span className="font-mono font-bold text-[#1E1E1E] text-[15px]">{promo.code}</span>
                   <button 
-                    className="w-8 h-8 bg-white rounded-full flex items-center justify-center text-[#1E1E1E] hover:bg-[#F3F4F6] active:scale-[0.95] transition-all outline-none focus-visible:bg-[#F3F4F6]"
+                    className="h-8 px-3 bg-[#F3F4F6] rounded-full flex items-center justify-center text-[#1E1E1E] text-[13px] font-medium hover:bg-[#ECECEE] active:scale-[0.95] transition-all outline-none focus-visible:bg-[#ECECEE]"
                     onClick={() => {
                        setInputCode(promo.code);
                        setMessage(null);
                     }}
-                    title="Copiar código al input"
+                    aria-label={`Usar código ${promo.code}`}
                   >
-                    <Scissors size={16} weight="bold" />
+                    Usar
                   </button>
                 </div>
               </div>

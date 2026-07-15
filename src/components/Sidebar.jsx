@@ -119,7 +119,7 @@ const Sidebar = ({ isOpen, onClose, onMenuSelect }) => {
             <div className="shrink-0">
               <DeviceMobile size={24} weight="fill" />
             </div>
-            <span className="text-[16px] font-bold whitespace-nowrap">
+            <span className="text-[16px] font-medium whitespace-nowrap">
               Instalar App
             </span>
           </button>

@@ -38,11 +38,9 @@ const Header = ({ onOpenCart, searchQuery, onSearchChange, onMenuToggle }) => {
   const [authModalConfig, setAuthModalConfig] = useState({ isOpen: false, view: 'login' });
 
   const openAuth = (view) => {
-    console.log('openAuth called with view:', view);
     setAuthModalConfig({ isOpen: true, view });
   };
   const closeAuth = () => {
-    console.log('closeAuth called');
     setAuthModalConfig({ ...authModalConfig, isOpen: false });
   };
 
@@ -61,7 +59,7 @@ const Header = ({ onOpenCart, searchQuery, onSearchChange, onMenuToggle }) => {
             </button>
             <div className="text-[22px] tracking-tight text-[#1E1E1E] leading-none">
               {/* <span className="font-normal">Uber</span> <span className="font-medium">Eats</span> */}
-              <img src={`${import.meta.env.BASE_URL}logo.svg`} alt="Uber Eats" className="h-6 w-auto object-contain shrink-0" />
+              <img src={`${import.meta.env.BASE_URL}logo.svg`} alt="Uber Eats" className="h-5 w-auto object-contain shrink-0" />
             </div>
           </div>
           
@@ -131,7 +129,7 @@ const Header = ({ onOpenCart, searchQuery, onSearchChange, onMenuToggle }) => {
           </button>
           <div className="text-[22px] tracking-tight text-[#1E1E1E] whitespace-nowrap">
             {/* <span className="font-normal">Uber</span> <span className="font-medium">Eats</span> */}
-            <img src={`${import.meta.env.BASE_URL}logo.svg`} alt="Uber Eats" className="h-6 w-auto object-contain shrink-0" />
+            <img src={`${import.meta.env.BASE_URL}logo.svg`} alt="Uber Eats" className="h-5 w-auto object-contain shrink-0" />
           </div>
         </div>
 
@@ -185,7 +183,7 @@ const Header = ({ onOpenCart, searchQuery, onSearchChange, onMenuToggle }) => {
           ) : (
             <>
               <button 
-                className="hidden lg:flex px-4 h-9 items-center justify-center rounded-full bg-white hover:bg-[#F3F4F6] active:bg-[#F3F4F6] text-[#1E1E1E] font-medium text-[14px] transition-all outline-none focus-visible:bg-[#F3F4F6]"
+                className="hidden lg:flex px-4 h-9 items-center justify-center rounded-full bg-[#F3F4F6] hover:bg-[#ECECEE] active:bg-[#ECECEE] text-[#1E1E1E] font-medium text-[14px] transition-all outline-none focus-visible:bg-[#ECECEE]"
                 onClick={() => openAuth('login')}
               >
                 Iniciar sesión
