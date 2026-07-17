@@ -103,8 +103,6 @@ const PullToRefresh = ({ onRefresh, children }) => {
         <motion.div 
           animate={controls}
           className="flex justify-center items-center h-12 w-12 bg-white rounded-full mt-[-48px]"
-          // we use a flat design instead of shadow: 
-          style={{ border: '1px solid #ECECEE' }}
         >
           {isRefreshing ? (
             <SpinnerGap size={24} color="#06C167" weight="bold" className="animate-spin" />

@@ -1,7 +1,8 @@
 import React, { useState, useEffect, useMemo } from 'react';
-import { motion } from 'framer-motion';
-import { X, Minus, Plus, ShareNetwork, Check } from '@phosphor-icons/react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { X, Minus, Plus, ShareNetwork, Check, MagnifyingGlassPlus } from '@phosphor-icons/react';
 import { useCart } from '../context/useCart';
+import ImageViewer from './ImageViewer';
 
 
 const handleKeyDown = (fn) => (e) => {
@@ -16,6 +17,7 @@ const ProductModal = ({ product, onClose }) => {
   const [removedIngredients, setRemovedIngredients] = useState([]);
   const [specialInstructions, setSpecialInstructions] = useState('');
   const [copied, setCopied] = useState(false);
+  const [isImageExpanded, setIsImageExpanded] = useState(false);
   const { addToCart } = useCart();
 
   const [selectedVariants, setSelectedVariants] = useState(() => {
@@ -110,12 +112,24 @@ const ProductModal = ({ product, onClose }) => {
       >
         
         {/* Imagen - Solo Desktop */}
-        <div className="hidden md:flex relative w-[45%] shrink-0 h-full bg-[#F3F4F6] justify-center items-center p-8">
-          <img
+        <div 
+          className="hidden md:flex relative w-[45%] shrink-0 h-full bg-[#F3F4F6] justify-center items-center p-8 group cursor-pointer"
+          onClick={() => setIsImageExpanded(true)}
+          role="button"
+          tabIndex={0}
+          onKeyDown={handleKeyDown(() => setIsImageExpanded(true))}
+          aria-label="Ver imagen ampliada"
+        >
+          <motion.img
             src={product.image}
             alt={product.name}
-            className="w-full h-full object-contain mix-blend-multiply"
+            className="w-full h-full object-contain mix-blend-multiply group-hover:scale-105 transition-transform duration-300"
           />
+          <div className="absolute inset-0 bg-black/0 group-hover:bg-black/5 transition-colors flex items-center justify-center opacity-0 group-hover:opacity-100">
+            <div className="bg-white/90 p-3 rounded-full text-[#1E1E1E]">
+              <MagnifyingGlassPlus size={24} weight="bold" />
+            </div>
+          </div>
         </div>
 
         {/* Columna de Información (Mobile: 100%, Desktop: 55%) */}
@@ -153,12 +167,22 @@ const ProductModal = ({ product, onClose }) => {
           <div className="flex-1 min-h-0 min-w-0 overflow-y-auto">
             
             {/* Imagen - Solo Mobile (Se mueve con el scroll) */}
-            <div className="md:hidden relative w-full aspect-square bg-[#F3F4F6] flex justify-center items-center p-8 mb-6">
-              <img
+            <div 
+              className="md:hidden relative w-full aspect-square bg-[#F3F4F6] flex justify-center items-center p-8 mb-6 cursor-pointer"
+              onClick={() => setIsImageExpanded(true)}
+              role="button"
+              tabIndex={0}
+              onKeyDown={handleKeyDown(() => setIsImageExpanded(true))}
+              aria-label="Ver imagen ampliada"
+            >
+              <motion.img
                 src={product.image}
                 alt={product.name}
                 className="w-full h-full object-contain mix-blend-multiply"
               />
+              <div className="absolute bottom-4 right-4 bg-white/90 p-2 rounded-full text-[#1E1E1E]">
+                <MagnifyingGlassPlus size={20} weight="bold" />
+              </div>
             </div>
 
             {/* Contenido */}
@@ -314,6 +338,15 @@ const ProductModal = ({ product, onClose }) => {
           </div>
         </div>
       </motion.div>
+      <AnimatePresence>
+        {isImageExpanded && (
+          <ImageViewer 
+            src={product.image} 
+            alt={product.name} 
+            onClose={() => setIsImageExpanded(false)} 
+          />
+        )}
+      </AnimatePresence>
     </motion.div>
   );
 };

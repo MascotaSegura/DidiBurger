@@ -317,7 +317,7 @@ const CartPanel = ({ onClose }) => {
 
             {/* Sticky Footer: total + confirm */}
             {cartItems.length > 0 && (
-              <div className="p-6 pb-[max(1.5rem,env(safe-area-inset-bottom))] bg-white shrink-0 border-t border-[#F3F4F6]">
+              <div className="p-6 pb-[max(1.5rem,env(safe-area-inset-bottom))] bg-white shrink-0">
                 {/* Total */}
                 <div className="flex justify-between mb-6 text-[#1E1E1E] items-end">
                   <span className="font-semibold text-lg">Total</span>
