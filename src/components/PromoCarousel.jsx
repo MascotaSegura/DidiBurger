@@ -10,7 +10,7 @@ const promos = [
     buttonText: 'Pedir ahora',
     bgColor: 'bg-[#06C167]',
     textColor: 'text-white',
-    image: import.meta.env.BASE_URL + 'images/classic_burger_v2.png',
+    image: import.meta.env.BASE_URL + 'images/classic_burger.png',
   },
   {
     id: 2,
@@ -19,7 +19,7 @@ const promos = [
     buttonText: 'Ordenar',
     bgColor: 'bg-[#06C167]',
     textColor: 'text-white',
-    image: import.meta.env.BASE_URL + 'images/double_burger_v2.png',
+    image: import.meta.env.BASE_URL + 'images/double_burger.png',
   },
   {
     id: 3,
@@ -28,7 +28,7 @@ const promos = [
     buttonText: 'Ver oferta',
     bgColor: 'bg-[#06C167]',
     textColor: 'text-white',
-    image: import.meta.env.BASE_URL + 'images/crispy_fries_v2.png',
+    image: import.meta.env.BASE_URL + 'images/crispy_fries.png',
   },
   {
     id: 4,
@@ -37,7 +37,7 @@ const promos = [
     buttonText: 'Agregar',
     bgColor: 'bg-[#06C167]',
     textColor: 'text-white',
-    image: import.meta.env.BASE_URL + 'images/ice_cola_v4.png',
+    image: import.meta.env.BASE_URL + 'images/ice_cola.png',
   },
   {
     id: 5,
@@ -46,7 +46,7 @@ const promos = [
     buttonText: 'Pedir postre',
     bgColor: 'bg-[#06C167]',
     textColor: 'text-white',
-    image: import.meta.env.BASE_URL + 'images/chocolate_brownie_v2.png',
+    image: import.meta.env.BASE_URL + 'images/chocolate_brownie.png',
   },
   {
     id: 6,
@@ -55,7 +55,7 @@ const promos = [
     buttonText: 'Ver combo',
     bgColor: 'bg-[#9E6202]',
     textColor: 'text-white',
-    image: import.meta.env.BASE_URL + 'images/combo_clasico_v2.png',
+    image: import.meta.env.BASE_URL + 'images/combo_clasico.png',
   },
   {
     id: 7,
@@ -64,7 +64,7 @@ const promos = [
     buttonText: 'Elegir tamaño',
     bgColor: 'bg-[#06C167]',
     textColor: 'text-white',
-    image: import.meta.env.BASE_URL + 'images/pizza_pepperoni_v2.png',
+    image: import.meta.env.BASE_URL + 'images/pizza_pepperoni.png',
   },
   {
     id: 8,
