@@ -43,7 +43,13 @@ const CartItemComponent = ({ item, updateQuantity, removeFromCart }) => {
         className="flex gap-4 bg-white relative z-10 w-full"
       >
         <div className="w-20 h-20 bg-[#F3F4F6] flex justify-center items-center p-1 shrink-0 rounded-2xl">
-          <img src={item.image} alt={item.name} className="max-w-full max-h-full object-contain mix-blend-multiply" />
+          <img 
+            src={item.image} 
+            alt={item.name} 
+            loading="lazy"
+            decoding="async"
+            className="max-w-full max-h-full object-contain mix-blend-multiply" 
+          />
         </div>
         <div className="flex-1 flex flex-col justify-between">
           <div className="flex justify-between items-start gap-2">

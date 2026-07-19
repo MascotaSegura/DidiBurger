@@ -77,7 +77,7 @@ const QuickAddControl = ({ product }) => {
   );
 };
 
-const ProductCard = ({ product, onClick }) => {
+const ProductCard = React.memo(({ product, onClick }) => {
   const { favorites = [], toggleFavorite = () => {} } = useCart();
   const isFavorite = favorites.includes(product.id);
 
@@ -99,6 +99,8 @@ const ProductCard = ({ product, onClick }) => {
         <img
           src={product.image}
           alt={product.name}
+          loading="lazy"
+          decoding="async"
           className="max-w-full max-h-full object-contain mix-blend-multiply"
         />
         {product.originalPrice && (
@@ -139,6 +141,8 @@ const ProductCard = ({ product, onClick }) => {
       </div>
     </div>
   );
-};
+});
+
+ProductCard.displayName = 'ProductCard';
 
 export default ProductCard;

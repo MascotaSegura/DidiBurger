@@ -1,24 +1,25 @@
-import React, { useState } from 'react';
+import React, { useState, Suspense, lazy } from 'react';
 import { AnimatePresence } from 'framer-motion';
 import { MagnifyingGlass, Storefront } from '@phosphor-icons/react';
 import Header from '../components/Header';
 import CategoryNav from '../components/CategoryNav';
 import ProductCard from '../components/ProductCard';
-import ProductModal from '../components/ProductModal';
 import PromoCarousel from '../components/PromoCarousel';
 import PullToRefresh from '../components/PullToRefresh';
-import CartPanel from '../components/CartPanel';
-import Sidebar from '../components/Sidebar';
-import OrdersPanel from '../components/OrdersPanel';
-import WalletPanel from '../components/WalletPanel';
-import StoresPanel from '../components/StoresPanel';
-import PromosPanel from '../components/PromosPanel';
-import HelpPanel from '../components/HelpPanel';
-import FavoritesPanel from '../components/FavoritesPanel';
-import OrderTrackingScreen from '../components/OrderTrackingScreen';
-import ChatPanel from '../components/ChatPanel';
-import ProfileScreen from '../components/ProfileScreen';
 import { products } from '../data/products';
+
+const ProductModal = lazy(() => import('../components/ProductModal'));
+const CartPanel = lazy(() => import('../components/CartPanel'));
+const Sidebar = lazy(() => import('../components/Sidebar'));
+const OrdersPanel = lazy(() => import('../components/OrdersPanel'));
+const WalletPanel = lazy(() => import('../components/WalletPanel'));
+const StoresPanel = lazy(() => import('../components/StoresPanel'));
+const PromosPanel = lazy(() => import('../components/PromosPanel'));
+const HelpPanel = lazy(() => import('../components/HelpPanel'));
+const FavoritesPanel = lazy(() => import('../components/FavoritesPanel'));
+const OrderTrackingScreen = lazy(() => import('../components/OrderTrackingScreen'));
+const ChatPanel = lazy(() => import('../components/ChatPanel'));
+const ProfileScreen = lazy(() => import('../components/ProfileScreen'));
 
 const Home = () => {
   const [selectedCategory, setSelectedCategory] = useState('all');
@@ -74,7 +75,7 @@ const Home = () => {
                 <ProductCard
                   key={product.id}
                   product={product}
-                  onClick={(p) => setSelectedProduct(p)}
+                  onClick={setSelectedProduct}
                 />
               ))}
             </div>
@@ -103,58 +104,100 @@ const Home = () => {
       {/* Navigation Drawer */}
       <AnimatePresence>
         {isSidebarOpen && (
-          <Sidebar 
-            isOpen={isSidebarOpen} 
-            onClose={() => setIsSidebarOpen(false)} 
-            onMenuSelect={(panelId) => {
-              setActivePanel(panelId);
-              setIsSidebarOpen(false);
-            }}
-            onOpenProfile={() => setShowProfile(true)}
-          />
+          <Suspense fallback={null}>
+            <Sidebar 
+              isOpen={isSidebarOpen} 
+              onClose={() => setIsSidebarOpen(false)} 
+              onMenuSelect={(panelId) => {
+                setActivePanel(panelId);
+                setIsSidebarOpen(false);
+              }}
+              onOpenProfile={() => setShowProfile(true)}
+            />
+          </Suspense>
         )}
       </AnimatePresence>
 
       <AnimatePresence>
         {selectedProduct && (
-          <ProductModal
-            product={selectedProduct}
-            onClose={() => setSelectedProduct(null)}
-          />
+          <Suspense fallback={null}>
+            <ProductModal
+              product={selectedProduct}
+              onClose={() => setSelectedProduct(null)}
+            />
+          </Suspense>
         )}
       </AnimatePresence>
 
       <AnimatePresence>
-        {isCartOpen && <CartPanel onClose={() => setIsCartOpen(false)} />}
+        {isCartOpen && (
+          <Suspense fallback={null}>
+            <CartPanel onClose={() => setIsCartOpen(false)} />
+          </Suspense>
+        )}
       </AnimatePresence>
       
       <AnimatePresence>
-        {activePanel === 'orders' && <OrdersPanel onClose={() => setActivePanel(null)} />}
+        {activePanel === 'orders' && (
+          <Suspense fallback={null}>
+            <OrdersPanel onClose={() => setActivePanel(null)} />
+          </Suspense>
+        )}
       </AnimatePresence>
       <AnimatePresence>
-        {activePanel === 'wallet' && <WalletPanel onClose={() => setActivePanel(null)} />}
+        {activePanel === 'wallet' && (
+          <Suspense fallback={null}>
+            <WalletPanel onClose={() => setActivePanel(null)} />
+          </Suspense>
+        )}
       </AnimatePresence>
       <AnimatePresence>
-        {activePanel === 'stores' && <StoresPanel onClose={() => setActivePanel(null)} />}
+        {activePanel === 'stores' && (
+          <Suspense fallback={null}>
+            <StoresPanel onClose={() => setActivePanel(null)} />
+          </Suspense>
+        )}
       </AnimatePresence>
       <AnimatePresence>
-        {activePanel === 'promos' && <PromosPanel onClose={() => setActivePanel(null)} />}
+        {activePanel === 'promos' && (
+          <Suspense fallback={null}>
+            <PromosPanel onClose={() => setActivePanel(null)} />
+          </Suspense>
+        )}
       </AnimatePresence>
       <AnimatePresence>
-        {activePanel === 'help' && <HelpPanel onClose={() => setActivePanel(null)} onOpenChat={() => setActiveChat('support')} />}
+        {activePanel === 'help' && (
+          <Suspense fallback={null}>
+            <HelpPanel onClose={() => setActivePanel(null)} onOpenChat={() => setActiveChat('support')} />
+          </Suspense>
+        )}
       </AnimatePresence>
       <AnimatePresence>
-        {activePanel === 'favorites' && <FavoritesPanel onClose={() => setActivePanel(null)} onProductClick={setSelectedProduct} />}
+        {activePanel === 'favorites' && (
+          <Suspense fallback={null}>
+            <FavoritesPanel onClose={() => setActivePanel(null)} onProductClick={setSelectedProduct} />
+          </Suspense>
+        )}
       </AnimatePresence>
 
-      <OrderTrackingScreen onOpenChat={(type) => setActiveChat(type)} />
+      <Suspense fallback={null}>
+        <OrderTrackingScreen onOpenChat={(type) => setActiveChat(type)} />
+      </Suspense>
       
       <AnimatePresence>
-        {activeChat && <ChatPanel isOpen={!!activeChat} onClose={() => setActiveChat(null)} recipient={activeChat} />}
+        {activeChat && (
+          <Suspense fallback={null}>
+            <ChatPanel isOpen={!!activeChat} onClose={() => setActiveChat(null)} recipient={activeChat} />
+          </Suspense>
+        )}
       </AnimatePresence>
 
       <AnimatePresence>
-        {showProfile && <ProfileScreen onClose={() => setShowProfile(false)} onOpenOrders={() => setActivePanel('orders')} onOpenFavorites={() => setActivePanel('favorites')} />}
+        {showProfile && (
+          <Suspense fallback={null}>
+            <ProfileScreen onClose={() => setShowProfile(false)} onOpenOrders={() => setActivePanel('orders')} onOpenFavorites={() => setActivePanel('favorites')} />
+          </Suspense>
+        )}
       </AnimatePresence>
     </div>
   );
