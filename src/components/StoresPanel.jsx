@@ -1,8 +1,7 @@
-import React, { useRef } from 'react';
+import React from 'react';
 import { motion } from 'framer-motion';
 import { X, Storefront, MapPin } from '@phosphor-icons/react';
 import { useCart } from '../context/useCart';
-import PullToRefresh from './PullToRefresh';
 
 const handleKeyDown = (fn) => (e) => {
   if (e.key === 'Enter' || e.key === ' ') {
@@ -13,12 +12,6 @@ const handleKeyDown = (fn) => (e) => {
 
 const StoresPanel = ({ onClose }) => {
   const { branches, pickupBranch, setPickupBranch, setDeliveryMode } = useCart();
-  const scrollContainerRef = useRef(null);
-
-  const handleRefresh = async () => {
-    // Simulate network request
-    await new Promise(resolve => setTimeout(resolve, 1500));
-  };
 
   const handleSelectBranch = (branch) => {
     setPickupBranch(branch);
@@ -66,48 +59,46 @@ const StoresPanel = ({ onClose }) => {
           </h2>
         </div>
 
-        <div className="flex-1 min-h-0 overflow-y-auto p-6" ref={scrollContainerRef}>
-          <PullToRefresh onRefresh={handleRefresh} scrollRef={scrollContainerRef} bgClass="bg-transparent">
-          {!branches || branches.length === 0 ? (
-            <div className="h-full min-h-[300px] flex flex-col items-center justify-center py-20 text-center">
-              <div className="w-20 h-20 bg-[#F3F4F6] rounded-full flex items-center justify-center mb-6">
-                <Storefront size={40} weight="fill" color="#D1D1D6" />
-              </div>
-              <h3 className="text-xl font-semibold text-[#1E1E1E] mb-2">No hay sucursales</h3>
-              <p className="text-[15px] text-[#8E8E93] max-w-[250px]">En este momento no hay sucursales disponibles.</p>
-            </div>
-          ) : (
-            <div className="flex flex-col gap-4">
-              {branches.map((branch) => {
-                const isSelected = pickupBranch?.id === branch.id;
-                return (
-                  <div key={branch.id} className={`p-5 rounded-2xl flex flex-col gap-3 transition-colors outline-none focus-visible:opacity-80 ${isSelected ? 'bg-[#1E1E1E] text-white' : 'bg-[#F3F4F6] text-[#1E1E1E]'}`}>
-                    <div className="flex items-start gap-3">
-                      <Storefront size={24} weight="fill" className={isSelected ? 'text-white' : 'text-[#1E1E1E]'} />
-                      <div className="flex-1 flex flex-col">
-                        <span className="font-semibold text-[16px]">{branch.label}</span>
-                        <span className={`text-[14px] mt-1 ${isSelected ? 'text-[#D1D1D6]' : 'text-[#8E8E93]'}`}>{branch.detail}</span>
-                      </div>
-                    </div>
-                    {!isSelected && (
-                      <button 
-                        className="mt-2 w-full bg-white text-[#1E1E1E] font-medium py-2.5 rounded-full hover:bg-[#ECECEE] active:scale-[0.98] outline-none focus-visible:bg-[#ECECEE] transition-all"
-                        onClick={() => handleSelectBranch(branch)}
-                      >
-                        Recoger aquí
-                      </button>
-                    )}
-                    {isSelected && (
-                      <div className="mt-2 w-full bg-[#2C2C2E] text-white font-medium py-2.5 rounded-full flex items-center justify-center cursor-default">
-                        Seleccionada
-                      </div>
-                    )}
+        <div className="flex-1 min-h-0 overflow-y-auto p-6">
+              {!branches || branches.length === 0 ? (
+                <div className="h-full flex flex-col items-center justify-center py-20 text-center">
+                  <div className="w-20 h-20 bg-[#F3F4F6] rounded-full flex items-center justify-center mb-6">
+                    <Storefront size={40} weight="fill" color="#D1D1D6" />
                   </div>
-                );
-              })}
-            </div>
-          )}
-          </PullToRefresh>
+                  <h3 className="text-xl font-semibold text-[#1E1E1E] mb-2">No hay sucursales</h3>
+                  <p className="text-[15px] text-[#8E8E93] max-w-[250px]">En este momento no hay sucursales disponibles.</p>
+                </div>
+              ) : (
+                <div className="flex flex-col gap-4">
+                  {branches.map((branch) => {
+                    const isSelected = pickupBranch?.id === branch.id;
+                    return (
+                      <div key={branch.id} className={`p-5 rounded-2xl flex flex-col gap-3 transition-colors outline-none focus-visible:opacity-80 ${isSelected ? 'bg-[#1E1E1E] text-white' : 'bg-[#F3F4F6] text-[#1E1E1E]'}`}>
+                        <div className="flex items-start gap-3">
+                          <Storefront size={24} weight="fill" className={isSelected ? 'text-white' : 'text-[#1E1E1E]'} />
+                          <div className="flex-1 flex flex-col">
+                            <span className="font-semibold text-[16px]">{branch.label}</span>
+                            <span className={`text-[14px] mt-1 ${isSelected ? 'text-[#D1D1D6]' : 'text-[#8E8E93]'}`}>{branch.detail}</span>
+                          </div>
+                        </div>
+                        {!isSelected && (
+                          <button 
+                            className="mt-2 w-full bg-white text-[#1E1E1E] font-medium py-2.5 rounded-full hover:bg-[#ECECEE] active:scale-[0.98] outline-none focus-visible:bg-[#ECECEE] transition-all"
+                            onClick={() => handleSelectBranch(branch)}
+                          >
+                            Recoger aquí
+                          </button>
+                        )}
+                        {isSelected && (
+                          <div className="mt-2 w-full bg-[#2C2C2E] text-white font-medium py-2.5 rounded-full flex items-center justify-center cursor-default">
+                            Seleccionada
+                          </div>
+                        )}
+                      </div>
+                    );
+                  })}
+                </div>
+              )}
         </div>
       </motion.div>
     </motion.div>

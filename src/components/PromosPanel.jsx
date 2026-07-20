@@ -1,8 +1,7 @@
-import React, { useState, useRef } from 'react';
+import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { X } from '@phosphor-icons/react';
 import { useCart } from '../context/useCart';
-import PullToRefresh from './PullToRefresh';
 
 const handleKeyDown = (fn) => (e) => {
   if (e.key === 'Enter' || e.key === ' ') {
@@ -20,12 +19,6 @@ const PromosPanel = ({ onClose }) => {
   const { applyPromo, activePromo } = useCart();
   const [inputCode, setInputCode] = useState('');
   const [message, setMessage] = useState(null);
-  const scrollContainerRef = useRef(null);
-
-  const handleRefresh = async () => {
-    // Simulate network request
-    await new Promise(resolve => setTimeout(resolve, 1500));
-  };
 
   const handleApply = () => {
     if (!inputCode.trim()) return;
@@ -78,69 +71,63 @@ const PromosPanel = ({ onClose }) => {
           </h2>
         </div>
 
-        <div className="flex-1 min-h-0 overflow-y-auto p-6" ref={scrollContainerRef}>
-          <PullToRefresh onRefresh={handleRefresh} scrollRef={scrollContainerRef} bgClass="bg-transparent">
-          <div className="flex items-center bg-[#F3F4F6] rounded-full px-4 py-1 mb-2 focus-within:bg-[#ECECEE] transition-colors">
-             <input 
-                type="text" 
-                placeholder="Ingresa un código promocional" 
-                className="flex-1 bg-transparent outline-none text-[15px] text-[#1E1E1E] placeholder:text-[#8E8E93] h-12 uppercase" 
-                value={inputCode}
-                onChange={(e) => {
-                   setInputCode(e.target.value.toUpperCase());
-                   if (message) setMessage(null);
-                }}
-                onKeyDown={(e) => {
-                   if (e.key === 'Enter') handleApply();
-                }}
-             />
-             <button 
-                className="bg-[#1E1E1E] text-white px-5 py-2 rounded-full font-medium text-[14px] hover:bg-[#2C2C2E] active:scale-[0.95] transition-all outline-none focus-visible:opacity-90 disabled:opacity-50"
-                onClick={handleApply}
-                disabled={!inputCode.trim()}
-             >
-               Aplicar
-             </button>
-          </div>
-          
-          <div className="h-6 mb-4">
-             {message && (
-               <p className={`text-[13px] font-medium px-2 ${message.type === 'success' ? 'text-[#06C167]' : 'text-[#FF3B30]'}`}>
-                 {message.text}
-               </p>
-             )}
-             {!message && activePromo && (
-               <p className="text-[13px] font-medium px-2 text-[#06C167]">
-                 Cupón activo: {activePromo.code}
-               </p>
-             )}
-          </div>
-
-          <h3 className="font-semibold text-[#1E1E1E] text-[16px] mb-4">Promociones disponibles</h3>
-          
-          <div className="flex flex-col gap-4">
-            {mockPromos.map((promo) => (
-              <div key={promo.id} className="bg-[#06C167]/10 p-5 rounded-2xl flex flex-col gap-2">
-                <span className="font-bold text-[#06C167] text-[18px]">{promo.title}</span>
-                <span className="text-[#1E1E1E] text-[14px] mb-2 max-w-[80%]">{promo.desc}</span>
-                
-                <div className="flex items-center justify-between mt-1 bg-white p-2 pl-4 rounded-full">
-                  <span className="font-mono font-bold text-[#1E1E1E] text-[15px]">{promo.code}</span>
-                  <button 
-                    className="h-8 px-3 bg-[#F3F4F6] rounded-full flex items-center justify-center text-[#1E1E1E] text-[13px] font-medium hover:bg-[#ECECEE] active:scale-[0.95] transition-all outline-none focus-visible:bg-[#ECECEE]"
-                    onClick={() => {
-                       setInputCode(promo.code);
-                       setMessage(null);
-                    }}
-                    aria-label={`Usar código ${promo.code}`}
-                  >
-                    Usar
-                  </button>
-                </div>
+        <div className="flex-1 min-h-0 overflow-y-auto p-6">
+              <div className="flex items-center bg-[#F3F4F6] rounded-full px-4 py-1 mb-2 focus-within:bg-[#ECECEE] transition-colors">
+                <input 
+                  type="text" 
+                  placeholder="Ingresa un código promocional" 
+                  className="flex-1 bg-transparent outline-none text-[15px] text-[#1E1E1E] placeholder:text-[#8E8E93] h-12 uppercase" 
+                  value={inputCode}
+                  onChange={(e) => {
+                    setInputCode(e.target.value.toUpperCase());
+                    if (message) setMessage(null);
+                  }}
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter') handleApply();
+                  }}
+                />
+                <button 
+                  className="bg-[#1E1E1E] text-white px-5 py-2 rounded-full font-medium text-[14px] hover:bg-[#2C2C2E] active:scale-[0.95] transition-all outline-none focus-visible:opacity-90 disabled:opacity-50"
+                  onClick={handleApply}
+                  disabled={!inputCode.trim()}
+                >
+                  Aplicar
+                </button>
               </div>
-            ))}
-          </div>
-          </PullToRefresh>
+              
+              <div className="h-6 mb-4">
+                {message && (
+                  <p className={`text-[13px] font-medium px-2 ${message.type === 'success' ? 'text-[#06C167]' : 'text-[#FF3B30]'}`}>
+                    {message.text}
+                  </p>
+                )}
+                {!message && activePromo && (
+                  <p className="text-[13px] font-medium px-2 text-[#06C167]">
+                    Cupón activo: {activePromo.code}
+                  </p>
+                )}
+              </div>
+
+              <h3 className="font-semibold text-[#1E1E1E] text-[16px] mb-4">Promociones disponibles</h3>
+              
+              <div className="flex flex-col gap-4">
+                {mockPromos.map((promo) => (
+                  <div key={promo.id} className="bg-[#06C167]/10 p-5 rounded-2xl flex flex-col gap-2">
+                    <span className="font-bold text-[#06C167] text-[18px]">{promo.title}</span>
+                    <span className="text-[#1E1E1E] text-[14px] mb-2 max-w-[80%]">{promo.desc}</span>
+                    <div className="flex items-center justify-between mt-1 bg-white p-2 pl-4 rounded-full">
+                      <span className="font-mono font-bold text-[#1E1E1E] text-[15px]">{promo.code}</span>
+                      <button 
+                        className="h-8 px-3 bg-[#F3F4F6] rounded-full flex items-center justify-center text-[#1E1E1E] text-[13px] font-medium hover:bg-[#ECECEE] active:scale-[0.95] transition-all outline-none focus-visible:bg-[#ECECEE]"
+                        onClick={() => { setInputCode(promo.code); setMessage(null); }}
+                        aria-label={`Usar código ${promo.code}`}
+                      >
+                        Usar
+                      </button>
+                    </div>
+                  </div>
+                ))}
+              </div>
         </div>
       </motion.div>
     </motion.div>

@@ -1,8 +1,7 @@
-import React, { useRef } from 'react';
+import React from 'react';
 import { motion } from 'framer-motion';
 import { X, Receipt, Package } from '@phosphor-icons/react';
 import { useCart } from '../context/useCart';
-import PullToRefresh from './PullToRefresh';
 
 const handleKeyDown = (fn) => (e) => {
   if (e.key === 'Enter' || e.key === ' ') {
@@ -18,12 +17,6 @@ const mockOrders = [
 
 const OrdersPanel = ({ onClose }) => {
   const { activeOrder, setOrderStatus } = useCart();
-  const scrollContainerRef = useRef(null);
-
-  const handleRefresh = async () => {
-    // Simulate network request
-    await new Promise(resolve => setTimeout(resolve, 1500));
-  };
 
   return (
     <motion.div
@@ -35,8 +28,7 @@ const OrdersPanel = ({ onClose }) => {
       aria-modal="true"
       aria-label="Mis Pedidos"
     >
-      {/* Container - sliding from right in desktop, up in mobile */}
-      <motion.div 
+      <motion.div
         initial={{ y: "100%" }}
         animate={{ y: 0 }}
         exit={{ y: "100%" }}
@@ -45,11 +37,10 @@ const OrdersPanel = ({ onClose }) => {
         dragConstraints={{ top: 0, bottom: 0 }}
         dragElastic={{ top: 0, bottom: 0.5 }}
         onDragEnd={(e, info) => {
-          if (info.offset.y > 100 || info.velocity.y > 500) {
-            onClose();
-          }
+          if (info.offset.y > 100 || info.velocity.y > 500) onClose();
         }}
-        className="bg-white w-full h-full max-h-[100dvh] md:h-full max-w-[480px] flex flex-col md:rounded-l-2xl rounded-t-2xl md:rounded-tr-none overflow-hidden relative isolate">
+        className="bg-white w-full h-full max-h-[100dvh] md:h-full max-w-[480px] flex flex-col md:rounded-l-2xl rounded-t-2xl md:rounded-tr-none overflow-hidden relative isolate"
+      >
         <div className="flex items-center px-6 pb-4 pt-[max(1rem,env(safe-area-inset-top,1rem))] shrink-0 bg-white">
           <div
             className="w-10 h-10 bg-[#F3F4F6] rounded-full flex items-center justify-center cursor-pointer hover:bg-[#ECECEE] active:bg-[#ECECEE] active:scale-[0.95] outline-none focus-visible:bg-[#ECECEE] transition-all"
@@ -66,25 +57,21 @@ const OrdersPanel = ({ onClose }) => {
           </h2>
         </div>
 
-        <div className="flex-1 min-h-0 overflow-y-auto p-6" ref={scrollContainerRef}>
-          <PullToRefresh onRefresh={handleRefresh} scrollRef={scrollContainerRef} bgClass="bg-transparent">
-            {mockOrders.length === 0 && !activeOrder ? (
-              <div className="h-full min-h-[300px] flex flex-col items-center justify-center py-20 text-center">
-                <div className="w-20 h-20 bg-[#F3F4F6] rounded-full flex items-center justify-center mb-6">
-                  <Receipt size={40} weight="fill" color="#D1D1D6" />
-                </div>
-                <h3 className="text-xl font-semibold text-[#1E1E1E] mb-2">No tienes pedidos</h3>
-                <p className="text-[15px] text-[#8E8E93] max-w-[250px]">¡Realiza tu primer pedido y aparecerá aquí!</p>
+        <div className="flex-1 min-h-0 overflow-y-auto p-6">
+          {mockOrders.length === 0 && !activeOrder ? (
+            <div className="h-full flex flex-col items-center justify-center py-20 text-center">
+              <div className="w-20 h-20 bg-[#F3F4F6] rounded-full flex items-center justify-center mb-6">
+                <Receipt size={40} weight="fill" color="#D1D1D6" />
               </div>
-            ) : (
+              <h3 className="text-xl font-semibold text-[#1E1E1E] mb-2">No tienes pedidos</h3>
+              <p className="text-[15px] text-[#8E8E93] max-w-[250px]">¡Realiza tu primer pedido y aparecerá aquí!</p>
+            </div>
+          ) : (
             <div className="flex flex-col gap-4">
               {activeOrder && (
-                <div 
+                <div
                   className="bg-[#1E1E1E] p-5 rounded-2xl flex flex-col gap-3 hover:bg-[#2C2C2E] transition-colors cursor-pointer outline-none focus-visible:opacity-90 relative overflow-hidden"
-                  onClick={() => {
-                    setOrderStatus('tracking');
-                    onClose();
-                  }}
+                  onClick={() => { setOrderStatus('tracking'); onClose(); }}
                 >
                   <div className="flex justify-between items-center relative z-10">
                     <span className="font-semibold text-white text-[15px]">Pedido en curso</span>
@@ -117,7 +104,6 @@ const OrdersPanel = ({ onClose }) => {
               ))}
             </div>
           )}
-          </PullToRefresh>
         </div>
       </motion.div>
     </motion.div>
