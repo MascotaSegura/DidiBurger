@@ -6,7 +6,18 @@ const PWABadge = () => {
   const {
     needRefresh: [needRefresh, setNeedRefresh],
     updateServiceWorker,
-  } = useRegisterSW();
+  } = useRegisterSW({
+    onRegistered(r) {
+      if (r) {
+        setInterval(() => {
+          r.update();
+        }, 60 * 1000); // Check every minute for testing/demo purposes
+      }
+    },
+    onRegisterError(error) {
+      console.error('SW registration error', error);
+    }
+  });
 
   if (!needRefresh) return null;
 

@@ -10,7 +10,11 @@ export default defineConfig({
     tailwindcss(),
     VitePWA({
       registerType: 'prompt',
-      includeAssets: ['favicon.svg', 'icons/*.png'],
+      includeAssets: ['favicon.svg', 'icons/*.png', 'images/*.png', 'images/*.jpg'],
+      workbox: {
+        globPatterns: ['**/*.{js,css,html,ico,png,svg,webp,jpg}'],
+        maximumFileSizeToCacheInBytes: 50 * 1024 * 1024 // 50 MB
+      },
       manifest: {
         name: 'Uber Eats',
         short_name: 'Uber Eats',
