@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
-import { motion } from 'framer-motion';
+import React, { useState, useRef } from 'react';
+import { motion, useDragControls } from 'framer-motion';
 import { X, CaretDown, CaretUp, Question } from '@phosphor-icons/react';
-
+import PullToRefresh from './PullToRefresh';
 const handleKeyDown = (fn) => (e) => {
   if (e.key === 'Enter' || e.key === ' ') {
     e.preventDefault();
@@ -18,6 +18,12 @@ const faqs = [
 
 const HelpPanel = ({ onClose, onOpenChat }) => {
   const [expanded, setExpanded] = useState(null);
+  const dragControls = useDragControls();
+  const scrollContainerRef = useRef(null);
+
+  const handleRefresh = async () => {
+    await new Promise(resolve => setTimeout(resolve, 1500));
+  };
 
   return (
     <motion.div
@@ -35,6 +41,8 @@ const HelpPanel = ({ onClose, onOpenChat }) => {
         exit={{ y: "100%" }}
         transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
         drag="y"
+        dragControls={dragControls}
+        dragListener={false}
         dragConstraints={{ top: 0, bottom: 0 }}
         dragElastic={{ top: 0, bottom: 0.5 }}
         onDragEnd={(e, info) => {
@@ -43,23 +51,37 @@ const HelpPanel = ({ onClose, onOpenChat }) => {
           }
         }}
         className="bg-white w-full h-full max-h-[100dvh] md:h-full max-w-[480px] flex flex-col md:rounded-l-2xl rounded-t-2xl md:rounded-tr-none overflow-hidden relative isolate">
-        <div className="flex items-center px-6 pb-4 pt-[max(1rem,env(safe-area-inset-top,1rem))] shrink-0 bg-white">
-          <div
-            className="w-10 h-10 bg-[#F3F4F6] rounded-full flex items-center justify-center cursor-pointer hover:bg-[#ECECEE] active:bg-[#ECECEE] active:scale-[0.95] outline-none focus-visible:bg-[#ECECEE] transition-all"
-            onClick={onClose}
-            onKeyDown={handleKeyDown(onClose)}
-            role="button"
-            tabIndex={0}
-            aria-label="Cerrar"
-          >
-            <X size={20} weight="bold" color="#1E1E1E" />
+        
+        {/* Drag Handle Area */}
+        <div 
+          className="flex flex-col shrink-0 bg-white touch-none cursor-grab active:cursor-grabbing z-10"
+          onPointerDown={(e) => dragControls.start(e)}
+        >
+          <div className="w-full flex justify-center pt-3 pb-1 md:hidden">
+            <div className="w-12 h-1.5 bg-[#E5E5EA] rounded-full" />
           </div>
-          <h2 className="flex-1 text-center text-lg font-semibold text-[#1E1E1E] pr-10">
-            Ayuda
-          </h2>
+          
+          <div className="flex items-center px-6 pb-4 pt-2 md:pt-[max(1rem,env(safe-area-inset-top,1rem))]">
+            <div
+              className="w-10 h-10 bg-[#F3F4F6] rounded-full flex items-center justify-center cursor-pointer hover:bg-[#ECECEE] active:bg-[#ECECEE] active:scale-[0.95] outline-none focus-visible:bg-[#ECECEE] transition-all"
+              onClick={onClose}
+              onPointerDown={(e) => e.stopPropagation()}
+              onKeyDown={handleKeyDown(onClose)}
+              role="button"
+              tabIndex={0}
+              aria-label="Cerrar"
+            >
+              <X size={20} weight="bold" color="#1E1E1E" />
+            </div>
+            <h2 className="flex-1 text-center text-lg font-semibold text-[#1E1E1E] pr-10 pointer-events-none">
+              Ayuda
+            </h2>
+          </div>
         </div>
 
-        <div className="flex-1 min-h-0 overflow-y-auto p-6">
+        <div className="flex-1 min-h-0 overflow-y-auto" ref={scrollContainerRef}>
+          <PullToRefresh onRefresh={handleRefresh} scrollRef={scrollContainerRef}>
+            <div className="p-6">
           <div className="flex flex-col items-center justify-center mb-8 text-center mt-4">
             <div className="w-16 h-16 bg-[#F3F4F6] rounded-full flex items-center justify-center mb-4">
               <Question size={32} weight="fill" color="#1E1E1E" />
@@ -93,7 +115,9 @@ const HelpPanel = ({ onClose, onOpenChat }) => {
                 </div>
               );
             })}
-          </div>
+            </div>
+            </div>
+          </PullToRefresh>
         </div>
         
         <div className="p-6 bg-white shrink-0 pb-[max(1.5rem,env(safe-area-inset-bottom))]">

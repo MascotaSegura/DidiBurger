@@ -1,9 +1,10 @@
-import React from 'react';
-import { motion } from 'framer-motion';
+import React, { useRef } from 'react';
+import { motion, useDragControls } from 'framer-motion';
 import { X, Heart } from '@phosphor-icons/react';
 import { useCart } from '../context/useCart';
 import { products } from '../data/products';
 import ProductCard from './ProductCard';
+import PullToRefresh from './PullToRefresh';
 
 const handleKeyDown = (fn) => (e) => {
   if (e.key === 'Enter' || e.key === ' ') {
@@ -14,6 +15,12 @@ const handleKeyDown = (fn) => (e) => {
 
 const FavoritesPanel = ({ onClose, onProductClick }) => {
   const { favorites = [] } = useCart();
+  const dragControls = useDragControls();
+  const scrollContainerRef = useRef(null);
+
+  const handleRefresh = async () => {
+    await new Promise(resolve => setTimeout(resolve, 1500));
+  };
   
   // Get full product objects for the favorited items
   const favoriteProducts = products.filter(p => favorites.includes(p.id));
@@ -35,6 +42,8 @@ const FavoritesPanel = ({ onClose, onProductClick }) => {
         exit={{ y: "100%" }}
         transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
         drag="y"
+        dragControls={dragControls}
+        dragListener={false}
         dragConstraints={{ top: 0, bottom: 0 }}
         dragElastic={{ top: 0, bottom: 0.5 }}
         onDragEnd={(e, info) => {
@@ -44,24 +53,36 @@ const FavoritesPanel = ({ onClose, onProductClick }) => {
         }}
         className="bg-[#F3F4F6] w-full h-full max-h-[100dvh] md:h-full md:max-w-[480px] flex flex-col md:rounded-l-2xl rounded-t-2xl md:rounded-tr-none overflow-hidden relative isolate">
         
-        {/* Header */}
-        <div className="flex items-center px-6 pb-4 pt-[max(1rem,env(safe-area-inset-top,1rem))] shrink-0 bg-white z-10">
-          <div
-            className="w-10 h-10 bg-[#F3F4F6] rounded-full flex items-center justify-center cursor-pointer hover:bg-[#ECECEE] active:bg-[#ECECEE] active:scale-[0.95] outline-none focus-visible:bg-[#ECECEE] transition-all"
-            onClick={onClose}
-            onKeyDown={handleKeyDown(onClose)}
-            role="button"
-            tabIndex={0}
-            aria-label="Cerrar"
-          >
-            <X size={20} weight="bold" color="#1E1E1E" />
+        {/* Drag Handle Area */}
+        <div 
+          className="flex flex-col shrink-0 bg-white touch-none cursor-grab active:cursor-grabbing z-10"
+          onPointerDown={(e) => dragControls.start(e)}
+        >
+          <div className="w-full flex justify-center pt-3 pb-1 md:hidden">
+            <div className="w-12 h-1.5 bg-[#E5E5EA] rounded-full" />
           </div>
-          <h2 className="flex-1 text-center text-lg font-semibold text-[#1E1E1E] pr-10">
-            Favoritos
-          </h2>
+          
+          <div className="flex items-center px-6 pb-4 pt-2 md:pt-[max(1rem,env(safe-area-inset-top,1rem))]">
+            <div
+              className="w-10 h-10 bg-[#F3F4F6] rounded-full flex items-center justify-center cursor-pointer hover:bg-[#ECECEE] active:bg-[#ECECEE] active:scale-[0.95] outline-none focus-visible:bg-[#ECECEE] transition-all"
+              onClick={onClose}
+              onPointerDown={(e) => e.stopPropagation()}
+              onKeyDown={handleKeyDown(onClose)}
+              role="button"
+              tabIndex={0}
+              aria-label="Cerrar"
+            >
+              <X size={20} weight="bold" color="#1E1E1E" />
+            </div>
+            <h2 className="flex-1 text-center text-lg font-semibold text-[#1E1E1E] pr-10 pointer-events-none">
+              Favoritos
+            </h2>
+          </div>
         </div>
 
-        <div className="flex-1 min-h-0 overflow-y-auto p-4 md:p-6 pb-[max(1.5rem,env(safe-area-inset-bottom))]">
+        <div className="flex-1 min-h-0 overflow-y-auto" ref={scrollContainerRef}>
+          <PullToRefresh onRefresh={handleRefresh} scrollRef={scrollContainerRef}>
+            <div className="p-4 md:p-6 pb-[max(1.5rem,env(safe-area-inset-bottom))]">
               {favoriteProducts.length === 0 ? (
                 <div className="h-full flex flex-col items-center justify-center py-10 text-center">
                   <div className="w-20 h-20 bg-[#ECECEE] rounded-full flex items-center justify-center mb-6">
@@ -85,6 +106,8 @@ const FavoritesPanel = ({ onClose, onProductClick }) => {
                   ))}
                 </div>
               )}
+            </div>
+          </PullToRefresh>
         </div>
       </motion.div>
     </motion.div>

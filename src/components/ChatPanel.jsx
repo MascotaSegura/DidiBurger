@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { motion } from 'framer-motion';
+import { motion, useDragControls } from 'framer-motion';
 import { X, PaperPlaneRight, Headset } from '@phosphor-icons/react';
 
 const handleKeyDown = (fn) => (e) => {
@@ -22,6 +22,7 @@ const ChatPanel = ({ isOpen, onClose, recipient }) => {
   const [messages, setMessages] = useState([]);
   const [inputValue, setInputValue] = useState('');
   const messagesEndRef = useRef(null);
+  const dragControls = useDragControls();
 
   useEffect(() => {
     if (isOpen) {
@@ -75,6 +76,8 @@ const ChatPanel = ({ isOpen, onClose, recipient }) => {
         exit={{ y: "100%" }}
         transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
         drag="y"
+        dragControls={dragControls}
+        dragListener={false}
         dragConstraints={{ top: 0, bottom: 0 }}
         dragElastic={{ top: 0, bottom: 0.5 }}
         onDragEnd={(e, info) => {
@@ -84,19 +87,28 @@ const ChatPanel = ({ isOpen, onClose, recipient }) => {
         }}
         className="bg-[#F3F4F6] w-full h-full max-h-[100dvh] md:h-full max-w-[480px] flex flex-col md:rounded-l-2xl rounded-t-2xl md:rounded-tr-none overflow-hidden relative isolate"
       >
-        {/* Header */}
-        <div className="flex items-center px-4 pb-4 pt-[max(1rem,env(safe-area-inset-top,1rem))] shrink-0 bg-white">
-          <div
-            className="w-10 h-10 bg-[#F3F4F6] rounded-full flex items-center justify-center cursor-pointer hover:bg-[#ECECEE] active:bg-[#ECECEE] active:scale-[0.95] outline-none focus-visible:bg-[#ECECEE] transition-all"
-            onClick={onClose}
-            onKeyDown={handleKeyDown(onClose)}
-            role="button"
-            tabIndex={0}
-            aria-label="Cerrar"
-          >
-            <X size={20} weight="bold" color="#1E1E1E" />
+        {/* Drag Handle Area */}
+        <div 
+          className="flex flex-col shrink-0 bg-white touch-none cursor-grab active:cursor-grabbing z-10"
+          onPointerDown={(e) => dragControls.start(e)}
+        >
+          <div className="w-full flex justify-center pt-3 pb-1 md:hidden">
+            <div className="w-12 h-1.5 bg-[#E5E5EA] rounded-full" />
           </div>
-          <div className="flex-1 flex items-center justify-center pr-10 gap-3">
+          
+          <div className="flex items-center px-4 pb-4 pt-2 md:pt-[max(1rem,env(safe-area-inset-top,1rem))]">
+            <div
+              className="w-10 h-10 bg-[#F3F4F6] rounded-full flex items-center justify-center cursor-pointer hover:bg-[#ECECEE] active:bg-[#ECECEE] active:scale-[0.95] outline-none focus-visible:bg-[#ECECEE] transition-all"
+              onClick={onClose}
+              onPointerDown={(e) => e.stopPropagation()}
+              onKeyDown={handleKeyDown(onClose)}
+              role="button"
+              tabIndex={0}
+              aria-label="Cerrar"
+            >
+              <X size={20} weight="bold" color="#1E1E1E" />
+            </div>
+            <div className="flex-1 flex items-center justify-center pr-10 gap-3 pointer-events-none">
             {recipient === 'driver' ? (
               <div className="w-10 h-10 rounded-full bg-[#D1D1D6] overflow-hidden shrink-0">
                 <img
@@ -119,6 +131,7 @@ const ChatPanel = ({ isOpen, onClose, recipient }) => {
               </p>
             </div>
           </div>
+        </div>
         </div>
 
         {/* Messages Area */}
