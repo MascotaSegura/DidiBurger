@@ -1,9 +1,11 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { CaretLeft, CaretRight } from '@phosphor-icons/react';
+import { products } from '../data/products';
 
 const promos = [
   {
     id: 1,
+    productId: 1,
     title: 'Hamburguesa Clásica',
     subtitle: '20% OFF en tu primera orden del día.',
     buttonText: 'Pedir ahora',
@@ -13,6 +15,7 @@ const promos = [
   },
   {
     id: 2,
+    productId: 2,
     title: 'Doble Queso',
     subtitle: 'Doble sabor, doble queso. Envío gratis hoy.',
     buttonText: 'Ordenar',
@@ -22,6 +25,7 @@ const promos = [
   },
   {
     id: 3,
+    productId: 3,
     title: 'Papas Crujientes',
     subtitle: '2x1 en papas fritas los fines de semana.',
     buttonText: 'Ver oferta',
@@ -31,6 +35,7 @@ const promos = [
   },
   {
     id: 4,
+    productId: 4,
     title: 'Refresco Helado',
     subtitle: '2x1 en bebidas frías seleccionadas.',
     buttonText: 'Agregar',
@@ -40,6 +45,7 @@ const promos = [
   },
   {
     id: 5,
+    productId: 5,
     title: 'Brownie de Chocolate',
     subtitle: 'El postre que tu orden estaba esperando.',
     buttonText: 'Pedir postre',
@@ -49,6 +55,7 @@ const promos = [
   },
   {
     id: 6,
+    productId: 6,
     title: 'Combo Clásico',
     subtitle: 'Más por menos. Envíos gratis con Uber One.',
     buttonText: 'Ver combo',
@@ -58,6 +65,7 @@ const promos = [
   },
   {
     id: 7,
+    productId: 7,
     title: 'Pizza Pepperoni',
     subtitle: 'Masa madre artesanal con pepperoni crujiente.',
     buttonText: 'Elegir tamaño',
@@ -67,6 +75,7 @@ const promos = [
   },
   {
     id: 8,
+    productId: 8,
     title: 'Alitas BBQ',
     subtitle: '10 piezas bañadas en salsa BBQ secreta.',
     buttonText: 'Pedir alitas',
@@ -76,11 +85,14 @@ const promos = [
   },
 ];
 
-const PromoCard = ({ promo }) => (
+const PromoCard = ({ promo, onSelect }) => (
   <div
     className={`relative flex items-center w-full h-[150px] lg:h-[180px] rounded-2xl overflow-hidden cursor-pointer transition-transform active:scale-[0.98] outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-[#06C167] ${promo.bgColor}`}
     role="button"
     tabIndex={0}
+    onClick={onSelect}
+    onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); onSelect?.(); } }}
+    aria-label={`Ver ${promo.title}`}
   >
     {/* Left Content */}
     <div className={`flex-1 h-full flex flex-col justify-center py-4 pl-5 lg:pl-6 pr-2 z-10 ${promo.textColor}`}>
@@ -109,10 +121,16 @@ const PromoCard = ({ promo }) => (
   </div>
 );
 
-const PromoCarousel = () => {
+const PromoCarousel = ({ onProductSelect }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [cardsPerView, setCardsPerView] = useState(1);
   const scrollRef = useRef(null);
+
+  const handlePromoClick = (promo) => {
+    if (!onProductSelect) return;
+    const product = products.find((p) => p.id === promo.productId);
+    if (product) onProductSelect(product);
+  };
 
   useEffect(() => {
     const updateView = () => {
@@ -199,7 +217,7 @@ const PromoCarousel = () => {
             className={`shrink-0 snap-center py-2 ${index < promos.length - 1 ? 'mr-4' : ''}`}
             style={{ width: getCardWidth() }}
           >
-            <PromoCard promo={promo} />
+            <PromoCard promo={promo} onSelect={() => handlePromoClick(promo)} />
           </div>
         ))}
 
