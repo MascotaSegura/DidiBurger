@@ -149,15 +149,21 @@ const PromoCarousel = () => {
     }
   };
 
+  const getCardWidth = () => {
+    if (cardsPerView === 3) return 'calc((100% - 5rem) / 3)';
+    if (cardsPerView === 2) return 'calc((100% - 4rem) / 2)';
+    return 'calc(100% - 2rem)';
+  };
+
   return (
-    <div className="w-full pt-4 pb-2">
-      <div className="max-w-7xl mx-auto px-2 sm:px-4 relative group">
+    <div className="w-full pt-4 pb-2 overflow-hidden">
+      <div className="max-w-7xl mx-auto relative group">
 
         {/* Navigation Arrows for Tablet/Desktop */}
         <button
           onClick={(e) => { e.preventDefault(); slideLeft(); }}
           disabled={currentIndex === 0}
-          className="hidden md:flex absolute left-0 xl:-left-4 top-1/2 -translate-y-1/2 z-20 w-10 h-10 bg-white rounded-full items-center justify-center text-[#1E1E1E] opacity-0 group-hover:opacity-100 transition-opacity hover:bg-[#F3F4F6] active:scale-95 disabled:opacity-0"
+          className="hidden md:flex absolute left-2 xl:-left-4 top-1/2 -translate-y-1/2 z-20 w-10 h-10 bg-white rounded-full items-center justify-center text-[#1E1E1E] opacity-0 group-hover:opacity-100 transition-all hover:bg-[#E5E5E7] active:bg-[#E5E5E7] active:scale-95 disabled:opacity-0"
           aria-label="Anterior"
         >
           <CaretLeft size={20} weight="bold" />
@@ -165,7 +171,7 @@ const PromoCarousel = () => {
         <button
           onClick={(e) => { e.preventDefault(); slideRight(); }}
           disabled={currentIndex >= maxIndex}
-          className="hidden md:flex absolute right-0 xl:-right-4 top-1/2 -translate-y-1/2 z-20 w-10 h-10 bg-white rounded-full items-center justify-center text-[#1E1E1E] opacity-0 group-hover:opacity-100 transition-opacity hover:bg-[#F3F4F6] active:scale-95 disabled:opacity-0"
+          className="hidden md:flex absolute right-2 xl:-right-4 top-1/2 -translate-y-1/2 z-20 w-10 h-10 bg-white rounded-full items-center justify-center text-[#1E1E1E] opacity-0 group-hover:opacity-100 transition-all hover:bg-[#E5E5E7] active:bg-[#E5E5E7] active:scale-95 disabled:opacity-0"
           aria-label="Siguiente"
         >
           <CaretRight size={20} weight="bold" />
@@ -177,15 +183,21 @@ const PromoCarousel = () => {
           onScroll={handleScroll}
           className="flex w-full overflow-x-auto snap-x snap-mandatory touch-pan-x [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
         >
-          {promos.map((promo) => (
+          {/* Left Spacer to push first item inwards without clipping */}
+          <div className="shrink-0 w-4 md:w-6" />
+          
+          {promos.map((promo, index) => (
             <div
               key={promo.id}
-              className="shrink-0 p-2 snap-center"
-              style={{ width: `${100 / cardsPerView}%` }}
+              className={`shrink-0 snap-center py-2 ${index < promos.length - 1 ? 'mr-4' : ''}`}
+              style={{ width: getCardWidth() }}
             >
               <PromoCard promo={promo} />
             </div>
           ))}
+
+          {/* Right Spacer */}
+          <div className="shrink-0 w-4 md:w-6" />
         </div>
 
         {/* Pagination Dots (Mobile) */}
