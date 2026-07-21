@@ -279,14 +279,10 @@ const PromoCarousel = ({ onProductSelect }) => {
       {/* Pagination Dots (Mobile) */}
       {cardsPerView === 1 && (
         <div className="absolute bottom-6 left-1/2 -translate-x-1/2 flex items-center gap-1.5 z-20 pointer-events-none">
-          {promos.map((p, i) => (
+          {promos.map((_, i) => (
             <div
               key={i}
-              className={`w-1.5 h-1.5 rounded-full transition-colors ${
-                i === currentIndex
-                  ? (p.textColor === 'text-white' ? 'bg-white' : 'bg-[#1E1E1E]')
-                  : (p.textColor === 'text-white' ? 'bg-white/40' : 'bg-[#1E1E1E]/30')
-              }`}
+              className={`w-1.5 h-1.5 rounded-full transition-colors ${i === currentIndex ? 'bg-white' : 'bg-white/40'}`}
             />
           ))}
         </div>
