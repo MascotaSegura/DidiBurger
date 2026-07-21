@@ -19,8 +19,8 @@ export default defineConfig({
         name: 'Uber Eats',
         short_name: 'Uber Eats',
         description: 'La mejor comida a tu puerta',
-        theme_color: '#142328',
-        background_color: '#142328',
+        theme_color: '#F3F4F6',
+        background_color: '#F3F4F6',
         display: 'standalone',
         icons: [
           {
