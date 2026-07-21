@@ -24,6 +24,16 @@ const promos = [
     image: import.meta.env.BASE_URL + 'images/promo_hamburguesa_doble.png',
   },
   {
+    id: 6,
+    productId: 6,
+    title: 'Combo Clásico',
+    subtitle: 'Más por menos. Envíos gratis con Uber One.',
+    buttonText: 'Ver combo',
+    bgColor: 'bg-[#9E6202]',
+    textColor: 'text-white',
+    image: import.meta.env.BASE_URL + 'images/promo_combo_clasico.png',
+  },
+  {
     id: 3,
     productId: 3,
     title: 'Papas Crujientes',
@@ -52,16 +62,6 @@ const promos = [
     bgColor: 'bg-[#06C167]',
     textColor: 'text-[#1E1E1E]',
     image: import.meta.env.BASE_URL + 'images/promo_brownie.png',
-  },
-  {
-    id: 6,
-    productId: 6,
-    title: 'Combo Clásico',
-    subtitle: 'Más por menos. Envíos gratis con Uber One.',
-    buttonText: 'Ver combo',
-    bgColor: 'bg-[#9E6202]',
-    textColor: 'text-white',
-    image: import.meta.env.BASE_URL + 'images/promo_combo_clasico.png',
   },
   {
     id: 7,
