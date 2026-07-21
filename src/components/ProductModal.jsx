@@ -18,8 +18,16 @@ const ProductModal = ({ product, onClose }) => {
   const [specialInstructions, setSpecialInstructions] = useState('');
   const [copied, setCopied] = useState(false);
   const [isImageExpanded, setIsImageExpanded] = useState(false);
+  const [headerOpacity, setHeaderOpacity] = useState(0);
   const { addToCart, favorites = [], toggleFavorite = () => {} } = useCart();
   const isFavorite = favorites.includes(product?.id);
+
+  const handleScroll = (e) => {
+    const scrollTop = e.target.scrollTop;
+    // Empieza a aparecer a los 10px, opaco total a los 100px
+    const opacity = Math.min(1, Math.max(0, (scrollTop - 10) / 90));
+    setHeaderOpacity(opacity);
+  };
 
   const [selectedVariants, setSelectedVariants] = useState(() => {
     const defaults = {};
@@ -137,68 +145,83 @@ const ProductModal = ({ product, onClose }) => {
         <div className="flex-1 min-h-0 flex flex-col w-full md:w-[55%] bg-white relative">
           
           {/* Header absoluto */}
-          <div className="absolute md:relative top-0 left-0 w-full flex justify-between md:justify-end items-center px-4 py-3 pt-[max(1rem,env(safe-area-inset-top,1rem))] z-20 md:bg-white shrink-0 pointer-events-none md:pointer-events-auto">
-            
-            {/* Left side: Close Button (Mobile Only) */}
-            <div className="md:hidden pointer-events-auto">
-              <div
-                className="w-10 h-10 bg-white rounded-full flex items-center justify-center cursor-pointer hover:bg-[#ECECEE] active:bg-[#ECECEE] active:scale-[0.95] outline-none focus-visible:bg-[#ECECEE] transition-all"
-                onClick={onClose}
-                onKeyDown={handleKeyDown(onClose)}
-                role="button"
-                tabIndex={0}
-                aria-label="Cerrar"
-              >
-                <X size={20} weight="bold" color="#1E1E1E" />
-              </div>
-            </div>
+          <div className="absolute md:relative top-0 left-0 w-full z-20 shrink-0 pointer-events-none md:pointer-events-auto">
+            {/* Fondo con opacidad progresiva — mismo comportamiento en mobile y desktop */}
+            <div className="absolute inset-0 bg-white transition-opacity duration-75" style={{ opacity: headerOpacity }} />
+            <div className="relative z-10 w-full flex flex-col pt-[max(0.75rem,env(safe-area-inset-top,0.75rem))] md:pt-[max(1rem,env(safe-area-inset-top,1rem))]">
+              <div className="flex items-center px-4 pb-3">
+                {/* Close Button (Mobile Only) */}
+                <div className="md:hidden pointer-events-auto shrink-0">
+                  <div
+                    className="w-10 h-10 bg-white rounded-full flex items-center justify-center cursor-pointer hover:bg-[#ECECEE] active:bg-[#ECECEE] active:scale-[0.95] outline-none focus-visible:bg-[#ECECEE] transition-all"
+                    onClick={onClose}
+                    onKeyDown={handleKeyDown(onClose)}
+                    role="button"
+                    tabIndex={0}
+                    aria-label="Cerrar"
+                  >
+                    <X size={20} weight="bold" color="#1E1E1E" />
+                  </div>
+                </div>
 
-            {/* Right side: Actions + Desktop Close */}
-            <div className="flex items-center gap-2 pointer-events-auto">
-              {/* Share Button */}
-              <div
-                className="w-10 h-10 bg-white md:bg-[#F3F4F6] rounded-full flex items-center justify-center cursor-pointer hover:bg-[#ECECEE] active:bg-[#ECECEE] active:scale-[0.95] outline-none focus-visible:bg-[#ECECEE] transition-all"
-                onClick={handleShare}
-                onKeyDown={handleKeyDown(handleShare)}
-                role="button"
-                tabIndex={0}
-                aria-label={copied ? 'Enlace copiado' : 'Compartir'}
-              >
-                {copied
-                  ? <Check size={20} weight="bold" color="#06C167" />
-                  : <ShareNetwork size={20} weight="bold" color="#1E1E1E" />}
-              </div>
-
-              {/* Favorite Button */}
-              <div
-                className="w-10 h-10 bg-white md:bg-[#F3F4F6] rounded-full flex items-center justify-center cursor-pointer hover:bg-[#ECECEE] active:bg-[#ECECEE] active:scale-[0.95] outline-none focus-visible:bg-[#ECECEE] transition-all"
-                onClick={() => toggleFavorite(product.id)}
-                onKeyDown={handleKeyDown(() => toggleFavorite(product.id))}
-                role="button"
-                tabIndex={0}
-                aria-label={isFavorite ? 'Quitar de favoritos' : 'Agregar a favoritos'}
-              >
-                <Heart size={20} weight={isFavorite ? "fill" : "bold"} color={isFavorite ? "#FF3B30" : "currentColor"} />
-              </div>
-
-              {/* Close Button (Desktop Only) */}
-              <div className="hidden md:block">
+                {/* Product name — aparece al hacer scroll, sincronizado con la opacidad del header */}
                 <div
-                  className="w-10 h-10 bg-[#F3F4F6] rounded-full flex items-center justify-center cursor-pointer hover:bg-[#ECECEE] active:bg-[#ECECEE] active:scale-[0.95] outline-none focus-visible:bg-[#ECECEE] transition-all"
-                  onClick={onClose}
-                  onKeyDown={handleKeyDown(onClose)}
-                  role="button"
-                  tabIndex={0}
-                  aria-label="Cerrar"
+                  className="flex-1 min-w-0 px-3 pointer-events-none"
+                  style={{ opacity: headerOpacity }}
                 >
-                  <X size={20} weight="bold" color="#1E1E1E" />
+                  <p className="text-lg font-semibold text-[#1E1E1E] truncate text-center leading-tight">
+                    {product.name}
+                  </p>
+                </div>
+
+                {/* Actions + Desktop Close */}
+                <div className="flex items-center gap-2 pointer-events-auto shrink-0 md:ml-auto">
+                  {/* Share Button */}
+                  <div
+                    className="w-10 h-10 bg-white md:bg-[#F3F4F6] rounded-full flex items-center justify-center cursor-pointer hover:bg-[#ECECEE] active:bg-[#ECECEE] active:scale-[0.95] outline-none focus-visible:bg-[#ECECEE] transition-all"
+                    onClick={handleShare}
+                    onKeyDown={handleKeyDown(handleShare)}
+                    role="button"
+                    tabIndex={0}
+                    aria-label={copied ? 'Enlace copiado' : 'Compartir'}
+                  >
+                    {copied
+                      ? <Check size={20} weight="bold" color="#06C167" />
+                      : <ShareNetwork size={20} weight="bold" color="#1E1E1E" />}
+                  </div>
+
+                  {/* Favorite Button */}
+                  <div
+                    className="w-10 h-10 bg-white md:bg-[#F3F4F6] rounded-full flex items-center justify-center cursor-pointer hover:bg-[#ECECEE] active:bg-[#ECECEE] active:scale-[0.95] outline-none focus-visible:bg-[#ECECEE] transition-all"
+                    onClick={() => toggleFavorite(product.id)}
+                    onKeyDown={handleKeyDown(() => toggleFavorite(product.id))}
+                    role="button"
+                    tabIndex={0}
+                    aria-label={isFavorite ? 'Quitar de favoritos' : 'Agregar a favoritos'}
+                  >
+                    <Heart size={20} weight={isFavorite ? "fill" : "bold"} color={isFavorite ? "#FF3B30" : "currentColor"} />
+                  </div>
+
+                  {/* Close Button (Desktop Only) */}
+                  <div className="hidden md:block">
+                    <div
+                      className="w-10 h-10 bg-[#F3F4F6] rounded-full flex items-center justify-center cursor-pointer hover:bg-[#ECECEE] active:bg-[#ECECEE] active:scale-[0.95] outline-none focus-visible:bg-[#ECECEE] transition-all"
+                      onClick={onClose}
+                      onKeyDown={handleKeyDown(onClose)}
+                      role="button"
+                      tabIndex={0}
+                      aria-label="Cerrar"
+                    >
+                      <X size={20} weight="bold" color="#1E1E1E" />
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
 
           {/* Área con Scroll */}
-          <div className="flex-1 min-h-0 min-w-0 overflow-y-auto">
+          <div className="flex-1 min-h-0 min-w-0 overflow-y-auto" onScroll={handleScroll}>
             
             {/* Imagen - Solo Mobile (Se mueve con el scroll) */}
             <div 

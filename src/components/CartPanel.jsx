@@ -208,8 +208,13 @@ const CartPanel = ({ onClose }) => {
         {/* ── VISTA: CARRITO ─────────────────────────────────────────────── */}
         {activeView === 'cart' && (
           <>
+            {/* Drag Handle Area */}
+            <div className="w-full flex justify-center pt-3 pb-1 md:hidden bg-white touch-none">
+              <div className="w-12 h-1.5 bg-[#E5E5EA] rounded-full" />
+            </div>
+
             {/* Header */}
-            <div className="flex items-center px-6 pb-4 pt-[max(1rem,env(safe-area-inset-top,1rem))] shrink-0">
+            <div className="flex items-center px-6 pb-4 pt-2 md:pt-[max(1rem,env(safe-area-inset-top,1rem))] shrink-0 bg-white">
               <div
                 className="w-10 h-10 bg-[#F3F4F6] rounded-full flex items-center justify-center cursor-pointer hover:bg-[#ECECEE] active:bg-[#ECECEE] active:scale-[0.95] outline-none focus-visible:bg-[#ECECEE] transition-all"
                 onClick={() => { onClose(); }}
@@ -350,7 +355,11 @@ const CartPanel = ({ onClose }) => {
         {/* ── VISTA: CUPÓN ───────────────────────────────────────────────── */}
         {activeView === 'promo' && (
           <div className="flex flex-col h-full w-full bg-white">
-            <div className="flex items-center px-6 pb-4 pt-[max(1rem,env(safe-area-inset-top,1rem))] shrink-0">
+            {/* Drag Handle Area */}
+            <div className="w-full flex justify-center pt-3 pb-1 md:hidden bg-white touch-none">
+              <div className="w-12 h-1.5 bg-[#E5E5EA] rounded-full" />
+            </div>
+            <div className="flex items-center px-6 pb-4 pt-2 md:pt-[max(1rem,env(safe-area-inset-top,1rem))] shrink-0 bg-white">
               <div
                 className="w-10 h-10 bg-[#F3F4F6] rounded-full flex items-center justify-center cursor-pointer hover:bg-[#ECECEE] active:bg-[#ECECEE] active:scale-[0.95] outline-none focus-visible:bg-[#ECECEE] transition-all"
                 onClick={() => { setActiveView('cart'); setPromoError(''); }}
@@ -413,7 +422,11 @@ const CartPanel = ({ onClose }) => {
         {/* ── VISTA: MÉTODO DE PAGO ──────────────────────────────────────── */}
         {activeView === 'payment' && (
           <div className="flex flex-col h-full w-full bg-white">
-            <div className="flex items-center px-6 pb-4 pt-[max(1rem,env(safe-area-inset-top,1rem))] shrink-0">
+            {/* Drag Handle Area */}
+            <div className="w-full flex justify-center pt-3 pb-1 md:hidden bg-white touch-none">
+              <div className="w-12 h-1.5 bg-[#E5E5EA] rounded-full" />
+            </div>
+            <div className="flex items-center px-6 pb-4 pt-2 md:pt-[max(1rem,env(safe-area-inset-top,1rem))] shrink-0 bg-white">
               <div
                 className="w-10 h-10 bg-[#F3F4F6] rounded-full flex items-center justify-center cursor-pointer hover:bg-[#ECECEE] active:bg-[#ECECEE] active:scale-[0.95] outline-none focus-visible:bg-[#ECECEE] transition-all"
                 onClick={() => setActiveView('cart')}
