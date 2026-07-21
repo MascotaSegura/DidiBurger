@@ -16,27 +16,30 @@ const handleKeyDown = (fn) => (e) => {
 const CategoryNav = ({ selectedCategory, onSelectCategory }) => {
   return (
     <div className="bg-white">
-      <div className="max-w-7xl mx-auto flex overflow-x-auto overflow-y-hidden overscroll-x-contain no-scrollbar px-4 pt-1 pb-2 md:py-2 gap-3">
-        {categories.map((cat) => {
-          const isSelected = selectedCategory === cat.id;
-          return (
-            <div
-              key={cat.id}
-              onClick={() => onSelectCategory(cat.id)}
-              onKeyDown={handleKeyDown(() => onSelectCategory(cat.id))}
-              role="button"
-              tabIndex={0}
-              aria-pressed={isSelected}
-              className={`whitespace-nowrap px-5 h-9 flex items-center justify-center rounded-full text-[14px] font-medium cursor-pointer transition-colors outline-none focus-visible:opacity-80 ${
-                isSelected
-                  ? 'bg-[#1E1E1E] text-white'
-                  : 'bg-[#F3F4F6] text-[#1E1E1E] hover:bg-[#ECECEE] active:bg-[#ECECEE]'
-              }`}
-            >
-              {cat.name}
-            </div>
-          );
-        })}
+      <div className="max-w-7xl mx-auto">
+        <div className="flex overflow-x-auto overflow-y-hidden overscroll-x-contain no-scrollbar px-4 pt-1 pb-2 md:py-2 gap-3">
+          {categories.map((cat) => {
+            const isSelected = selectedCategory === cat.id;
+            return (
+              <div
+                key={cat.id}
+                onClick={() => onSelectCategory(cat.id)}
+                onKeyDown={handleKeyDown(() => onSelectCategory(cat.id))}
+                role="button"
+                tabIndex={0}
+                aria-pressed={isSelected}
+                className={`whitespace-nowrap px-5 h-9 flex items-center justify-center rounded-full text-[14px] font-medium cursor-pointer transition-colors outline-none focus-visible:opacity-80 shrink-0 ${
+                  isSelected
+                    ? 'bg-[#1E1E1E] text-white'
+                    : 'bg-[#F3F4F6] text-[#1E1E1E] hover:bg-[#ECECEE] active:bg-[#ECECEE]'
+                }`}
+              >
+                {cat.name}
+              </div>
+            );
+          })}
+          <div className="shrink-0 w-1 pointer-events-none" />
+        </div>
       </div>
     </div>
   );

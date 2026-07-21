@@ -53,7 +53,7 @@ const AdminSupport = () => {
 
   if (activeTicket) {
     return (
-      <div className="flex-1 flex flex-col h-full bg-[#F3F4F6] relative z-10 animate-fade-in pb-24 md:pb-0">
+      <div className="flex-1 flex flex-col h-full bg-[#F3F4F6] relative z-10 animate-fade-in pb-0">
         {/* Chat Header */}
         <div className="flex items-center justify-between p-4 bg-white shrink-0 shadow-none pb-4">
           <div className="flex items-center gap-3">
@@ -127,7 +127,7 @@ const AdminSupport = () => {
   }
 
   return (
-    <div className="flex-1 flex flex-col p-4 md:p-8 overflow-y-auto pb-24 md:pb-8">
+    <div className="flex-1 flex flex-col p-4 md:p-8 overflow-y-auto pb-4 md:pb-8">
       <div className="mb-6 md:mb-8 mt-2 md:mt-0 px-2 md:px-0 flex flex-col gap-4">
         <div>
           <h1 className="text-2xl font-bold text-[#1E1E1E]">Servicio al Cliente</h1>
@@ -146,12 +146,12 @@ const AdminSupport = () => {
         </div>
 
         {/* Status Filter Pills */}
-        <div className="flex gap-2 overflow-x-auto pb-1">
+        <div className="flex gap-2 overflow-x-auto pb-1 no-scrollbar px-1">
           {TICKET_STATUS_FILTERS.map(filter => (
             <button
               key={filter}
               onClick={() => setStatusFilter(filter)}
-              className={`px-4 py-2 rounded-full text-[13px] font-bold whitespace-nowrap outline-none transition-all active:scale-95 ${
+              className={`px-4 py-2 rounded-full text-[13px] font-bold whitespace-nowrap outline-none transition-all shrink-0 active:scale-95 ${
                 statusFilter === filter
                   ? 'bg-[#1E1E1E] text-white'
                   : 'bg-white text-[#1E1E1E] hover:bg-[#E5E5E7]'
@@ -162,7 +162,7 @@ const AdminSupport = () => {
           ))}
           <button
             onClick={() => setRecentOnly(prev => !prev)}
-            className={`px-4 py-2 rounded-full text-[13px] font-bold whitespace-nowrap outline-none transition-all active:scale-95 ${
+            className={`px-4 py-2 rounded-full text-[13px] font-bold whitespace-nowrap outline-none transition-all shrink-0 active:scale-95 ${
               recentOnly
                 ? 'bg-[#1E1E1E] text-white'
                 : 'bg-white text-[#1E1E1E] hover:bg-[#E5E5E7]'
@@ -170,6 +170,7 @@ const AdminSupport = () => {
           >
             Recientes (24h)
           </button>
+          <div className="shrink-0 w-1 pointer-events-none" />
         </div>
       </div>
 

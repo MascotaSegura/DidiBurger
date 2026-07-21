@@ -25,7 +25,7 @@ const AdminUsers = () => {
   };
 
   return (
-    <div className="flex-1 flex flex-col p-4 md:p-8 overflow-y-auto pb-24 md:pb-8">
+    <div className="flex-1 flex flex-col p-4 md:p-8 overflow-y-auto pb-4 md:pb-8">
       <div className="mb-6 md:mb-8 mt-2 md:mt-0 px-2 md:px-0 flex flex-col gap-4">
         <div>
           <h1 className="text-2xl font-bold text-[#1E1E1E]">Usuarios Registrados</h1>

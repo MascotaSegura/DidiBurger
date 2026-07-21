@@ -93,7 +93,7 @@ const AdminLayout = () => {
       </div>
 
       {/* Main Content Area */}
-      <div className="flex-1 flex flex-col min-h-screen min-w-0 pb-[80px] md:pb-0">
+      <div className="flex-1 flex flex-col min-h-screen min-w-0 pb-[64px] md:pb-0">
         <div className="flex-1 flex flex-col relative w-full h-full max-w-full">
           {activeTab === 'overview' && <AdminOverview />}
           {activeTab === 'products' && <AdminProducts isEmbedded />}
@@ -106,15 +106,15 @@ const AdminLayout = () => {
       </div>
 
       {/* Mobile Bottom Nav */}
-      <div className="md:hidden fixed bottom-0 left-0 right-0 bg-white shadow-none pt-2 pb-[env(safe-area-inset-bottom)] z-50 flex items-center justify-around px-2">
+      <div className="md:hidden fixed bottom-0 left-0 right-0 h-16 bg-white shadow-none pt-1 pb-[env(safe-area-inset-bottom)] z-50 flex items-center justify-around px-2 border-t border-[#F3F4F6]">
         {tabs.map(tab => (
           <button
             key={tab.id}
             onClick={() => changeTab(tab.id)}
-            className={`flex flex-col items-center justify-center w-16 h-14 outline-none transition-colors ${activeTab === tab.id ? 'text-[#1E1E1E]' : 'text-[#8E8E93]'}`}
+            className={`flex flex-col items-center justify-center w-14 h-14 outline-none transition-colors ${activeTab === tab.id ? 'text-[#1E1E1E]' : 'text-[#8E8E93]'}`}
           >
-            <tab.icon size={24} weight={activeTab === tab.id ? 'fill' : 'regular'} />
-            <span className="text-[10px] font-medium mt-1">{tab.label}</span>
+            <tab.icon size={22} weight={activeTab === tab.id ? 'fill' : 'regular'} />
+            <span className="text-[10px] font-medium mt-0.5">{tab.label}</span>
           </button>
         ))}
       </div>

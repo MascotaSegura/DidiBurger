@@ -32,7 +32,7 @@ const AdminOrders = () => {
   });
 
   return (
-    <div className="flex-1 flex flex-col p-4 md:p-8 overflow-y-auto pb-24 md:pb-8">
+    <div className="flex-1 flex flex-col p-4 md:p-8 overflow-y-auto pb-4 md:pb-8">
       <div className="mb-6 md:mb-8 mt-2 md:mt-0 px-2 md:px-0 flex flex-col gap-4">
         <div className="flex justify-between items-end">
           <div>
@@ -53,12 +53,12 @@ const AdminOrders = () => {
         </div>
 
         {/* Status Filter Pills */}
-        <div className="flex gap-2 overflow-x-auto pb-1">
+        <div className="flex gap-2 overflow-x-auto pb-1 no-scrollbar px-1">
           {ORDER_STATUS_FILTERS.map(filter => (
             <button
               key={filter}
               onClick={() => setStatusFilter(filter)}
-              className={`px-4 py-2 rounded-full text-[13px] font-bold whitespace-nowrap outline-none transition-all active:scale-95 ${
+              className={`px-4 py-2 rounded-full text-[13px] font-bold whitespace-nowrap outline-none transition-all shrink-0 active:scale-95 ${
                 statusFilter === filter
                   ? 'bg-[#1E1E1E] text-white'
                   : 'bg-white text-[#1E1E1E] hover:bg-[#E5E5E7]'
@@ -67,6 +67,7 @@ const AdminOrders = () => {
               {filter}
             </button>
           ))}
+          <div className="shrink-0 w-1 pointer-events-none" />
         </div>
       </div>
 
