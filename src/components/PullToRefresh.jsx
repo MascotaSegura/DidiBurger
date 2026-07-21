@@ -185,7 +185,7 @@ const PullToRefresh = ({ onRefresh, children, scrollRef }) => {
   const contentY = isRefreshing ? INDICATOR_SIZE + 12 : pullPx;
 
   return (
-    <div ref={containerRef} className="relative w-full h-full min-h-full overflow-hidden">
+    <div ref={containerRef} className={`relative w-full h-full min-h-full ${gestureState !== 'idle' ? 'overflow-hidden' : 'overflow-visible'}`}>
       {/* Pull indicator — completely invisible (scale 0) at idle */}
       <div
         aria-hidden="true"
