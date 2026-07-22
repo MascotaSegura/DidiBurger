@@ -26,7 +26,7 @@ const AdminUsers = () => {
 
   return (
     <div className="flex-1 flex flex-col p-4 md:p-8 overflow-y-auto pb-4 md:pb-8">
-      <div className="mb-6 md:mb-8 mt-2 md:mt-0 px-2 md:px-0 flex flex-col gap-4">
+      <div className="mb-6 md:mb-8 mt-2 md:mt-0 flex flex-col gap-4">
         <div>
           <h1 className="text-2xl font-bold text-[#1E1E1E]">Usuarios Registrados</h1>
           <p className="text-[#8E8E93] text-[15px] mt-1">Directorio de clientes de la plataforma.</p>
@@ -44,7 +44,7 @@ const AdminUsers = () => {
         </div>
       </div>
 
-      <div className="bg-white rounded-2xl flex-1 p-2 md:p-4 mx-2 md:mx-0">
+      <div className="bg-white rounded-2xl flex-1 p-2 md:p-4">
         <div className="flex flex-col gap-2">
           {filteredUsers.map(user => (
             <div key={user.id} className="flex flex-col md:flex-row md:items-center justify-between p-4 bg-[#F3F4F6] rounded-2xl hover:bg-[#ECECEE] transition-colors">

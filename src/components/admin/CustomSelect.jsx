@@ -45,7 +45,7 @@ const CustomSelect = ({ value, onChange, options, placeholder, required }) => {
                     onChange({ target: { name: 'category', value: opt.value } });
                     setIsOpen(false);
                   }}
-                  className={`w-full text-left px-4 py-2.5 rounded-2xl text-[15px] font-medium transition-colors flex items-center justify-between outline-none ${
+                  className={`w-full text-left px-4 py-2.5 rounded-full text-[15px] font-medium transition-colors flex items-center justify-between outline-none ${
                     value === opt.value ? 'bg-[#1E1E1E] text-white' : 'text-[#1E1E1E] hover:bg-[#F3F4F6] active:bg-[#ECECEE]'
                   }`}
                 >

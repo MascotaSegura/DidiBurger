@@ -33,7 +33,7 @@ const AdminOrders = () => {
 
   return (
     <div className="flex-1 flex flex-col p-4 md:p-8 overflow-y-auto pb-4 md:pb-8">
-      <div className="mb-6 md:mb-8 mt-2 md:mt-0 px-2 md:px-0 flex flex-col gap-4">
+      <div className="mb-6 md:mb-8 mt-2 md:mt-0 flex flex-col gap-4">
         <div className="flex justify-between items-end">
           <div>
             <h1 className="text-2xl font-bold text-[#1E1E1E]">Gestión de Pedidos</h1>
@@ -53,7 +53,7 @@ const AdminOrders = () => {
         </div>
 
         {/* Status Filter Pills */}
-        <div className="flex gap-2 overflow-x-auto pb-1 no-scrollbar px-1">
+        <div className="-mx-4 px-4 md:-mx-8 md:px-8 flex gap-2 overflow-x-auto pb-1 no-scrollbar">
           {ORDER_STATUS_FILTERS.map(filter => (
             <button
               key={filter}
@@ -67,11 +67,10 @@ const AdminOrders = () => {
               {filter}
             </button>
           ))}
-          <div className="shrink-0 w-1 pointer-events-none" />
         </div>
       </div>
 
-      <div className="bg-white rounded-2xl flex-1 p-2 md:p-4 mx-2 md:mx-0">
+      <div className="bg-white rounded-2xl flex-1 p-2 md:p-4">
         <div className="flex flex-col gap-2">
           {filteredOrders.map(order => (
             <div key={order.id} className="flex flex-col md:flex-row md:items-center justify-between p-4 bg-[#F3F4F6] rounded-2xl hover:bg-[#ECECEE] transition-colors">

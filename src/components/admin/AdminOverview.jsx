@@ -18,12 +18,12 @@ const AdminOverview = () => {
 
   return (
     <div className="flex-1 flex flex-col p-4 md:p-8 overflow-y-auto">
-      <div className="mb-6 md:mb-8 mt-2 md:mt-0 px-2 md:px-0">
+      <div className="mb-6 md:mb-8 mt-2 md:mt-0">
         <h1 className="text-2xl font-bold text-[#1E1E1E]">Resumen General</h1>
         <p className="text-[#8E8E93] text-[15px] mt-1">Métricas clave de tu negocio.</p>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 px-2 md:px-0">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
         {cards.map((card, i) => (
           <div key={i} className="bg-white rounded-2xl p-6 flex items-center justify-between">
             <div className="flex flex-col">
@@ -38,7 +38,7 @@ const AdminOverview = () => {
       </div>
 
       {/* Actividad Reciente */}
-      <div className="mt-8 px-2 md:px-0 flex-1 flex flex-col min-h-[300px]">
+      <div className="mt-8 flex-1 flex flex-col min-h-[300px]">
         <div className="bg-white rounded-2xl flex-1 flex flex-col overflow-hidden p-2 md:p-4">
           <div className="p-4 flex items-center justify-between">
             <h2 className="text-lg font-bold text-[#1E1E1E]">Órdenes Recientes</h2>

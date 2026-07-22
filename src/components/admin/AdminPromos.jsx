@@ -52,7 +52,7 @@ const PromoFormModal = ({ isOpen, onClose, onSave }) => {
                   type="button"
                   key={t}
                   onClick={() => setFormData(p => ({ ...p, type: t }))}
-                  className={`flex-1 py-2.5 rounded-2xl text-[13px] font-bold transition-all outline-none active:scale-95 ${
+                  className={`flex-1 py-2 px-4 h-9 flex items-center justify-center rounded-full text-[13px] font-bold transition-all outline-none active:scale-95 ${
                     formData.type === t ? 'bg-[#1E1E1E] text-white' : 'bg-[#F3F4F6] text-[#1E1E1E] hover:bg-[#ECECEE]'
                   }`}
                 >
@@ -103,7 +103,7 @@ const AdminPromos = () => {
 
   return (
     <div className="flex-1 flex flex-col p-4 md:p-8 overflow-y-auto pb-4 md:pb-8">
-      <div className="mb-6 md:mb-8 mt-2 md:mt-0 px-2 md:px-0 flex flex-col gap-4">
+      <div className="mb-6 md:mb-8 mt-2 md:mt-0 flex flex-col gap-4">
         <div className="flex justify-between items-end">
           <div>
             <h1 className="text-2xl font-bold text-[#1E1E1E]">Promociones</h1>
@@ -130,7 +130,7 @@ const AdminPromos = () => {
         </div>
       </div>
 
-      <div className="bg-white rounded-2xl flex-1 p-2 md:p-4 mx-2 md:mx-0">
+      <div className="bg-white rounded-2xl flex-1 p-2 md:p-4">
         <div className="flex flex-col gap-2">
           {filteredPromos.map(promo => (
             <div key={promo.id} className="flex flex-col md:flex-row md:items-center justify-between p-4 bg-[#F3F4F6] rounded-2xl hover:bg-[#ECECEE] transition-colors">

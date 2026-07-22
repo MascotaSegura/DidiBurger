@@ -149,7 +149,7 @@ const ProductFormModal = ({ isOpen, onClose, product }) => {
                     <button
                       type="button"
                       onClick={() => { setIsNewCategory(false); setFormData(prev => ({...prev, category: ''})) }}
-                      className="px-4 bg-[#F3F4F6] text-[#1E1E1E] rounded-2xl font-medium text-[13px] hover:bg-[#ECECEE] transition-colors outline-none shrink-0"
+                      className="px-4 bg-[#F3F4F6] text-[#1E1E1E] rounded-full font-medium text-[13px] hover:bg-[#ECECEE] transition-colors outline-none shrink-0"
                     >
                       Cancelar
                     </button>

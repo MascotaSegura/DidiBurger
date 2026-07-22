@@ -85,7 +85,7 @@ const OptionsEditor = ({ ingredients, onChangeIngredients, singleChoiceOptions, 
           <button
             type="button"
             onClick={addIngredient}
-            className="w-12 bg-[#F3F4F6] text-[#1E1E1E] rounded-2xl flex items-center justify-center hover:bg-[#ECECEE] transition-colors outline-none shrink-0"
+            className="w-12 bg-[#F3F4F6] text-[#1E1E1E] rounded-full flex items-center justify-center hover:bg-[#ECECEE] transition-colors outline-none shrink-0"
           >
             <Plus size={20} weight="bold" />
           </button>
@@ -156,7 +156,7 @@ const OptionsEditor = ({ ingredients, onChangeIngredients, singleChoiceOptions, 
                   <button
                     type="button"
                     onClick={() => removeOptionFromGroup(groupIdx, optIdx)}
-                    className="w-10 bg-white rounded-2xl flex items-center justify-center text-[#FF3B30] hover:bg-[#FFF0F0] active:scale-95 transition-colors outline-none shrink-0"
+                    className="w-10 bg-white rounded-full flex items-center justify-center text-[#FF3B30] hover:bg-[#FFF0F0] active:scale-95 transition-colors outline-none shrink-0"
                   >
                     <X size={16} weight="bold" />
                   </button>
@@ -165,7 +165,7 @@ const OptionsEditor = ({ ingredients, onChangeIngredients, singleChoiceOptions, 
               <button
                 type="button"
                 onClick={() => addOptionToGroup(groupIdx)}
-                className="mt-1 w-full border border-dashed border-[#D1D1D6] rounded-2xl py-2.5 flex items-center justify-center gap-1.5 text-[13px] font-bold text-[#8E8E93] hover:text-[#1E1E1E] hover:border-[#1E1E1E] hover:bg-white transition-all outline-none"
+                className="mt-1 w-full border border-dashed border-[#D1D1D6] rounded-full py-2.5 flex items-center justify-center gap-1.5 text-[13px] font-bold text-[#8E8E93] hover:text-[#1E1E1E] hover:border-[#1E1E1E] hover:bg-white transition-all outline-none"
               >
                 <Plus size={14} weight="bold" />
                 Añadir opción

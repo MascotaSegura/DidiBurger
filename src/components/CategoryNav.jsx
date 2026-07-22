@@ -16,8 +16,8 @@ const handleKeyDown = (fn) => (e) => {
 const CategoryNav = ({ selectedCategory, onSelectCategory }) => {
   return (
     <div className="bg-white">
-      <div className="max-w-7xl mx-auto">
-        <div className="flex overflow-x-auto overflow-y-hidden overscroll-x-contain no-scrollbar px-4 pt-1 pb-2 md:py-2 gap-3">
+      <div className="max-w-7xl mx-auto px-4 md:px-8">
+        <div className="-mx-4 px-4 md:-mx-8 md:px-8 flex overflow-x-auto overflow-y-hidden overscroll-x-contain no-scrollbar py-2 gap-3">
           {categories.map((cat) => {
             const isSelected = selectedCategory === cat.id;
             return (
@@ -38,7 +38,6 @@ const CategoryNav = ({ selectedCategory, onSelectCategory }) => {
               </div>
             );
           })}
-          <div className="shrink-0 w-1 pointer-events-none" />
         </div>
       </div>
     </div>

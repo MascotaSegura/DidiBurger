@@ -5,9 +5,7 @@ import React from 'react';
  * @param {string} className — Tailwind classes for size/shape/rounding
  */
 const SkeletonBlock = ({ className = '' }) => (
-  <div className={`relative overflow-hidden bg-[#E5E5EA] ${className}`}>
-    <span className="skeleton-shimmer" />
-  </div>
+  <div className={`relative overflow-hidden animate-pulse bg-[#E5E5EA] ${className}`} />
 );
 
 // ─────────────────────────────────────────────────────────────────────────────
